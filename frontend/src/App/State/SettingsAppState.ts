@@ -17,7 +17,11 @@ import ImportListOptionsSettings from 'typings/ImportListOptionsSettings';
 import Indexer from 'typings/Indexer';
 import IndexerFlag from 'typings/IndexerFlag';
 import Notification from 'typings/Notification';
+<<<<<<< HEAD
 import QualityProfile from 'typings/QualityProfile';
+=======
+import DownloadClientOptions from 'typings/Settings/DownloadClientOptions';
+>>>>>>> cf593b1f5 (Use react-query for Quality Definitions)
 import General from 'typings/Settings/General';
 import IndexerOptions from 'typings/Settings/IndexerOptions';
 import MediaManagement from 'typings/Settings/MediaManagement';
@@ -92,6 +96,7 @@ export interface NotificationAppState
   extends AppSectionState<Notification>,
     AppSectionDeleteState {}
 
+<<<<<<< HEAD
 export interface QualityProfilesAppState
   extends AppSectionState<QualityProfile>,
     AppSectionItemSchemaState<QualityProfile> {}
@@ -102,6 +107,8 @@ export interface ReleaseProfilesAppState
   pendingChanges: Partial<ReleaseProfile>;
 }
 
+=======
+>>>>>>> cf593b1f5 (Use react-query for Quality Definitions)
 export interface CustomFormatAppState
   extends AppSectionState<CustomFormat>,
     AppSectionDeleteState,
@@ -143,10 +150,13 @@ interface SettingsAppState {
   naming: NamingAppState;
   namingExamples: NamingExamplesAppState;
   notifications: NotificationAppState;
+<<<<<<< HEAD
   qualityProfiles: QualityProfilesAppState;
   releaseProfiles: ReleaseProfilesAppState;
   ui: UiSettingsAppState;
   safeForWorkMode: boolean;
+=======
+>>>>>>> cf593b1f5 (Use react-query for Quality Definitions)
 }
 
 export default SettingsAppState;

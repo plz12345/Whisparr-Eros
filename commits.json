@@ -1,0 +1,2442 @@
+[
+  {
+    "sha": "bee7e4325f8d3c79572f2a088e661d2133f15158",
+    "node_id": "C_kwDOACWfu9oAKGJlZTdlNDMyNWY4ZDNjNzk1NzJmMmEwODhlNjYxZDIxMzNmMTUxNTg",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-11T22:04:40Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:53Z"
+      },
+      "message": "New: Parse non-ASCII release groups\n\nCloses #8341",
+      "tree": {
+        "sha": "c8aa6d0d9000d31865261847eba26cf32d50265a",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/c8aa6d0d9000d31865261847eba26cf32d50265a"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/bee7e4325f8d3c79572f2a088e661d2133f15158",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/bee7e4325f8d3c79572f2a088e661d2133f15158",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/bee7e4325f8d3c79572f2a088e661d2133f15158",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/bee7e4325f8d3c79572f2a088e661d2133f15158/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a"
+      }
+    ]
+  },
+  {
+    "sha": "7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a",
+    "node_id": "C_kwDOACWfu9oAKDdiMGRiNDZjMjVmODJhNGUyNmEyZGU3NTU2M2MyY2MxYTRlOWY3M2E",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-11T19:08:48Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:53Z"
+      },
+      "message": "New: Improve parsing of non-mini series releases containing \"Part #\" in the episode name",
+      "tree": {
+        "sha": "3bad40df1d934cbde3013e96e89f6bc11d210558",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/3bad40df1d934cbde3013e96e89f6bc11d210558"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/7b0db46c25f82a4e26a2de75563c2cc1a4e9f73a/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b16743bddaa0406144d0213b0a62aed6ac2e2148",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/b16743bddaa0406144d0213b0a62aed6ac2e2148",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/b16743bddaa0406144d0213b0a62aed6ac2e2148"
+      }
+    ]
+  },
+  {
+    "sha": "b16743bddaa0406144d0213b0a62aed6ac2e2148",
+    "node_id": "C_kwDOACWfu9oAKGIxNjc0M2JkZGFhMDQwNjE0NGQwMjEzYjBhNjJhZWQ2YWMyZTIxNDg",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-11T19:07:36Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:53Z"
+      },
+      "message": "Fixed: Don't parse release group from episode title when it contains a dash",
+      "tree": {
+        "sha": "9864ed4ac58d7c4011f861737211a9457cb6190e",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/9864ed4ac58d7c4011f861737211a9457cb6190e"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/b16743bddaa0406144d0213b0a62aed6ac2e2148",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/b16743bddaa0406144d0213b0a62aed6ac2e2148",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/b16743bddaa0406144d0213b0a62aed6ac2e2148",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/b16743bddaa0406144d0213b0a62aed6ac2e2148/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "399ca1661fccfd38723caf4ec79f8775751426ac",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/399ca1661fccfd38723caf4ec79f8775751426ac",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/399ca1661fccfd38723caf4ec79f8775751426ac"
+      }
+    ]
+  },
+  {
+    "sha": "399ca1661fccfd38723caf4ec79f8775751426ac",
+    "node_id": "C_kwDOACWfu9oAKDM5OWNhMTY2MWZjY2ZkMzg3MjNjYWY0ZWM3OWY4Nzc1NzUxNDI2YWM",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-11T18:49:42Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:48Z"
+      },
+      "message": "New: Ability to set command priority when starting command via API",
+      "tree": {
+        "sha": "adbea4acc040c7c055f4ec85a565d6cea9af59bb",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/adbea4acc040c7c055f4ec85a565d6cea9af59bb"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/399ca1661fccfd38723caf4ec79f8775751426ac",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/399ca1661fccfd38723caf4ec79f8775751426ac",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/399ca1661fccfd38723caf4ec79f8775751426ac",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/399ca1661fccfd38723caf4ec79f8775751426ac/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "28300ffb2b57936b554724d9b339b76dd837114b",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/28300ffb2b57936b554724d9b339b76dd837114b",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/28300ffb2b57936b554724d9b339b76dd837114b"
+      }
+    ]
+  },
+  {
+    "sha": "28300ffb2b57936b554724d9b339b76dd837114b",
+    "node_id": "C_kwDOACWfu9oAKDI4MzAwZmZiMmI1NzkzNmI1NTQ3MjRkOWIzMzliNzZkZDgzNzExNGI",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T02:45:58Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:35Z"
+      },
+      "message": "Add aria-labels to sidebar status",
+      "tree": {
+        "sha": "b09240ad798675581c410ec1a45f56dd1d188b5c",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/b09240ad798675581c410ec1a45f56dd1d188b5c"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/28300ffb2b57936b554724d9b339b76dd837114b",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/28300ffb2b57936b554724d9b339b76dd837114b",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/28300ffb2b57936b554724d9b339b76dd837114b",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/28300ffb2b57936b554724d9b339b76dd837114b/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "ae13ce4ac6df6851db1740471761783adb35b182",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/ae13ce4ac6df6851db1740471761783adb35b182",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/ae13ce4ac6df6851db1740471761783adb35b182"
+      }
+    ]
+  },
+  {
+    "sha": "ae13ce4ac6df6851db1740471761783adb35b182",
+    "node_id": "C_kwDOACWfu9oAKGFlMTNjZTRhYzZkZjY4NTFkYjE3NDA0NzE3NjE3ODNhZGIzNWIxODI",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T02:43:58Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:35Z"
+      },
+      "message": "Improve tab behaviour",
+      "tree": {
+        "sha": "e742feff3eeddd2a7b2070c9ddbdc6df04bcc6bd",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/e742feff3eeddd2a7b2070c9ddbdc6df04bcc6bd"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/ae13ce4ac6df6851db1740471761783adb35b182",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/ae13ce4ac6df6851db1740471761783adb35b182",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/ae13ce4ac6df6851db1740471761783adb35b182",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/ae13ce4ac6df6851db1740471761783adb35b182/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "276e67b5fa5dba1ee55909da3f72335a3a484e49",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/276e67b5fa5dba1ee55909da3f72335a3a484e49",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/276e67b5fa5dba1ee55909da3f72335a3a484e49"
+      }
+    ]
+  },
+  {
+    "sha": "276e67b5fa5dba1ee55909da3f72335a3a484e49",
+    "node_id": "C_kwDOACWfu9oAKDI3NmU2N2I1ZmE1ZGJhMWVlNTU5MDlkYTNmNzIzMzVhM2E0ODRlNDk",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T02:43:26Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:35Z"
+      },
+      "message": "Add alt text for series images\n\nCloses #8332",
+      "tree": {
+        "sha": "1ac8595da55f615edce426b2957ca6fc659afd72",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/1ac8595da55f615edce426b2957ca6fc659afd72"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/276e67b5fa5dba1ee55909da3f72335a3a484e49",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/276e67b5fa5dba1ee55909da3f72335a3a484e49",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/276e67b5fa5dba1ee55909da3f72335a3a484e49",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/276e67b5fa5dba1ee55909da3f72335a3a484e49/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15"
+      }
+    ]
+  },
+  {
+    "sha": "e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15",
+    "node_id": "C_kwDOACWfu9oAKGUyMGI0YzRmNWRhODU5N2E0ZjNiYzVjZjE5OGFiODJhNDQ3ZjJkMTU",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:28:04Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:26Z"
+      },
+      "message": "Update error message when connections fail to load",
+      "tree": {
+        "sha": "8e9fd6607885417731c58db605cd48eac0b53877",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/8e9fd6607885417731c58db605cd48eac0b53877"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e20b4c4f5da8597a4f3bc5cf198ab82a447f2d15/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "6d49b41dd26ca9bc61bda119698debcb960612e1",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/6d49b41dd26ca9bc61bda119698debcb960612e1",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/6d49b41dd26ca9bc61bda119698debcb960612e1"
+      }
+    ]
+  },
+  {
+    "sha": "6d49b41dd26ca9bc61bda119698debcb960612e1",
+    "node_id": "C_kwDOACWfu9oAKDZkNDliNDFkZDI2Y2E5YmM2MWJkYTExOTY5OGRlYmNiOTYwNjEyZTE",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2025-12-30T23:00:46Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:26Z"
+      },
+      "message": "Use react-query for Connections",
+      "tree": {
+        "sha": "75d33a4607cf579e25d1abc019c36bfea452be32",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/75d33a4607cf579e25d1abc019c36bfea452be32"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/6d49b41dd26ca9bc61bda119698debcb960612e1",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/6d49b41dd26ca9bc61bda119698debcb960612e1",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/6d49b41dd26ca9bc61bda119698debcb960612e1",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/6d49b41dd26ca9bc61bda119698debcb960612e1/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "0d80c093ffd4f07bd46249ab7d48a9e5272fda62",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/0d80c093ffd4f07bd46249ab7d48a9e5272fda62",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/0d80c093ffd4f07bd46249ab7d48a9e5272fda62"
+      }
+    ]
+  },
+  {
+    "sha": "0d80c093ffd4f07bd46249ab7d48a9e5272fda62",
+    "node_id": "C_kwDOACWfu9oAKDBkODBjMDkzZmZkNGYwN2JkNDYyNDlhYjdkNDhhOWU1MjcyZmRhNjI",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2025-12-30T20:29:25Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:26Z"
+      },
+      "message": "Prevent empty path from breaking custom script validation",
+      "tree": {
+        "sha": "7cc972f6f06e17b2018a06ead4c939057fc4c935",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/7cc972f6f06e17b2018a06ead4c939057fc4c935"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/0d80c093ffd4f07bd46249ab7d48a9e5272fda62",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/0d80c093ffd4f07bd46249ab7d48a9e5272fda62",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/0d80c093ffd4f07bd46249ab7d48a9e5272fda62",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/0d80c093ffd4f07bd46249ab7d48a9e5272fda62/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "06c6062531d87f77787e435d57366c34bd8f2f79",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/06c6062531d87f77787e435d57366c34bd8f2f79",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/06c6062531d87f77787e435d57366c34bd8f2f79"
+      }
+    ]
+  },
+  {
+    "sha": "06c6062531d87f77787e435d57366c34bd8f2f79",
+    "node_id": "C_kwDOACWfu9oAKDA2YzYwNjI1MzFkODdmNzc3ODdlNDM1ZDU3MzY2YzM0YmQ4ZjJmNzk",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2025-12-30T20:28:45Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:26Z"
+      },
+      "message": "Add v5 Connection endpoints",
+      "tree": {
+        "sha": "33ab21d64f52e8b113f7b99e8276525f687a0175",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/33ab21d64f52e8b113f7b99e8276525f687a0175"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/06c6062531d87f77787e435d57366c34bd8f2f79",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/06c6062531d87f77787e435d57366c34bd8f2f79",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/06c6062531d87f77787e435d57366c34bd8f2f79",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/06c6062531d87f77787e435d57366c34bd8f2f79/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "3e8a85ad26ded2a65dd90a49dc2d20f331f06e79",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/3e8a85ad26ded2a65dd90a49dc2d20f331f06e79",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/3e8a85ad26ded2a65dd90a49dc2d20f331f06e79"
+      }
+    ]
+  },
+  {
+    "sha": "3e8a85ad26ded2a65dd90a49dc2d20f331f06e79",
+    "node_id": "C_kwDOACWfu9oAKDNlOGE4NWFkMjZkZWQyYTY1ZGQ5MGE0OWRjMmQyMGYzMzFmMDZlNzk",
+    "commit": {
+      "author": {
+        "name": "Weblate",
+        "email": "noreply@weblate.org",
+        "date": "2026-01-12T18:24:11Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-13T02:59:06Z"
+      },
+      "message": "Multiple Translations updated by Weblate\n\nignore-downstream\n\nCo-authored-by: Gallyam Biktashev <gallyamb@gmail.com>\nCo-authored-by: GkhnGRBZ <gkhn.gurbuz@hotmail.com>\nCo-authored-by: Havok Dan <havokdan@yahoo.com.br>\nCo-authored-by: Oskari Lavinto <olavinto@protonmail.com>\nCo-authored-by: Weblate <noreply@weblate.org>\nCo-authored-by: fordas <fordas15@gmail.com>\nCo-authored-by: ugyes <ferenc.bodi@live.com>\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/es/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/fi/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/hu/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/pt_BR/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/ru/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/tr/\nTranslation: Servarr/Sonarr",
+      "tree": {
+        "sha": "7fea96e63ea30e1037dd57c1eefa1a3735121d42",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/7fea96e63ea30e1037dd57c1eefa1a3735121d42"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/3e8a85ad26ded2a65dd90a49dc2d20f331f06e79",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/3e8a85ad26ded2a65dd90a49dc2d20f331f06e79",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/3e8a85ad26ded2a65dd90a49dc2d20f331f06e79",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/3e8a85ad26ded2a65dd90a49dc2d20f331f06e79/comments",
+    "author": {
+      "login": "weblate",
+      "id": 1607653,
+      "node_id": "MDQ6VXNlcjE2MDc2NTM=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1607653?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/weblate",
+      "html_url": "https://github.com/weblate",
+      "followers_url": "https://api.github.com/users/weblate/followers",
+      "following_url": "https://api.github.com/users/weblate/following{/other_user}",
+      "gists_url": "https://api.github.com/users/weblate/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/weblate/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/weblate/subscriptions",
+      "organizations_url": "https://api.github.com/users/weblate/orgs",
+      "repos_url": "https://api.github.com/users/weblate/repos",
+      "events_url": "https://api.github.com/users/weblate/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/weblate/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "107e474f9c4c3be14db03f95ffaa22c46246a191",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/107e474f9c4c3be14db03f95ffaa22c46246a191",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/107e474f9c4c3be14db03f95ffaa22c46246a191"
+      }
+    ]
+  },
+  {
+    "sha": "107e474f9c4c3be14db03f95ffaa22c46246a191",
+    "node_id": "C_kwDOACWfu9oAKDEwN2U0NzRmOWM0YzNiZTE0ZGIwM2Y5NWZmYWEyMmM0NjI0NmExOTE",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T02:16:59Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:15:17Z"
+      },
+      "message": "Parse additional reversed filename format",
+      "tree": {
+        "sha": "96d21f8598a480567a1260d59f2a0c1cffd90398",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/96d21f8598a480567a1260d59f2a0c1cffd90398"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/107e474f9c4c3be14db03f95ffaa22c46246a191",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/107e474f9c4c3be14db03f95ffaa22c46246a191",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/107e474f9c4c3be14db03f95ffaa22c46246a191",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/107e474f9c4c3be14db03f95ffaa22c46246a191/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "0149886b688117cad7e0f61bed565e4b204b1f64",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/0149886b688117cad7e0f61bed565e4b204b1f64",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/0149886b688117cad7e0f61bed565e4b204b1f64"
+      }
+    ]
+  },
+  {
+    "sha": "0149886b688117cad7e0f61bed565e4b204b1f64",
+    "node_id": "C_kwDOACWfu9oAKDAxNDk4ODZiNjg4MTE3Y2FkN2UwZjYxYmVkNTY1ZTRiMjA0YjFmNjQ",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-04T02:24:11Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:15:07Z"
+      },
+      "message": "Remove Custom Filters from fetch server collection",
+      "tree": {
+        "sha": "ebd926894e70b98274776f789c9c04294fe4c0b3",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/ebd926894e70b98274776f789c9c04294fe4c0b3"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/0149886b688117cad7e0f61bed565e4b204b1f64",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/0149886b688117cad7e0f61bed565e4b204b1f64",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/0149886b688117cad7e0f61bed565e4b204b1f64",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/0149886b688117cad7e0f61bed565e4b204b1f64/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "77612810d8f77dba73f8dab34e7f2541504a3ddc",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/77612810d8f77dba73f8dab34e7f2541504a3ddc",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/77612810d8f77dba73f8dab34e7f2541504a3ddc"
+      }
+    ]
+  },
+  {
+    "sha": "77612810d8f77dba73f8dab34e7f2541504a3ddc",
+    "node_id": "C_kwDOACWfu9oAKDc3NjEyODEwZDhmNzdkYmE3M2Y4ZGFiMzRlN2YyNTQxNTA0YTNkZGM",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-04T21:02:25Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:14:57Z"
+      },
+      "message": "Fix finding last command run",
+      "tree": {
+        "sha": "eed2e96756a4628fd66e68b6918e22dfec0391d3",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/eed2e96756a4628fd66e68b6918e22dfec0391d3"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/77612810d8f77dba73f8dab34e7f2541504a3ddc",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/77612810d8f77dba73f8dab34e7f2541504a3ddc",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/77612810d8f77dba73f8dab34e7f2541504a3ddc",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/77612810d8f77dba73f8dab34e7f2541504a3ddc/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "12ed8cdc26f4af24c369fd806d7886007ce32407",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/12ed8cdc26f4af24c369fd806d7886007ce32407",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/12ed8cdc26f4af24c369fd806d7886007ce32407"
+      }
+    ]
+  },
+  {
+    "sha": "12ed8cdc26f4af24c369fd806d7886007ce32407",
+    "node_id": "C_kwDOACWfu9oAKDEyZWQ4Y2RjMjZmNGFmMjRjMzY5ZmQ4MDZkNzg4NjAwN2NlMzI0MDc",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-03T15:18:29Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:14:37Z"
+      },
+      "message": "Bump BusyTimeout for SQLite to 1000ms",
+      "tree": {
+        "sha": "575f5520ca523750585e4ac478d120f663930276",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/575f5520ca523750585e4ac478d120f663930276"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/12ed8cdc26f4af24c369fd806d7886007ce32407",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/12ed8cdc26f4af24c369fd806d7886007ce32407",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/12ed8cdc26f4af24c369fd806d7886007ce32407",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/12ed8cdc26f4af24c369fd806d7886007ce32407/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "63431917feddec910d369a245463ceeb2d4cbe53",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/63431917feddec910d369a245463ceeb2d4cbe53",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/63431917feddec910d369a245463ceeb2d4cbe53"
+      }
+    ]
+  },
+  {
+    "sha": "63431917feddec910d369a245463ceeb2d4cbe53",
+    "node_id": "C_kwDOACWfu9oAKDYzNDMxOTE3ZmVkZGVjOTEwZDM2OWEyNDU0NjNjZWViMmQ0Y2JlNTM",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-03T22:39:09Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:14:29Z"
+      },
+      "message": "Fixed: Improve parsing of WEB 2160p releases\n\nCloses #8324",
+      "tree": {
+        "sha": "6cf14d8c654906217c3b934d627a1d4204ba3f5d",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/6cf14d8c654906217c3b934d627a1d4204ba3f5d"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/63431917feddec910d369a245463ceeb2d4cbe53",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/63431917feddec910d369a245463ceeb2d4cbe53",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/63431917feddec910d369a245463ceeb2d4cbe53",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/63431917feddec910d369a245463ceeb2d4cbe53/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "e06c6ba649a367098f92ab45778fe9b7b0b13542",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e06c6ba649a367098f92ab45778fe9b7b0b13542",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/e06c6ba649a367098f92ab45778fe9b7b0b13542"
+      }
+    ]
+  },
+  {
+    "sha": "e06c6ba649a367098f92ab45778fe9b7b0b13542",
+    "node_id": "C_kwDOACWfu9oAKGUwNmM2YmE2NDlhMzY3MDk4ZjkyYWI0NTc3OGZlOWI3YjBiMTM1NDI",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-03T22:38:24Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:14:29Z"
+      },
+      "message": "Fixed: Parsing multiple subtitle languages\n\nCloses #8322",
+      "tree": {
+        "sha": "6a892a7adba8b40d98837d5503aac0f0972f376b",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/6a892a7adba8b40d98837d5503aac0f0972f376b"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/e06c6ba649a367098f92ab45778fe9b7b0b13542",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e06c6ba649a367098f92ab45778fe9b7b0b13542",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/e06c6ba649a367098f92ab45778fe9b7b0b13542",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e06c6ba649a367098f92ab45778fe9b7b0b13542/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3"
+      }
+    ]
+  },
+  {
+    "sha": "e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3",
+    "node_id": "C_kwDOACWfu9oAKGU3NDdlYzhmNWMzNDk2Y2QwZmQ1YzIyMzkyNWQ5YjRlMmJkYmY5ZjM",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-03T18:08:59Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:13:57Z"
+      },
+      "message": "Fix disposing of the HttpRequestMessage",
+      "tree": {
+        "sha": "95a3f37752862d8e68d4e10b8939ef5043c4c21d",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/95a3f37752862d8e68d4e10b8939ef5043c4c21d"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e747ec8f5c3496cd0fd5c223925d9b4e2bdbf9f3/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "6a6639105ededc4d24ebc963bb8be4e677792a0d",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/6a6639105ededc4d24ebc963bb8be4e677792a0d",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/6a6639105ededc4d24ebc963bb8be4e677792a0d"
+      }
+    ]
+  },
+  {
+    "sha": "6a6639105ededc4d24ebc963bb8be4e677792a0d",
+    "node_id": "C_kwDOACWfu9oAKDZhNjYzOTEwNWVkZWRjNGQyNGViYzk2M2JiOGJlNGU2Nzc3OTJhMGQ",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-07T03:13:25Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-01-07T03:13:25Z"
+      },
+      "message": "New: API key support for qBittorrent\n\nCloses #8282",
+      "tree": {
+        "sha": "41d6ab641587310e97dd34832d03a4544e73c5aa",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/41d6ab641587310e97dd34832d03a4544e73c5aa"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/6a6639105ededc4d24ebc963bb8be4e677792a0d",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJpXc9VCRC1aQ7uu5UhlAAALXkQAHLj4EVDwuYNUSyEYuMCSKBw\n8wXxh2bMT4Hsbs9J2ADZumnuu4w67f2TG9jj6GvjrPxEW+Ylehc2v2CaYAZV2dKn\n/LhSa0NsnTnAUsjZbJWMaw1pxXs4asXW0xhqmdadhwnqjYv5p3b5GKKmxFgKmxKY\nzWHf5T14gFJMtuWOhOe/ahwNCaESej9xQ+5JUWDz8w+X5sQ7H9/2fzRLp6JeBzKT\nCcKXE++KxwHZBUmlaeKxsoFfOlDQj3Tsfk5AJ9tn5zaK1ZV2z1R5ERUnQXsdtpsH\nrFbEJb/JETd0WLYwYPL751g10qm608LLvdpnRZvbkBh16NAylgIQVNZ+5n++gKR/\nkkeKmnXOO69ybTbCbyHqWXVwLIxG3uh6eBoTmo9Jq2NALKN/2z0bLDD3AwRwc0Ud\nwNuynZf/oM3oSIOF5JbJH/U06TOyasE59HL+YN9GbLrWKIc+pwRfzJnMYCCWc8BS\nzh4N5Nc/cIvnDoZ+vCrmllV7izXOhspqjOoPrgNT7xs+R/JAUBf/5OqG9jWe1mVO\nG37CTDJUczhSrBLhCE7Maa77Q7pWRpTbUK8e6JREN+2HZ4oqhCJcZV70pKzRjpsu\nOrNTqKS+S7geNqWStMnx2We85WGOxorXCv9VOAYFI8gnZJ+daXX/r6nMWnTJkes9\nyC6ghgNVhKKWtYv2O8aQ\n=aKPB\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 41d6ab641587310e97dd34832d03a4544e73c5aa\nparent 8f5f3070ace856ddcb285a7358cf8e71cac9858a\nauthor Bogdan <mynameisbogdan@users.noreply.github.com> 1767755605 +0200\ncommitter GitHub <noreply@github.com> 1767755605 -0800\n\nNew: API key support for qBittorrent\n\nCloses #8282",
+        "verified_at": "2026-01-07T03:13:25Z"
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/6a6639105ededc4d24ebc963bb8be4e677792a0d",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/6a6639105ededc4d24ebc963bb8be4e677792a0d",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/6a6639105ededc4d24ebc963bb8be4e677792a0d/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "8f5f3070ace856ddcb285a7358cf8e71cac9858a",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/8f5f3070ace856ddcb285a7358cf8e71cac9858a",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/8f5f3070ace856ddcb285a7358cf8e71cac9858a"
+      }
+    ]
+  },
+  {
+    "sha": "8f5f3070ace856ddcb285a7358cf8e71cac9858a",
+    "node_id": "C_kwDOACWfu9oAKDhmNWYzMDcwYWNlODU2ZGRjYjI4NWE3MzU4Y2Y4ZTcxY2FjOTg1OGE",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-02T11:26:18Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:12:58Z"
+      },
+      "message": "Fixed: Login with credentials on Qbittorrent 5.2",
+      "tree": {
+        "sha": "47597d2ff4d5ec1e69a65832ac89f0a6fa30af0e",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/47597d2ff4d5ec1e69a65832ac89f0a6fa30af0e"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/8f5f3070ace856ddcb285a7358cf8e71cac9858a",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/8f5f3070ace856ddcb285a7358cf8e71cac9858a",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/8f5f3070ace856ddcb285a7358cf8e71cac9858a",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/8f5f3070ace856ddcb285a7358cf8e71cac9858a/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "1839aa7907448da005819b377c0bc13977fe3009",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/1839aa7907448da005819b377c0bc13977fe3009",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/1839aa7907448da005819b377c0bc13977fe3009"
+      }
+    ]
+  },
+  {
+    "sha": "1839aa7907448da005819b377c0bc13977fe3009",
+    "node_id": "C_kwDOACWfu9oAKDE4MzlhYTc5MDc0NDhkYTAwNTgxOWIzNzdjMGJjMTM5NzdmZTMwMDk",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-01T19:09:07Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:12:17Z"
+      },
+      "message": "Add Threshold to translations",
+      "tree": {
+        "sha": "79069b83304b74b5e34a282e1c1de9e4d6ee8fc2",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/79069b83304b74b5e34a282e1c1de9e4d6ee8fc2"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/1839aa7907448da005819b377c0bc13977fe3009",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/1839aa7907448da005819b377c0bc13977fe3009",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/1839aa7907448da005819b377c0bc13977fe3009",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/1839aa7907448da005819b377c0bc13977fe3009/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "a79234de484aafa48b367409f4a6f812dd926dc7",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/a79234de484aafa48b367409f4a6f812dd926dc7",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/a79234de484aafa48b367409f4a6f812dd926dc7"
+      }
+    ]
+  },
+  {
+    "sha": "a79234de484aafa48b367409f4a6f812dd926dc7",
+    "node_id": "C_kwDOACWfu9oAKGE3OTIzNGRlNDg0YWFmYTQ4YjM2NzQwOWY0YTZmODEyZGQ5MjZkYzc",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-07T03:12:01Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-01-07T03:12:01Z"
+      },
+      "message": "Remove constraint for TvRageId from Series table",
+      "tree": {
+        "sha": "502acf2e8e5b6b08e7ce788ab8359b5d6da169ee",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/502acf2e8e5b6b08e7ce788ab8359b5d6da169ee"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/a79234de484aafa48b367409f4a6f812dd926dc7",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJpXc8BCRC1aQ7uu5UhlAAA2xsQAET2j/mE9Kq1dD/x1G83zAFn\nZMQeby8vsmh+ThUeDiXg54/WPtbKmw1kF/nk8W1ZS1UVx6oXASQ2stC51uSSTxRD\nz9EGT077tldLpgrLlHTdNPEbXg59V+dbEc/ybJyWxhoR2qjh7JomLxNenLNBnkhD\nXTp2susNCkfeOsVkDFlaS0gRta7OTwZQxIe20M2fqsndjx47l+3A9ZEvqwhT6wFN\nODYDFbndAAmC7g+0tQ623TcLvlT9lBwXE8f0GaoOzn9PXigCDNZO/a32ddnr0kVZ\n6axDezvLR0oLEEbDk2SikIzPKJ56QyGEFjEa11fZvjeN0rkF1D70CdvfcfTWmAW0\nJq1SpuVTcNMT6qbE1V7HNpwHWX0WFIoFhsOCIuyIEP8DkF6bugZGFvlIYjaMxMb9\n584+/Ai7uxoham2XrREBt6A5UN67GL86bP8i78aDxkEVxDR7xtO0kuVRaOPF72yw\nXeHeKqzngwDShoqzD9NS9rB4kpFWqpKQS9oT0O5UmKPHD6QgavC6gn03CW+uzYQn\nPBST2Agbt0qlCI23A3Dxr+OeNNWystxZeDkgB0hq/xTokFICsioJjtgZ1D1KfSgt\nv0xvZJPKRdx33IXv3g/1HlMtniP6Q9qPRlCOSHU4aAFgPuSbkHMTD+cQEUIv6MMT\nLDayeoDoVfgzgUbs0C3n\n=PCf/\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 502acf2e8e5b6b08e7ce788ab8359b5d6da169ee\nparent ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d\nauthor Bogdan <mynameisbogdan@users.noreply.github.com> 1767755521 +0200\ncommitter GitHub <noreply@github.com> 1767755521 -0800\n\nRemove constraint for TvRageId from Series table\n\n",
+        "verified_at": "2026-01-07T03:12:01Z"
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/a79234de484aafa48b367409f4a6f812dd926dc7",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/a79234de484aafa48b367409f4a6f812dd926dc7",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/a79234de484aafa48b367409f4a6f812dd926dc7/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d"
+      }
+    ]
+  },
+  {
+    "sha": "ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d",
+    "node_id": "C_kwDOACWfu9oAKGFjNWI5YjE0ZWViODdiOGM5NWRiM2VkMWQ0Mzc0MmZjMTA3NmM2M2Q",
+    "commit": {
+      "author": {
+        "name": "Weblate",
+        "email": "noreply@weblate.org",
+        "date": "2026-01-05T22:24:14Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-07T03:11:05Z"
+      },
+      "message": "Multiple Translations updated by Weblate\n\nignore-downstream\n\nCo-authored-by: Dani Talens <databio@gmail.com>\nCo-authored-by: Gallyam Biktashev <gallyamb@gmail.com>\nCo-authored-by: Havok Dan <havokdan@yahoo.com.br>\nCo-authored-by: Weblate <noreply@weblate.org>\nCo-authored-by: fordas <fordas15@gmail.com>\nCo-authored-by: ugyes <ferenc.bodi@live.com>\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/ca/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/es/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/hu/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/pt_BR/\nTranslate-URL: https://translate.servarr.com/projects/servarr/sonarr/ru/\nTranslation: Servarr/Sonarr",
+      "tree": {
+        "sha": "74da6aeaa61793845b88a5d974a51825c0195300",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/74da6aeaa61793845b88a5d974a51825c0195300"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/ac5b9b14eeb87b8c95db3ed1d43742fc1076c63d/comments",
+    "author": {
+      "login": "weblate",
+      "id": 1607653,
+      "node_id": "MDQ6VXNlcjE2MDc2NTM=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1607653?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/weblate",
+      "html_url": "https://github.com/weblate",
+      "followers_url": "https://api.github.com/users/weblate/followers",
+      "following_url": "https://api.github.com/users/weblate/following{/other_user}",
+      "gists_url": "https://api.github.com/users/weblate/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/weblate/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/weblate/subscriptions",
+      "organizations_url": "https://api.github.com/users/weblate/orgs",
+      "repos_url": "https://api.github.com/users/weblate/repos",
+      "events_url": "https://api.github.com/users/weblate/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/weblate/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "e0abca8360fb9009b9cb0723cdda144e9deaff66",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e0abca8360fb9009b9cb0723cdda144e9deaff66",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/e0abca8360fb9009b9cb0723cdda144e9deaff66"
+      }
+    ]
+  },
+  {
+    "sha": "e0abca8360fb9009b9cb0723cdda144e9deaff66",
+    "node_id": "C_kwDOACWfu9oAKGUwYWJjYTgzNjBmYjkwMDliOWNiMDcyM2NkZGExNDRlOWRlYWZmNjY",
+    "commit": {
+      "author": {
+        "name": "Sonarr",
+        "email": "development@sonarr.tv",
+        "date": "2026-01-01T17:36:47Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-01T17:38:09Z"
+      },
+      "message": "Automated API Docs update\n\nignore-downstream",
+      "tree": {
+        "sha": "53c316e9e1685aceb63163f943cc22aae47080f8",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/53c316e9e1685aceb63163f943cc22aae47080f8"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/e0abca8360fb9009b9cb0723cdda144e9deaff66",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e0abca8360fb9009b9cb0723cdda144e9deaff66",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/e0abca8360fb9009b9cb0723cdda144e9deaff66",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/e0abca8360fb9009b9cb0723cdda144e9deaff66/comments",
+    "author": null,
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b2f2c21a61eea3eec213af045853b5a5d27a754f",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/b2f2c21a61eea3eec213af045853b5a5d27a754f",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/b2f2c21a61eea3eec213af045853b5a5d27a754f"
+      }
+    ]
+  },
+  {
+    "sha": "b2f2c21a61eea3eec213af045853b5a5d27a754f",
+    "node_id": "C_kwDOACWfu9oAKGIyZjJjMjFhNjFlZWEzZWVjMjEzYWYwNDU4NTNiNWE1ZDI3YTc1NGY",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2025-12-29T20:45:46Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-01T17:33:50Z"
+      },
+      "message": "New: Return error if invalid indexer or download client provided for pushed releases",
+      "tree": {
+        "sha": "c5ac29e235357e7e6eebe8751296dcb832fe307b",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/c5ac29e235357e7e6eebe8751296dcb832fe307b"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/b2f2c21a61eea3eec213af045853b5a5d27a754f",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/b2f2c21a61eea3eec213af045853b5a5d27a754f",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/b2f2c21a61eea3eec213af045853b5a5d27a754f",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/b2f2c21a61eea3eec213af045853b5a5d27a754f/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a"
+      }
+    ]
+  },
+  {
+    "sha": "4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a",
+    "node_id": "C_kwDOACWfu9oAKDRiZjAyMjIxZTY3YzUzZWE1ZThkZTY2MTVjM2E5YTJkZGZlNWZjNWE",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-01T16:51:12Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-01T17:33:20Z"
+      },
+      "message": "Prevent NullRefs in series event handlers",
+      "tree": {
+        "sha": "ca51bd77df37680eb14373f2243795b6d7fbdc87",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/ca51bd77df37680eb14373f2243795b6d7fbdc87"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/4bf02221e67c53ea5e8de6615c3a9a2ddfe5fc5a/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "c70de927a5113a3029478c539ca0f7f3095e07e9",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/c70de927a5113a3029478c539ca0f7f3095e07e9",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/c70de927a5113a3029478c539ca0f7f3095e07e9"
+      }
+    ]
+  },
+  {
+    "sha": "c70de927a5113a3029478c539ca0f7f3095e07e9",
+    "node_id": "C_kwDOACWfu9oAKGM3MGRlOTI3YTUxMTNhMzAyOTQ3OGM1MzljYTBmN2YzMDk1ZTA3ZTk",
+    "commit": {
+      "author": {
+        "name": "Bogdan",
+        "email": "mynameisbogdan@users.noreply.github.com",
+        "date": "2026-01-01T14:35:10Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-01T17:32:54Z"
+      },
+      "message": "Avoid unique constraints for primary keys in SQLite migrations",
+      "tree": {
+        "sha": "f547810a6a3095173ec94606d4052a39bdb8d9ab",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/f547810a6a3095173ec94606d4052a39bdb8d9ab"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/c70de927a5113a3029478c539ca0f7f3095e07e9",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/c70de927a5113a3029478c539ca0f7f3095e07e9",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/c70de927a5113a3029478c539ca0f7f3095e07e9",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/c70de927a5113a3029478c539ca0f7f3095e07e9/comments",
+    "author": {
+      "login": "mynameisbogdan",
+      "id": 707714,
+      "node_id": "MDQ6VXNlcjcwNzcxNA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/707714?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mynameisbogdan",
+      "html_url": "https://github.com/mynameisbogdan",
+      "followers_url": "https://api.github.com/users/mynameisbogdan/followers",
+      "following_url": "https://api.github.com/users/mynameisbogdan/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mynameisbogdan/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mynameisbogdan/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mynameisbogdan/subscriptions",
+      "organizations_url": "https://api.github.com/users/mynameisbogdan/orgs",
+      "repos_url": "https://api.github.com/users/mynameisbogdan/repos",
+      "events_url": "https://api.github.com/users/mynameisbogdan/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mynameisbogdan/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b"
+      }
+    ]
+  },
+  {
+    "sha": "c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b",
+    "node_id": "C_kwDOACWfu9oAKGM2MGE5NzhlYjhiZjk1ZjQ3ZTZjODM1Njk0OGVjYzhjMmNhMDlhMmI",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-01T17:19:08Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-01T17:32:42Z"
+      },
+      "message": "Fix fetching indexers for release profiles",
+      "tree": {
+        "sha": "3523a412c564d49ec0ed3e4c594b63e809b7967d",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/3523a412c564d49ec0ed3e4c594b63e809b7967d"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/c60a978eb8bf95f47e6c8356948ecc8c2ca09a2b/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7"
+      }
+    ]
+  },
+  {
+    "sha": "cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7",
+    "node_id": "C_kwDOACWfu9oAKGNmNTkzYjFmNWQxNDQxYTMxY2I3NGU1ZDNlZTQzYTJiNGFhZTIxYjc",
+    "commit": {
+      "author": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2025-12-30T07:38:30Z"
+      },
+      "committer": {
+        "name": "Mark McDowall",
+        "email": "mark@mcdowall.ca",
+        "date": "2026-01-01T17:32:36Z"
+      },
+      "message": "Use react-query for Quality Definitions",
+      "tree": {
+        "sha": "4a08c397c2514aa8230795ab15a2b55c8ea936c1",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/git/trees/4a08c397c2514aa8230795ab15a2b55c8ea936c1"
+      },
+      "url": "https://api.github.com/repos/Sonarr/Sonarr/git/commits/cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7",
+    "html_url": "https://github.com/Sonarr/Sonarr/commit/cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7",
+    "comments_url": "https://api.github.com/repos/Sonarr/Sonarr/commits/cf593b1f5d1441a31cb74e5d3ee43a2b4aae21b7/comments",
+    "author": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "markus101",
+      "id": 413544,
+      "node_id": "MDQ6VXNlcjQxMzU0NA==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/413544?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/markus101",
+      "html_url": "https://github.com/markus101",
+      "followers_url": "https://api.github.com/users/markus101/followers",
+      "following_url": "https://api.github.com/users/markus101/following{/other_user}",
+      "gists_url": "https://api.github.com/users/markus101/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/markus101/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/markus101/subscriptions",
+      "organizations_url": "https://api.github.com/users/markus101/orgs",
+      "repos_url": "https://api.github.com/users/markus101/repos",
+      "events_url": "https://api.github.com/users/markus101/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/markus101/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "243a3057aea3b6df0b8c11aa6167094eb22140c2",
+        "url": "https://api.github.com/repos/Sonarr/Sonarr/commits/243a3057aea3b6df0b8c11aa6167094eb22140c2",
+        "html_url": "https://github.com/Sonarr/Sonarr/commit/243a3057aea3b6df0b8c11aa6167094eb22140c2"
+      }
+    ]
+  }
+]
