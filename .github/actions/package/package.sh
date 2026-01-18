@@ -1,9 +1,13 @@
 #!/bin/bash
 
+
 outputFolder=_output
 artifactsFolder=_artifacts
 uiFolder="$outputFolder/UI"
 framework="${FRAMEWORK:=net10.0}"
+
+# Sanitize BRANCH for safe file names (replace / with _)
+safeBranch="${BRANCH//\//_}"
 
 rm -rf $artifactsFolder
 mkdir $artifactsFolder
@@ -13,7 +17,7 @@ do
   name="${runtime##*/}"
   folderName="$runtime/$framework"
   whisparrFolder="$folderName/Whisparr"
-  archiveName="Whisparr.$BRANCH.$WHISPARR_VERSION.$name"
+  archiveName="Whisparr.$safeBranch.$WHISPARR_VERSION.$name"
 
   if [[ "$name" == 'UI' ]]; then
     continue
