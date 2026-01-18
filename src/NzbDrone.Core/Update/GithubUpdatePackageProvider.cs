@@ -139,10 +139,29 @@ namespace NzbDrone.Core.Update
                     continue;
                 }
 
-                // Filter release assets by mapped OS asset string and architecture
-                var asset = release.assets.FirstOrDefault(a =>
-                    a.name.Contains(osAssetString, StringComparison.OrdinalIgnoreCase) &&
-                    a.name.Contains(arch, StringComparison.OrdinalIgnoreCase));
+
+                // Prefer .tar.gz for Osx, fallback to .zip/.app
+                GithubAsset asset = null;
+                if (OsInfo.Os == Os.Osx)
+                {
+                    asset = release.assets.FirstOrDefault(a =>
+                        a.name.Contains(osAssetString, StringComparison.OrdinalIgnoreCase) &&
+                        a.name.Contains(arch, StringComparison.OrdinalIgnoreCase) &&
+                        a.name.EndsWith(".tar.gz", StringComparison.OrdinalIgnoreCase));
+                    if (asset == null)
+                    {
+                        asset = release.assets.FirstOrDefault(a =>
+                            a.name.Contains(osAssetString, StringComparison.OrdinalIgnoreCase) &&
+                            a.name.Contains(arch, StringComparison.OrdinalIgnoreCase) &&
+                            (a.name.EndsWith(".zip", StringComparison.OrdinalIgnoreCase) || a.name.EndsWith(".app", StringComparison.OrdinalIgnoreCase)));
+                    }
+                }
+                else
+                {
+                    asset = release.assets.FirstOrDefault(a =>
+                        a.name.Contains(osAssetString, StringComparison.OrdinalIgnoreCase) &&
+                        a.name.Contains(arch, StringComparison.OrdinalIgnoreCase));
+                }
                 if (asset == null)
                 {
                     _logger.Debug("No asset found for release {0} matching OS asset string '{1}' and arch '{2}'",
