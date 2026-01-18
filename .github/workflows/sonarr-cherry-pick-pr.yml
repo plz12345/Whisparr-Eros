@@ -1,0 +1,68 @@
+name: Cherry-pick Sonarr Commits as PRs
+
+on:
+  schedule:
+    - cron: '0 */12 * * *' # every 12 hours
+  workflow_dispatch:
+
+jobs:
+  cherry-pick-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Whisparr-Fork
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Get last processed commit
+        id: last
+        run: |
+          if [ -f .github/workflows/upstream/sonarr_last_commit.txt ]; then
+            LAST_COMMIT=$(cat .github/workflows/upstream/sonarr_last_commit.txt)
+          else
+            LAST_COMMIT=""
+          fi
+          echo "last_commit=$LAST_COMMIT" >> $GITHUB_OUTPUT
+
+      - name: Fetch Sonarr commits
+        run: |
+          curl -s "https://api.github.com/repos/Sonarr/Sonarr/commits?v5-develop" > commits.json
+
+      - name: Install jq and gh
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq gh
+
+      - name: Cherry-pick new Sonarr commits and create PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          LAST_COMMIT="${{ steps.last.outputs.last_commit }}"
+          NEW_COMMITS=$(jq -r --arg LAST_COMMIT "$LAST_COMMIT" '[.[] | select(.sha != $LAST_COMMIT)] | reverse' commits.json)
+          if [ "${NEW_COMMITS}" = "[]" ]; then
+            echo "No new commits to process."
+            exit 0
+          fi
+          git remote add sonarr https://github.com/Sonarr/Sonarr.git
+          git fetch sonarr v5-develop
+          for row in $(echo "${NEW_COMMITS}" | jq -r '.[] | @base64'); do
+            _jq() {
+              echo ${row} | base64 --decode | jq -r ${1}
+            }
+            SHA=$(_jq '.sha')
+            MSG=$(_jq '.commit.message')
+            URL=$(_jq '.html_url')
+            BRANCH="sonarr-cherry-${SHA}"
+            git checkout -b "$BRANCH"
+            git cherry-pick "$SHA" || {
+              echo "Cherry-pick failed for $SHA, skipping.";
+              git cherry-pick --abort;
+              continue;
+            }
+            git push origin "$BRANCH"
+            gh pr create --title "Cherry-pick Sonarr Commit: $SHA" --body "[$SHA]($URL)\n\n$MSG" --head "$BRANCH" --base eros-develop
+            echo "$SHA" > .github/workflows/upstream/sonarr_last_commit.txt
+            git add .github/workflows/upstream/sonarr_last_commit.txt
+            git commit -m "Update last processed Sonarr commit"
+            git push origin "$BRANCH"
+          done
