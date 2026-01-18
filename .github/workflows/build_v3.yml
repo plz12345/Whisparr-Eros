@@ -15,6 +15,7 @@ on:
     paths-ignore:
       - "src/NzbDrone.Core/Localization/Core/**"
       - "src/Whisparr.Api.*/openapi.json"
+      - ".github/workflows/**
 
 concurrency:
   group: ${{ github.workflow }}-pr-${{ github.event.pull_request.number }}
