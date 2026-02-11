@@ -24,6 +24,9 @@ jobs:
       - name: Install dotnet-outdated tool
         run: dotnet tool install --global dotnet-outdated-tool
 
+      - name: Restore solution
+        run: dotnet restore src/Whisparr.sln
+
       - name: Run dotnet list package --outdated
         run: |
           dotnet list src/Whisparr.sln package --outdated > outdated-report.txt
