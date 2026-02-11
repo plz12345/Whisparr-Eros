@@ -1,0 +1,60 @@
+# This GitHub Action checks for outdated NuGet packages and creates a PR if updates are available.
+# It uses dotnet-outdated-tool to update packages automatically.
+# Place this file in .github/workflows/nuget-update.yml
+
+name: "NuGet Package Updater"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1" # Every Monday at 6am UTC
+
+jobs:
+  update-nuget-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install dotnet-outdated tool
+        run: dotnet tool install --global dotnet-outdated-tool
+
+      - name: Run dotnet-outdated and update packages
+        run: |
+          dotnet outdated src/Whisparr.sln --upgrade --no-restore --transitive --prompt-yes --fail-on-updates --output outdated-report.txt
+        continue-on-error: true
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Get outdated report
+        if: steps.git-check.outputs.changed == 'true'
+        id: outdated-report
+        run: |
+          echo 'body<<EOF' >> $GITHUB_OUTPUT
+          echo 'Automated update of NuGet dependencies using dotnet-outdated.' >> $GITHUB_OUTPUT
+          echo '' >> $GITHUB_OUTPUT
+          echo '````' >> $GITHUB_OUTPUT
+          cat outdated-report.txt >> $GITHUB_OUTPUT
+          echo '````' >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
+      - name: Create or Update Pull Request
+        if: steps.git-check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: update NuGet dependencies"
+          title: "Chore: update NuGet dependencies"
+          body: ${{ steps.outdated-report.outputs.body }}
+          branch: "auto/nuget-update"
+          delete-branch: true
