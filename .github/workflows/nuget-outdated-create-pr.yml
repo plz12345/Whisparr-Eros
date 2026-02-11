@@ -26,7 +26,7 @@ jobs:
 
       - name: Run dotnet-outdated and update packages
         run: |
-          dotnet outdated src/Whisparr.sln --upgrade --no-restore --transitive --prompt-yes --fail-on-updates --output outdated-report.txt
+          dotnet outdated src/Whisparr.sln --upgrade --no-restore --transitive --fail-on-updates --output outdated-report.txt
         continue-on-error: true
 
       - name: Check for changes
