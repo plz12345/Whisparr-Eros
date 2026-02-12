@@ -1,0 +1,703 @@
+{
+  "version": 1,
+  "parameters": "--outdated",
+  "problems": [
+    {
+      "project": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone/Whisparr.csproj",
+      "level": "error",
+      "text": "No assets file was found for `/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone/Whisparr.csproj`. Please run restore before running this command."
+    }
+  ],
+  "sources": [
+    "https://api.nuget.org/v3/index.json",
+    "https://pkgs.dev.azure.com/Servarr/Servarr/_packaging/dotnet-bsd-crossbuild/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/Servarr/Servarr/_packaging/Mono.Posix.NETStandard/nuget/v3/index.json",
+    "https://pkgs.dev.azure.com/Servarr/Servarr/_packaging/FFMpegCore/nuget/v3/index.json"
+  ],
+  "projects": [
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/Whisparr.Api.V3/Whisparr.Api.V3.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "Ical.Net",
+              "requestedVersion": "4.3.1",
+              "resolvedVersion": "4.3.1",
+              "latestVersion": "5.2.1"
+            },
+            {
+              "id": "Swashbuckle.AspNetCore.Annotations",
+              "requestedVersion": "8.1.4",
+              "resolvedVersion": "8.1.4",
+              "latestVersion": "10.1.2"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/Whisparr.Http/Whisparr.Http.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Api.Test/Whisparr.Api.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Automation.Test/Whisparr.Automation.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.Bcl.AsyncInterfaces",
+              "requestedVersion": "8.0.0",
+              "resolvedVersion": "8.0.0",
+              "latestVersion": "10.0.3"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            },
+            {
+              "id": "Selenium.Support",
+              "requestedVersion": "4.27.0",
+              "resolvedVersion": "4.27.0",
+              "latestVersion": "4.40.0"
+            },
+            {
+              "id": "Selenium.WebDriver",
+              "requestedVersion": "4.27.0",
+              "resolvedVersion": "4.27.0",
+              "latestVersion": "4.40.0"
+            },
+            {
+              "id": "Selenium.WebDriver.ChromeDriver",
+              "requestedVersion": "137.0.7151.6800",
+              "resolvedVersion": "137.0.7151.6800",
+              "latestVersion": "145.0.7632.4600"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Common.Test/Whisparr.Common.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Common/Whisparr.Common.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "IPAddressRange",
+              "requestedVersion": "6.2.0",
+              "resolvedVersion": "6.2.0",
+              "latestVersion": "6.3.0"
+            },
+            {
+              "id": "Microsoft.Extensions.Hosting.WindowsServices",
+              "requestedVersion": "8.0.1",
+              "resolvedVersion": "8.0.1",
+              "latestVersion": "10.0.3"
+            },
+            {
+              "id": "Newtonsoft.Json",
+              "requestedVersion": "13.0.3",
+              "resolvedVersion": "13.0.3",
+              "latestVersion": "13.0.4"
+            },
+            {
+              "id": "Npgsql",
+              "requestedVersion": "9.0.3",
+              "resolvedVersion": "9.0.3",
+              "latestVersion": "10.0.1"
+            },
+            {
+              "id": "Sentry",
+              "requestedVersion": "4.0.2",
+              "resolvedVersion": "4.0.2",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "SourceGear.sqlite3",
+              "requestedVersion": "3.50.4.2",
+              "resolvedVersion": "3.50.4.2",
+              "latestVersion": "3.50.4.5"
+            },
+            {
+              "id": "System.Configuration.ConfigurationManager",
+              "requestedVersion": "8.0.1",
+              "resolvedVersion": "8.0.1",
+              "latestVersion": "10.0.3"
+            },
+            {
+              "id": "System.ServiceProcess.ServiceController",
+              "requestedVersion": "8.0.1",
+              "resolvedVersion": "8.0.1",
+              "latestVersion": "10.0.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Console/Whisparr.Console.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Core.Test/Whisparr.Core.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Core/Whisparr.Core.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "Diacritical.Net",
+              "requestedVersion": "1.0.4",
+              "resolvedVersion": "1.0.4",
+              "latestVersion": "1.0.5"
+            },
+            {
+              "id": "FluentMigrator.Runner.Core",
+              "requestedVersion": "6.2.0",
+              "resolvedVersion": "6.2.0",
+              "latestVersion": "8.0.1"
+            },
+            {
+              "id": "FluentMigrator.Runner.Postgres",
+              "requestedVersion": "6.2.0",
+              "resolvedVersion": "6.2.0",
+              "latestVersion": "8.0.1"
+            },
+            {
+              "id": "FluentMigrator.Runner.SQLite",
+              "requestedVersion": "6.2.0",
+              "resolvedVersion": "6.2.0",
+              "latestVersion": "8.0.1"
+            },
+            {
+              "id": "MailKit",
+              "requestedVersion": "4.13.0",
+              "resolvedVersion": "4.13.0",
+              "latestVersion": "4.14.1"
+            },
+            {
+              "id": "Microsoft.AspNetCore.Cryptography.KeyDerivation",
+              "requestedVersion": "8.0.17",
+              "resolvedVersion": "8.0.17",
+              "latestVersion": "10.0.3"
+            },
+            {
+              "id": "Microsoft.Data.SqlClient",
+              "requestedVersion": "6.1.1",
+              "resolvedVersion": "6.1.1",
+              "latestVersion": "6.1.4"
+            },
+            {
+              "id": "Microsoft.Extensions.Configuration",
+              "requestedVersion": "8.0.0",
+              "resolvedVersion": "8.0.0",
+              "latestVersion": "10.0.3"
+            },
+            {
+              "id": "Newtonsoft.Json",
+              "requestedVersion": "13.0.3",
+              "resolvedVersion": "13.0.3",
+              "latestVersion": "13.0.4"
+            },
+            {
+              "id": "Npgsql",
+              "requestedVersion": "9.0.3",
+              "resolvedVersion": "9.0.3",
+              "latestVersion": "10.0.1"
+            },
+            {
+              "id": "Polly",
+              "requestedVersion": "8.6.0",
+              "resolvedVersion": "8.6.0",
+              "latestVersion": "8.6.5"
+            },
+            {
+              "id": "Servarr.FFMpegCore",
+              "requestedVersion": "4.7.0-26",
+              "resolvedVersion": "4.7.0-26",
+              "latestVersion": "Not found at the sources"
+            },
+            {
+              "id": "SixLabors.ImageSharp",
+              "requestedVersion": "3.1.11",
+              "resolvedVersion": "3.1.11",
+              "latestVersion": "3.1.12"
+            },
+            {
+              "id": "System.Drawing.Common",
+              "requestedVersion": "10.0.1",
+              "resolvedVersion": "10.0.1",
+              "latestVersion": "10.0.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Host.Test/Whisparr.Host.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Host/Whisparr.Host.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "Microsoft.Extensions.Hosting.WindowsServices",
+              "requestedVersion": "8.0.1",
+              "resolvedVersion": "8.0.1",
+              "latestVersion": "10.0.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Integration.Test/Whisparr.Integration.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.AspNetCore.SignalR.Client",
+              "requestedVersion": "8.0.17",
+              "resolvedVersion": "8.0.17",
+              "latestVersion": "10.0.3"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Libraries.Test/Whisparr.Libraries.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Mono.Test/Whisparr.Mono.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Mono/Whisparr.Mono.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.SignalR/Whisparr.SignalR.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Test.Common/Whisparr.Test.Common.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "FluentAssertions",
+              "requestedVersion": "6.12.1",
+              "resolvedVersion": "6.12.1",
+              "latestVersion": "8.8.0"
+            },
+            {
+              "id": "Moq",
+              "requestedVersion": "4.18.4",
+              "resolvedVersion": "4.18.4",
+              "latestVersion": "4.20.72"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "RestSharp",
+              "requestedVersion": "106.15.0",
+              "resolvedVersion": "106.15.0",
+              "latestVersion": "113.1.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Test.Dummy/Whisparr.Test.Dummy.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Update.Test/Whisparr.Update.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Update/Whisparr.Update.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Windows.Test/Whisparr.Windows.Test.csproj",
+      "frameworks": [
+        {
+          "framework": "net10.0",
+          "topLevelPackages": [
+            {
+              "id": "GitHubActionsTestLogger",
+              "requestedVersion": "2.4.1",
+              "resolvedVersion": "2.4.1",
+              "latestVersion": "3.0.1"
+            },
+            {
+              "id": "Microsoft.NET.Test.Sdk",
+              "requestedVersion": "17.10.0",
+              "resolvedVersion": "17.10.0",
+              "latestVersion": "18.0.1"
+            },
+            {
+              "id": "NUnit",
+              "requestedVersion": "3.14.0",
+              "resolvedVersion": "3.14.0",
+              "latestVersion": "4.4.0"
+            },
+            {
+              "id": "NUnit3TestAdapter",
+              "requestedVersion": "5.1.0",
+              "resolvedVersion": "5.1.0",
+              "latestVersion": "6.1.0"
+            },
+            {
+              "id": "NunitXml.TestLogger",
+              "requestedVersion": "3.1.20",
+              "resolvedVersion": "3.1.20",
+              "latestVersion": "8.0.0"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone.Windows/Whisparr.Windows.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone/Whisparr.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/ServiceHelpers/ServiceInstall/ServiceInstall.csproj"
+    },
+    {
+      "path": "/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/ServiceHelpers/ServiceUninstall/ServiceUninstall.csproj"
+    }
+  ]
+}

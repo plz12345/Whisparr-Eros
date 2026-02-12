@@ -1,0 +1,171 @@
+## NuGet Package Updates
+
+The following packages have updates available:
+
+```
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+
+The following sources were used:
+   https://api.nuget.org/v3/index.json
+   https://pkgs.dev.azure.com/Servarr/Servarr/_packaging/dotnet-bsd-crossbuild/nuget/v3/index.json
+   https://pkgs.dev.azure.com/Servarr/Servarr/_packaging/Mono.Posix.NETStandard/nuget/v3/index.json
+   https://pkgs.dev.azure.com/Servarr/Servarr/_packaging/FFMpegCore/nuget/v3/index.json
+
+Project `Whisparr.Api.V3` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                         Requested   Resolved   Latest
+   > Ical.Net                                4.3.1       4.3.1      5.2.1 
+   > Swashbuckle.AspNetCore.Annotations      8.1.4       8.1.4      10.1.2
+
+The given project `Whisparr.Http` has no updates given the current sources.
+Project `Whisparr.Api.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+Project `Whisparr.Automation.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                      Requested         Resolved          Latest         
+   > GitHubActionsTestLogger              2.4.1             2.4.1             3.0.1          
+   > Microsoft.Bcl.AsyncInterfaces        8.0.0             8.0.0             10.0.3         
+   > Microsoft.NET.Test.Sdk               17.10.0           17.10.0           18.0.1         
+   > NUnit                                3.14.0            3.14.0            4.4.0          
+   > NUnit3TestAdapter                    5.1.0             5.1.0             6.1.0          
+   > NunitXml.TestLogger                  3.1.20            3.1.20            8.0.0          
+   > Selenium.Support                     4.27.0            4.27.0            4.40.0         
+   > Selenium.WebDriver                   4.27.0            4.27.0            4.40.0         
+   > Selenium.WebDriver.ChromeDriver      137.0.7151.6800   137.0.7151.6800   145.0.7632.4600
+
+Project `Whisparr.Common.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+Project `Whisparr.Common` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                                   Requested   Resolved   Latest  
+   > IPAddressRange                                    6.2.0       6.2.0      6.3.0   
+   > Microsoft.Extensions.Hosting.WindowsServices      8.0.1       8.0.1      10.0.3  
+   > Newtonsoft.Json                                   13.0.3      13.0.3     13.0.4  
+   > Npgsql                                            9.0.3       9.0.3      10.0.1  
+   > Sentry                                            4.0.2       4.0.2      6.1.0   
+   > SourceGear.sqlite3                                3.50.4.2    3.50.4.2   3.50.4.5
+   > System.Configuration.ConfigurationManager         8.0.1       8.0.1      10.0.3  
+   > System.ServiceProcess.ServiceController           8.0.1       8.0.1      10.0.3  
+
+The given project `Whisparr.Console` has no updates given the current sources.
+Project `Whisparr.Core.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+Project `Whisparr.Core` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                                      Requested   Resolved   Latest                  
+   > Diacritical.Net                                      1.0.4       1.0.4      1.0.5                   
+   > FluentMigrator.Runner.Core                           6.2.0       6.2.0      8.0.1                   
+   > FluentMigrator.Runner.Postgres                       6.2.0       6.2.0      8.0.1                   
+   > FluentMigrator.Runner.SQLite                         6.2.0       6.2.0      8.0.1                   
+   > MailKit                                              4.13.0      4.13.0     4.14.1                  
+   > Microsoft.AspNetCore.Cryptography.KeyDerivation      8.0.17      8.0.17     10.0.3                  
+   > Microsoft.Data.SqlClient                             6.1.1       6.1.1      6.1.4                   
+   > Microsoft.Extensions.Configuration                   8.0.0       8.0.0      10.0.3                  
+   > Newtonsoft.Json                                      13.0.3      13.0.3     13.0.4                  
+   > Npgsql                                               9.0.3       9.0.3      10.0.1                  
+   > Polly                                                8.6.0       8.6.0      8.6.5                   
+   > Servarr.FFMpegCore                                   4.7.0-26    4.7.0-26   Not found at the sources
+   > SixLabors.ImageSharp                                 3.1.11      3.1.11     3.1.12                  
+   > System.Drawing.Common                                10.0.1      10.0.1     10.0.3                  
+
+Project `Whisparr.Host.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+Project `Whisparr.Host` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                                   Requested   Resolved   Latest
+   > Microsoft.Extensions.Hosting.WindowsServices      8.0.1       8.0.1      10.0.3
+
+Project `Whisparr.Integration.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package                          Requested   Resolved   Latest
+   > GitHubActionsTestLogger                  2.4.1       2.4.1      3.0.1 
+   > Microsoft.AspNetCore.SignalR.Client      8.0.17      8.0.17     10.0.3
+   > Microsoft.NET.Test.Sdk                   17.10.0     17.10.0    18.0.1
+   > NUnit                                    3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter                        5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger                      3.1.20      3.1.20     8.0.0 
+
+Project `Whisparr.Libraries.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+Project `Whisparr.Mono.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+The given project `Whisparr.Mono` has no updates given the current sources.
+The given project `Whisparr.SignalR` has no updates given the current sources.
+Project `Whisparr.Test.Common` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package       Requested   Resolved   Latest 
+   > FluentAssertions      6.12.1      6.12.1     8.8.0  
+   > Moq                   4.18.4      4.18.4     4.20.72
+   > NUnit                 3.14.0      3.14.0     4.4.0  
+   > RestSharp             106.15.0    106.15.0   113.1.0
+
+The given project `Whisparr.Test.Dummy` has no updates given the current sources.
+Project `Whisparr.Update.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+The given project `Whisparr.Update` has no updates given the current sources.
+Project `Whisparr.Windows.Test` has the following updates to its packages
+   [net10.0]: 
+   Top-level Package              Requested   Resolved   Latest
+   > GitHubActionsTestLogger      2.4.1       2.4.1      3.0.1 
+   > Microsoft.NET.Test.Sdk       17.10.0     17.10.0    18.0.1
+   > NUnit                        3.14.0      3.14.0     4.4.0 
+   > NUnit3TestAdapter            5.1.0       5.1.0      6.1.0 
+   > NunitXml.TestLogger          3.1.20      3.1.20     8.0.0 
+
+The given project `Whisparr.Windows` has no updates given the current sources.
+No assets file was found for `/home/runner/work/Whisparr-Eros/Whisparr-Eros/src/NzbDrone/Whisparr.csproj`. Please run restore before running this command.
+
+```
+
+---
+*This PR was automatically generated by the NuGet Updates workflow*
