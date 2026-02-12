@@ -2,8 +2,8 @@ name: NuGet Package Updates
 
 on:
   schedule:
-    # Run daily at 6:00 AM UTC
-    - cron: "0 6 * * *"
+    # Run weekly on Mondays at 6:00 AM UTC
+    - cron: "0 6 * * 1"
   workflow_dispatch: # Allow manual trigger
 
 permissions:
@@ -78,41 +78,52 @@ jobs:
           cat update_summary.md >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
 
-      - name: Update packages
+      - name: Create report file for PR
         if: steps.check-outdated.outputs.has_updates == 'true'
         working-directory: src
         run: |
-          echo "Updating packages..."
-          # Use dotnet-outdated tool to update packages
-          # -u flag updates the packages, -t flag includes transitive dependencies
-          dotnet outdated Whisparr.sln -u
+          # Create a report file that will be committed to the PR branch
+          cp update_summary.md NUGET_UPDATES_REPORT.md
+          echo "" >> NUGET_UPDATES_REPORT.md
+          echo "Last scanned: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> NUGET_UPDATES_REPORT.md
 
-      - name: Check for changes
-        id: check-changes
+      - name: Create or Update Pull Request
         if: steps.check-outdated.outputs.has_updates == 'true'
-        run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            echo "has_changes=true" >> "$GITHUB_OUTPUT"
-            echo "Changes detected in project files"
-          else
-            echo "has_changes=false" >> "$GITHUB_OUTPUT"
-            echo "No changes made to project files"
-          fi
-
-      - name: Create Pull Request
-        if: steps.check-changes.outputs.has_changes == 'true'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Chore: Update NuGet packages"
-          branch: nuget-updates-${{ github.run_number }}
-          delete-branch: true
-          title: "Chore: Update NuGet packages"
-          body: ${{ steps.summary.outputs.SUMMARY }}
+          commit-message: "Chore: Update NuGet package report"
+          branch: nuget-updates-report
+          delete-branch: false
+          title: "Chore: NuGet Package Updates Available"
+          body: |
+            ${{ steps.summary.outputs.SUMMARY }}
+
+            ---
+
+            **Note**: This PR is automatically updated weekly with the current list of available package updates.
+            Manual update is required due to circular project references in Whisparr.Common and Whisparr.Common.Tests.
+
+            To manually update packages, run: `dotnet outdated src/Whisparr.sln -u`
+
+            **Last scanned**: Run #${{ github.run_number }} at ${{ github.event.repository.updated_at }}
           labels: |
             dependencies
             nuget
-          assignees: ${{ github.repository_owner }}
+
+      - name: Close PR if no updates
+        if: steps.check-outdated.outputs.has_updates == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if the PR exists and close it if no updates are needed
+          PR_NUMBER=$(gh pr list --head nuget-updates-report --json number --jq '.[0].number' || echo "")
+          if [ -n "$PR_NUMBER" ]; then
+            echo "Closing PR #$PR_NUMBER as all packages are up to date"
+            gh pr close "$PR_NUMBER" --comment "All NuGet packages are now up to date. Closing this PR."
+          else
+            echo "No existing PR to close"
+          fi
 
       - name: No updates needed
         if: steps.check-outdated.outputs.has_updates == 'false'
