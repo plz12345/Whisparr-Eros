@@ -17,7 +17,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: eros-develop
+          fetch-depth: 1
+          fetch-tags: false
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -27,13 +29,20 @@ jobs:
       - name: Install dotnet-outdated tool
         run: dotnet tool install --global dotnet-outdated-tool
 
+      - name: Restore NuGet packages
+        working-directory: src
+        run: |
+          echo "Restoring NuGet packages..."
+          dotnet restore Whisparr.sln --verbosity minimal
+
       - name: Check for outdated packages
         id: check-outdated
         working-directory: src
+        timeout-minutes: 10
         run: |
           # Get list of outdated packages
           echo "Checking for outdated packages..."
-          dotnet list package --outdated > outdated_packages.txt 2>&1
+          dotnet list Whisparr.sln package --outdated > outdated_packages.txt 2>&1 || true
 
           # Display the output
           cat outdated_packages.txt
