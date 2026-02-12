@@ -40,14 +40,18 @@ jobs:
         working-directory: src
         timeout-minutes: 10
         run: |
-          # Get list of outdated packages
+          # Get list of outdated packages with project grouping
           echo "Checking for outdated packages..."
+          dotnet list Whisparr.sln package --outdated --format json > outdated_packages.json 2>&1 || true
+
+          # Also get human-readable format
           dotnet list Whisparr.sln package --outdated > outdated_packages.txt 2>&1 || true
 
           # Display the output
+          echo "=== Outdated Packages Report ==="
           cat outdated_packages.txt
 
-          # Check if there are any outdated packages (excluding header lines)
+          # Check if there are any outdated packages (lines with ">" indicate updates)
           if grep -q ">" outdated_packages.txt; then
             echo "has_updates=true" >> "$GITHUB_OUTPUT"
             echo "Found outdated packages"
