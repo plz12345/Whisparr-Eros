@@ -171,6 +171,123 @@ namespace Whisparr.Api.V3.Movies
             return moviesResources;
         }
 
+        /// <summary>Retrieves a single movie or scene by their foreign ID (int for TMDB, UUID for Stash/TPDB)</summary>
+        /// <returns>Movie details with statistics and local cover URLs</returns>
+        /// <response code="200">Movie found and returned</response>
+        /// <response code="404">Movie with the specified foreign ID not found</response>
+        [HttpGet("byForeignId/{foreignId}")]
+        [Produces("application/json")]
+        public ActionResult<MovieResource> GetMovieByForeignId(string foreignId)
+        {
+            if (string.IsNullOrWhiteSpace(foreignId))
+            {
+                return BadRequest("Foreign ID is required");
+            }
+
+            Movie movie = null;
+
+            // Check if foreignId is an integer (TMDB)
+            if (int.TryParse(foreignId, out var tmdbId))
+            {
+                movie = _moviesService.FindByTmdbId(tmdbId);
+            }
+            else
+            {
+                // Try TPDB first, then Stash
+                movie = _moviesService.FindByTpdbId(foreignId);
+                if (movie == null)
+                {
+                    movie = _moviesService.FindByForeignId(foreignId);
+                }
+            }
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            var movieResource = MapToResource(movie);
+
+            return movieResource;
+        }
+
+        /// <summary>Retrieves a list of movies or scenes by their foreign IDs (mixed int for TMDB, UUID for Stash/TPDB)</summary>
+        /// <returns>Movie details</returns>
+        /// <remarks>If a foreign ID does not exist in Whisparr, it is not returned. Does not query metadata providers on demand.</remarks>
+        /// <response code="200">Movies found and returned, or an empty array</response>
+        [HttpPost("list")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public ActionResult<List<MovieResource>> GetMoviesByForeignIds([FromBody] List<string> foreignIds)
+        {
+            if (foreignIds == null || !foreignIds.Any())
+            {
+                return Ok(new List<MovieResource>());
+            }
+
+            var movieResources = new List<MovieResource>();
+            var movieIds = new List<int>();
+
+            // Lookup each foreignId
+            foreach (var foreignId in foreignIds)
+            {
+                if (string.IsNullOrWhiteSpace(foreignId))
+                {
+                    continue;
+                }
+
+                Movie movie = null;
+
+                // Check if foreignId is an integer (TMDB)
+                if (int.TryParse(foreignId, out var tmdbId))
+                {
+                    movie = _moviesService.FindByTmdbId(tmdbId);
+                }
+                else
+                {
+                    // Try TPDB first, then Stash
+                    movie = _moviesService.FindByTpdbId(foreignId);
+                    if (movie == null)
+                    {
+                        movie = _moviesService.FindByForeignId(foreignId);
+                    }
+                }
+
+                if (movie != null)
+                {
+                    movieIds.Add(movie.Id);
+                }
+            }
+
+            // Use existing bulk fetch if cache is enabled
+            if (_useCache)
+            {
+                movieResources = GetMovieResources(movieIds);
+            }
+            else
+            {
+                // Fetch movies with statistics
+                var movies = _moviesService.FindByIds(movieIds);
+                var movieStats = _movieStatisticsService.MovieStatistics(movieIds);
+                var sdict = movieStats.ToDictionary(x => x.MovieId);
+                var coverFileInfos = _coverMapper.GetMovieCoverFileInfos();
+                var availDelay = _configService.AvailabilityDelay;
+
+                foreach (var movie in movies)
+                {
+                    movieResources.Add(movie.ToResource(availDelay, _qualityUpgradableSpecification));
+                }
+
+                LinkMovieStatistics(movieResources, sdict);
+                MapCoversToLocal(movieResources, coverFileInfos);
+
+                var rootFolders = _rootFolderService.All();
+                movieResources.ForEach(m => m.RootFolderPath = _rootFolderService.GetBestRootFolderPath(m.Path, rootFolders));
+            }
+
+            return Ok(movieResources);
+        }
+
         [HttpGet]
         public List<MovieResource> AllMovie(int? tmdbId, string tpdbId, string stashId, bool excludeLocalCovers = false)
         {

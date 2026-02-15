@@ -45,15 +45,15 @@ import fonts from 'Styles/Variables/fonts';
 import formatRuntime from 'Utilities/Date/formatRuntime';
 import formatBytes from 'Utilities/Number/formatBytes';
 import translate from 'Utilities/String/translate';
-import MovieCastPostersConnector from './Credits/Cast/MovieCastPostersConnector';
-import MovieDetailsLinks from './MovieDetailsLinks';
-import MovieStatusLabel from './MovieStatusLabel';
-import MovieStudioLink from './MovieStudioLink';
-import MovieTagsConnector from './MovieTagsConnector';
-import ReleaseDateDisplay from './ReleaseDateDisplay';
-import MovieTitlesTable from './Titles/MovieTitlesTable';
-import { useMovieDetails } from './useMovieDetails';
-import styles from './MovieDetails.css';
+import MovieCastPostersConnector from '../../Movie/Details/Credits/Cast/MovieCastPostersConnector';
+import MovieDetailsLinks from '../../Movie/Details/MovieDetailsLinks';
+import MovieStatusLabel from '../../Movie/Details/MovieStatusLabel';
+import MovieStudioLink from '../../Movie/Details/MovieStudioLink';
+import MovieTagsConnector from '../../Movie/Details/MovieTagsConnector';
+import ReleaseDateDisplay from '../../Movie/Details/ReleaseDateDisplay';
+import MovieTitlesTable from '../../Movie/Details/Titles/MovieTitlesTable';
+import { useSceneDetails } from './useSceneDetails';
+import styles from '../../Movie/Details/MovieDetails.css';
 
 const defaultFontSize = Number(fonts.defaultFontSize as string);
 const lineHeight = parseFloat(fonts.lineHeight as string);
@@ -63,25 +63,25 @@ function getFanartUrl(images: MovieImageType[]) {
   return image?.url ?? image?.remoteUrl;
 }
 
-interface MovieDetailsProps {
+interface SceneDetailsProps {
   foreignId: string;
 }
 
 /**
- * Movie Details Component - displays detailed information for a single movie
- * Uses React Query for data fetching via useMovieDetails hook
+ * Scene Details Component - displays detailed information for a single scene
+ * Uses React Query for data fetching via useSceneDetails hook
  */
-function MovieDetails({ foreignId }: MovieDetailsProps) {
+function SceneDetails({ foreignId }: SceneDetailsProps) {
   const {
-    movie,
-    movieId,
-    isMovieDetailsFetching,
-    movieDetailsError,
+    scene,
+    sceneId,
+    isSceneDetailsFetching,
+    sceneDetailsError,
     onRefreshPress,
     onSearchPress,
     onMonitorTogglePress,
     isManualRefresh,
-  } = useMovieDetails(foreignId);
+  } = useSceneDetails(foreignId);
 
   const safeForWorkMode = useContext(SafeForWorkModeContext);
   const isSmallScreen = useSelector(
@@ -103,7 +103,7 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
   const [overviewHeight, setOverviewHeight] = useState(0);
   const [titleWidth, setTitleWidth] = useState(0);
 
-  if (isMovieDetailsFetching && !movie) {
+  if (isSceneDetailsFetching && !scene) {
     return (
       <PageContent title={translate('Loading')}>
         <PageContentBody>
@@ -113,21 +113,21 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
     );
   }
 
-  if (movieDetailsError) {
+  if (sceneDetailsError) {
     return (
       <PageContent title={translate('Error')}>
         <PageContentBody>
-          <NotFound message={translate('FailedToLoadMovieFromAPI')} />
+          <NotFound message={translate('FailedToLoadSceneFromAPI')} />
         </PageContentBody>
       </PageContent>
     );
   }
 
-  if (!movie) {
+  if (!scene) {
     return (
       <PageContent title={translate('NotFound')}>
         <PageContentBody>
-          <NotFound message={translate('MovieNotFound')} />
+          <NotFound message={translate('SceneNotFound')} />
         </PageContentBody>
       </PageContent>
     );
@@ -157,12 +157,12 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
     tpdbId,
     stashId,
     hasFile: hasMovieFiles,
-  } = movie;
+  } = scene;
 
   // Optional properties not in Movie type but may come from API
-  const code = (movie as any).code as string | undefined;
-  const certification = (movie as any).certification as string | undefined;
-  const studio = (movie as any).studio as string | undefined;
+  const code = (scene as any).code as string | undefined;
+  const certification = (scene as any).certification as string | undefined;
+  const studio = (scene as any).studio as string | undefined;
 
   const { sizeOnDisk = 0 } = statistics as { sizeOnDisk?: number };
   const statusDetails = getMovieStatusDetails(status);
@@ -245,7 +245,7 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
       </PageToolbar>
 
       <PageContentBody innerClassName={styles.innerContentBody}>
-        <div className={styles.header}>
+        <div className={styles.sceneHeader}>
           <div
             className={styles.backdrop}
             style={
@@ -260,8 +260,8 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
           <div className={styles.headerContent}>
             <MovieImage
               safeForWorkMode={safeForWorkMode}
-              className={styles.poster}
-              coverType="poster"
+              className={styles.screenshot}
+              coverType="screenshot"
               images={images}
               size={500}
               lazy={false}
@@ -282,7 +282,7 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
                         monitored={monitored}
                         isSaving={isSaving}
                         size={40}
-                        type="movieMonitor"
+                        type="sceneMonitor"
                         onPress={() => onMonitorTogglePress(!monitored)}
                       />
                     </div>
@@ -345,12 +345,12 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
                     />
                   </span>
 
-                  {!!tags.length && movieId && (
+                  {!!tags.length && sceneId && (
                     <span>
                       <Tooltip
                         anchor={<Icon name={icons.TAGS} size={20} />}
                         tooltip={
-                          <MovieTagsConnector key={movieId} movieId={movieId} />
+                          <MovieTagsConnector key={sceneId} movieId={sceneId} />
                         }
                         position={tooltipPositions.BOTTOM}
                       />
@@ -476,37 +476,37 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
           </div>
         </div>
 
-        {movieId && (
+        {sceneId && (
           <div className={styles.contentContainer}>
             <FieldSet legend={translate('Files')}>
-              <MovieFileEditorTable movieId={movieId} />
-              <ExtraFileTable movieId={movieId} />
+              <MovieFileEditorTable movieId={sceneId} />
+              <ExtraFileTable movieId={sceneId} />
             </FieldSet>
 
             <FieldSet legend={translate('Cast')}>
               <MovieCastPostersConnector
-                movieId={movieId}
+                movieId={sceneId}
                 isSmallScreen={isSmallScreen}
               />
             </FieldSet>
 
             <FieldSet legend={translate('Titles')}>
-              <MovieTitlesTable movieId={movieId} />
+              <MovieTitlesTable movieId={sceneId} />
             </FieldSet>
           </div>
         )}
 
-        {movieId && (
+        {sceneId && (
           <>
             <OrganizePreviewModal
               isOpen={isOrganizeModalOpen}
-              movieId={movieId}
+              movieId={sceneId}
               onModalClose={() => setIsOrganizeModalOpen(false)}
             />
 
             <EditMovieModal
               isOpen={isEditMovieModalOpen}
-              movieId={movieId}
+              movieId={sceneId}
               onModalClose={() => setIsEditMovieModalOpen(false)}
               onDeleteMoviePress={() => {
                 setIsEditMovieModalOpen(false);
@@ -516,19 +516,19 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
 
             <MovieHistoryModal
               isOpen={isMovieHistoryModalOpen}
-              movieId={movieId}
+              movieId={sceneId}
               onModalClose={() => setIsMovieHistoryModalOpen(false)}
             />
 
             <DeleteMovieModal
               isOpen={isDeleteMovieModalOpen}
-              movieId={movieId}
+              movieId={sceneId}
               onModalClose={() => setIsDeleteMovieModalOpen(false)}
             />
 
             <InteractiveImportModal
               isOpen={isInteractiveImportModalOpen}
-              movieId={movieId}
+              movieId={sceneId}
               title={title}
               folder={path}
               initialSortKey="relativePath"
@@ -543,7 +543,7 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
 
             <MovieInteractiveSearchModal
               isOpen={isInteractiveSearchModalOpen}
-              movieId={movieId}
+              movieId={sceneId}
               onModalClose={() => setIsInteractiveSearchModalOpen(false)}
             />
           </>
@@ -553,4 +553,4 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
   );
 }
 
-export default MovieDetails;
+export default SceneDetails;
