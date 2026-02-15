@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
+using NzbDrone.Api.V3.Credits;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Core.CustomFormats;
 using NzbDrone.Core.DecisionEngine.Specifications;
 using NzbDrone.Core.Languages;
 using NzbDrone.Core.MediaCover;
 using NzbDrone.Core.Movies;
-using NzbDrone.Core.Movies.Credits;
 using NzbDrone.Core.Parser;
 using Swashbuckle.AspNetCore.Annotations;
 using Whisparr.Api.V3.MovieFiles;
@@ -82,7 +82,7 @@ namespace Whisparr.Api.V3.Movies
         public Ratings Ratings { get; set; }
         public MovieFileResource MovieFile { get; set; }
         public MovieCollectionResource Collection { get; set; }
-        public List<Credit> SearchCredits { get; set; }
+        public List<CreditResource> Credits { get; set; }
         public List<string> PerformerForeignIds { get; set; }
         public List<string> PerformerNames { get; set; }
         public ItemType ItemType { get; set; }
@@ -161,7 +161,6 @@ namespace Whisparr.Api.V3.Movies
                 MovieFile = movieFile,
                 StudioTitle = model.MovieMetadata.Value.StudioTitle,
                 StudioForeignId = model.MovieMetadata.Value.StudioForeignId,
-                SearchCredits = model.MovieMetadata.Value.Credits,
                 PerformerForeignIds = model.MovieMetadata.Value.PerformerForeignIds,
                 PerformerNames = model.MovieMetadata.Value.PerformerNames,
                 ItemType = model.MovieMetadata.Value.ItemType,

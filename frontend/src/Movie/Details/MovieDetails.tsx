@@ -45,11 +45,11 @@ import fonts from 'Styles/Variables/fonts';
 import formatRuntime from 'Utilities/Date/formatRuntime';
 import formatBytes from 'Utilities/Number/formatBytes';
 import translate from 'Utilities/String/translate';
-import MovieCastPostersConnector from './Credits/Cast/MovieCastPostersConnector';
+import MovieCastPosters from './Credits/Cast/MovieCastPosters';
 import MovieDetailsLinks from './MovieDetailsLinks';
 import MovieStatusLabel from './MovieStatusLabel';
 import MovieStudioLink from './MovieStudioLink';
-import MovieTagsConnector from './MovieTagsConnector';
+import MovieTagsDisplay from './MovieTagsDisplay';
 import ReleaseDateDisplay from './ReleaseDateDisplay';
 import MovieTitlesTable from './Titles/MovieTitlesTable';
 import { useMovieDetails } from './useMovieDetails';
@@ -153,6 +153,7 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
     isAvailable,
     images = [],
     tags = [],
+    credits = [],
     tmdbId,
     tpdbId,
     stashId,
@@ -345,13 +346,11 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
                     />
                   </span>
 
-                  {!!tags.length && movieId && (
+                  {!!tags.length && (
                     <span>
                       <Tooltip
                         anchor={<Icon name={icons.TAGS} size={20} />}
-                        tooltip={
-                          <MovieTagsConnector key={movieId} movieId={movieId} />
-                        }
+                        tooltip={<MovieTagsDisplay tagIds={tags} />}
                         position={tooltipPositions.BOTTOM}
                       />
                     </span>
@@ -484,8 +483,8 @@ function MovieDetails({ foreignId }: MovieDetailsProps) {
             </FieldSet>
 
             <FieldSet legend={translate('Cast')}>
-              <MovieCastPostersConnector
-                movieId={movieId}
+              <MovieCastPosters
+                credits={credits}
                 isSmallScreen={isSmallScreen}
               />
             </FieldSet>

@@ -37,7 +37,6 @@ import MovieCollectionLabel from 'Movie/MovieCollectionLabel';
 import MovieGenres from 'Movie/MovieGenres';
 import MovieImage from 'Movie/MovieImage';
 import MovieInteractiveSearchModal from 'Movie/Search/MovieInteractiveSearchModal';
-import MovieFileEditorTable from 'MovieFile/Editor/MovieFileEditorTable';
 import ExtraFileTable from 'MovieFile/Extras/ExtraFileTable';
 import OrganizePreviewModal from 'Organize/OrganizePreviewModal';
 import QualityProfileName from 'Settings/Profiles/Quality/QualityProfileName';
@@ -45,13 +44,14 @@ import fonts from 'Styles/Variables/fonts';
 import formatRuntime from 'Utilities/Date/formatRuntime';
 import formatBytes from 'Utilities/Number/formatBytes';
 import translate from 'Utilities/String/translate';
-import MovieCastPostersConnector from '../../Movie/Details/Credits/Cast/MovieCastPostersConnector';
 import MovieDetailsLinks from '../../Movie/Details/MovieDetailsLinks';
 import MovieStatusLabel from '../../Movie/Details/MovieStatusLabel';
 import MovieStudioLink from '../../Movie/Details/MovieStudioLink';
-import MovieTagsConnector from '../../Movie/Details/MovieTagsConnector';
+import MovieTagsDisplay from '../../Movie/Details/MovieTagsDisplay';
 import ReleaseDateDisplay from '../../Movie/Details/ReleaseDateDisplay';
 import MovieTitlesTable from '../../Movie/Details/Titles/MovieTitlesTable';
+import SceneCastPosters from './SceneCastPosters';
+import SceneFileEditorTable from './SceneFileEditorTable';
 import { useSceneDetails } from './useSceneDetails';
 import styles from '../../Movie/Details/MovieDetails.css';
 
@@ -153,15 +153,17 @@ function SceneDetails({ foreignId }: SceneDetailsProps) {
     isAvailable,
     images = [],
     tags = [],
+    credits = [],
     tmdbId,
     tpdbId,
     stashId,
+    movieFile,
+    movieFileId,
     hasFile: hasMovieFiles,
   } = scene;
 
   // Optional properties not in Movie type but may come from API
   const code = (scene as any).code as string | undefined;
-  const certification = (scene as any).certification as string | undefined;
   const studio = (scene as any).studio as string | undefined;
 
   const { sizeOnDisk = 0 } = statistics as { sizeOnDisk?: number };
@@ -299,15 +301,6 @@ function SceneDetails({ foreignId }: SceneDetailsProps) {
 
               <div className={styles.details}>
                 <div>
-                  {certification ? (
-                    <span
-                      className={styles.certification}
-                      title={translate('Certification')}
-                    >
-                      {certification}
-                    </span>
-                  ) : null}
-
                   {releaseDate ? (
                     <ReleaseDateDisplay releaseDate={releaseDate} />
                   ) : null}
@@ -345,13 +338,11 @@ function SceneDetails({ foreignId }: SceneDetailsProps) {
                     />
                   </span>
 
-                  {!!tags.length && sceneId && (
+                  {!!tags.length && (
                     <span>
                       <Tooltip
                         anchor={<Icon name={icons.TAGS} size={20} />}
-                        tooltip={
-                          <MovieTagsConnector key={sceneId} movieId={sceneId} />
-                        }
+                        tooltip={<MovieTagsDisplay tagIds={tags} />}
                         position={tooltipPositions.BOTTOM}
                       />
                     </span>
@@ -479,13 +470,17 @@ function SceneDetails({ foreignId }: SceneDetailsProps) {
         {sceneId && (
           <div className={styles.contentContainer}>
             <FieldSet legend={translate('Files')}>
-              <MovieFileEditorTable movieId={sceneId} />
+              <SceneFileEditorTable
+                sceneId={sceneId}
+                movieFileId={movieFileId}
+                movieFile={movieFile}
+              />
               <ExtraFileTable movieId={sceneId} />
             </FieldSet>
 
             <FieldSet legend={translate('Cast')}>
-              <MovieCastPostersConnector
-                movieId={sceneId}
+              <SceneCastPosters
+                credits={credits}
                 isSmallScreen={isSmallScreen}
               />
             </FieldSet>

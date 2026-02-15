@@ -8,6 +8,7 @@ using DryIoc.ImTools;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using NzbDrone.Api.V3.Credits;
 using NzbDrone.Common.Cache;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Core.Configuration;
@@ -20,6 +21,7 @@ using NzbDrone.Core.Messaging.Commands;
 using NzbDrone.Core.Messaging.Events;
 using NzbDrone.Core.Movies;
 using NzbDrone.Core.Movies.Commands;
+using NzbDrone.Core.Movies.Credits;
 using NzbDrone.Core.Movies.Events;
 using NzbDrone.Core.MovieStats;
 using NzbDrone.Core.Parser;
@@ -52,6 +54,7 @@ namespace Whisparr.Api.V3.Movies
         private readonly IRootFolderService _rootFolderService;
         private readonly IUpgradableSpecification _qualityUpgradableSpecification;
         private readonly IConfigService _configService;
+        private readonly ICreditService _creditService;
         private readonly bool _useCache;
         private readonly ICached<MovieResource> _movieResourcesCache;
         private readonly Logger _logger;
@@ -65,6 +68,7 @@ namespace Whisparr.Api.V3.Movies
                            IRootFolderService rootFolderService,
                            IUpgradableSpecification qualityUpgradableSpecification,
                            IConfigService configService,
+                           ICreditService creditService,
                            RootFolderValidator<MovieResource> rootFolderValidator,
                            MappedNetworkDriveValidator<MovieResource> mappedNetworkDriveValidator,
                            MoviePathValidator<MovieResource> moviesPathValidator,
@@ -84,6 +88,7 @@ namespace Whisparr.Api.V3.Movies
             _movieStatisticsService = movieStatisticsService;
             _qualityUpgradableSpecification = qualityUpgradableSpecification;
             _configService = configService;
+            _creditService = creditService;
             _coverMapper = coverMapper;
             _commandQueueManager = commandQueueManager;
             _useCache = _configService.WhisparrCacheMovieAPI;
@@ -482,6 +487,14 @@ namespace Whisparr.Api.V3.Movies
             var availDelay = _configService.AvailabilityDelay;
 
             var resource = movie.ToResource(availDelay, _qualityUpgradableSpecification);
+
+            // Populate credits from CreditService
+            if (movie.MovieMetadataId > 0)
+            {
+                var credits = _creditService.GetAllCreditsForMovieMetadata(movie.MovieMetadataId);
+                var movieMetadataSource = _configService.WhisparrMovieMetadataSource;
+                resource.Credits = credits.ToResource(movieMetadataSource);
+            }
 
             // TODO: movie this to the movie updated event handler instead
             MapCoversToLocal(resource);
