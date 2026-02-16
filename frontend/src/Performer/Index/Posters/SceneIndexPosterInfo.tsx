@@ -27,7 +27,6 @@ interface SceneIndexPosterInfoProps {
   shortDateFormat: string;
   longDateFormat: string;
   timeFormat: string;
-  showTmdbRating: boolean;
 }
 
 function SceneIndexPosterInfo(props: SceneIndexPosterInfoProps) {

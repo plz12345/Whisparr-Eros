@@ -44,6 +44,7 @@ namespace NzbDrone.Core.Movies
         HashSet<int> AllMovieWithCollectionsTmdbIds();
         void SetFileId(List<Movie> movies);
         List<Movie> SearchMovies(string cleanTitle, string foreignId);
+        PagingSpec<Movie> Paged(PagingSpec<Movie> pagingSpec);
     }
 
     public class MovieRepository : BasicRepository<Movie>, IMovieRepository
@@ -433,7 +434,7 @@ namespace NzbDrone.Core.Movies
             {
                 return conn.Query<string>("SELECT \"StashId\" FROM \"MovieMetadata\" JOIN \"Movies\" ON (\"Movies\".\"MovieMetadataId\" = \"MovieMetadata\".\"Id\") WHERE \"StashId\" IS NOT NULL").ToList();
             }
-            }
+        }
 
         public List<string> AllMovieForeignIds()
         {
@@ -539,6 +540,11 @@ namespace NzbDrone.Core.Movies
                 builder,
                 (movie, metadata, qualityProfile, file, altTitle) => Map(movieDictionary, movie, metadata, qualityProfile, file, altTitle));
             return movieDictionary.Values.ToList();
+        }
+
+        public PagingSpec<Movie> Paged(PagingSpec<Movie> pagingSpec)
+        {
+            return GetPaged(pagingSpec);
         }
     }
 }

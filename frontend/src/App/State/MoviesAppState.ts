@@ -13,21 +13,24 @@ export interface MovieIndexAppState {
   secondarySortKey: string;
   secondarySortDirection: SortDirection;
   view: string;
+  page: number;
+  pageSize: number;
 
   posterOptions: {
     detailedProgressBar: boolean;
+    pageSize: number;
     size: string;
     showTitle: boolean;
     showMonitored: boolean;
     showQualityProfile: boolean;
     showReleaseDate: boolean;
-    showTmdbRating: boolean;
     showTags: boolean;
     showSearchAction: boolean;
   };
 
   overviewOptions: {
     detailedProgressBar: boolean;
+    pageSize: number;
     size: string;
     showMonitored: boolean;
     showStudio: boolean;
@@ -40,6 +43,7 @@ export interface MovieIndexAppState {
   };
 
   tableOptions: {
+    pageSize: number;
     showSearchAction: boolean;
   };
 

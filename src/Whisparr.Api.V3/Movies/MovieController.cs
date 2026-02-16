@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DryIoc.ImTools;
 using FluentValidation;
@@ -11,6 +13,7 @@ using NLog;
 using NzbDrone.Common.Cache;
 using NzbDrone.Common.Extensions;
 using NzbDrone.Core.Configuration;
+using NzbDrone.Core.Datastore;
 using NzbDrone.Core.Datastore.Events;
 using NzbDrone.Core.DecisionEngine.Specifications;
 using NzbDrone.Core.MediaCover;
@@ -28,6 +31,7 @@ using NzbDrone.Core.Validation;
 using NzbDrone.Core.Validation.Paths;
 using NzbDrone.SignalR;
 using Whisparr.Http;
+using Whisparr.Http.Extensions;
 using Whisparr.Http.REST;
 using Whisparr.Http.REST.Attributes;
 
@@ -55,6 +59,22 @@ namespace Whisparr.Api.V3.Movies
         private readonly bool _useCache;
         private readonly ICached<MovieResource> _movieResourcesCache;
         private readonly Logger _logger;
+        private readonly HashSet<string> _allowedMovieSortKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "movies.added",
+            "movieMetadata.itemType",
+            "movies.monitored",
+            "movies.path",
+            "movies.qualityProfileId",
+            "movieMetadata.releaseDate",
+            "movieMetadata.runtime",
+            "sizeOnDisk",
+            "movieMetadata.sortTitle",
+            "movieMetadata.status",
+            "movieMetadata.studio",
+            "movieMetadata.title",
+            "movieMetadata.year",
+        };
 
         public MovieController(IBroadcastSignalRMessage signalRBroadcaster,
                            IMovieService moviesService,
@@ -240,6 +260,513 @@ namespace Whisparr.Api.V3.Movies
             }
 
             return moviesResources;
+        }
+
+        /// <summary>Retrieves a paged list of movies with advanced filtering options</summary>
+        /// <param name="request">Paging and filtering parameters</param>
+        /// <returns>Paged list of movies matching the specified criteria</returns>
+        [HttpPost("paged")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public ActionResult<PagingResource<MovieResource>> GetMoviesPagedPost([FromBody] MoviePagingRequestResource request)
+        {
+            if (request == null)
+            {
+                _logger.Error("Paged movie request is null. Check the request body and route.");
+                return BadRequest("Request body is null or invalid.");
+            }
+
+            var pagingResource = new PagingResource<MovieResource>(request);
+            var pageSpec = pagingResource.MapToPagingSpec<MovieResource, Movie>(
+                _allowedMovieSortKeys,
+                "movieMetadata.sortTitle",
+                SortDirection.Ascending);
+
+            // Enforce itemType filter for movies
+            pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == ItemType.Movie);
+
+            var hasTagFilter = request.Filters != null && request.Filters.Any(f => f.Key?.ToLowerInvariant() == "tags" && f.Value != null);
+
+            // Dapper doesn't support filtering on arrays like [1,2,3] so we do it in memory.
+            if (hasTagFilter)
+            {
+                return GetPagedMoviesWithTags(request, pageSpec);
+            }
+            else
+            {
+                // Standard filtering without tags is optimized for performance
+                return GetPagedMoviesStandard(request, pageSpec);
+            }
+        }
+
+        /// <summary>Retrieves a paged list of scenes with advanced filtering options</summary>
+        /// <param name="request">Paging and filtering parameters</param>
+        /// <returns>Paged list of scenes matching the specified criteria</returns>
+        [HttpPost("scenes/paged")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public ActionResult<PagingResource<MovieResource>> GetScenesPagedPost([FromBody] MoviePagingRequestResource request)
+        {
+            if (request == null)
+            {
+                _logger.Error("Paged scene request is null. Check the request body and route.");
+                return BadRequest("Request body is null or invalid.");
+            }
+
+            var pagingResource = new PagingResource<MovieResource>(request);
+            var pageSpec = pagingResource.MapToPagingSpec<MovieResource, Movie>(
+                _allowedMovieSortKeys,
+                "movieMetadata.sortTitle",
+                SortDirection.Ascending);
+
+            // Enforce itemType filter for scenes
+            pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == ItemType.Scene);
+
+            var hasTagFilter = request.Filters != null && request.Filters.Any(f => f.Key?.ToLowerInvariant() == "tags" && f.Value != null);
+
+            // Dapper doesn't support filtering on arrays like [1,2,3] so we do it in memory.
+            if (hasTagFilter)
+            {
+                return GetPagedMoviesWithTags(request, pageSpec);
+            }
+            else
+            {
+                // Standard filtering without tags is optimized for performance
+                return GetPagedMoviesStandard(request, pageSpec);
+            }
+        }
+
+        private ActionResult<PagingResource<MovieResource>> GetPagedMoviesWithTags(MoviePagingRequestResource request, PagingSpec<Movie> pageSpec)
+        {
+            var allMovies = _moviesService.GetAllMovies();
+            ApplyMovieFiltersToPagingSpec(request.Filters, pageSpec);
+            var filteredMovies = allMovies.AsQueryable();
+            foreach (var expr in pageSpec.FilterExpressions)
+            {
+                filteredMovies = filteredMovies.Where(expr);
+            }
+
+            var sortKey = pageSpec.SortKey ?? "sortTitle";
+            var pageSize = pageSpec.PageSize > 0 && pageSpec.PageSize < 1000 ? pageSpec.PageSize : 10;
+            var sortDir = pageSpec.SortDirection;
+            filteredMovies = sortDir == SortDirection.Descending
+                ? filteredMovies.OrderByDescending(m => GetSortValue(m, sortKey))
+                : filteredMovies.OrderBy(m => GetSortValue(m, sortKey));
+
+            var offset = ((pageSpec.Page > 0 ? pageSpec.Page : 1) - 1) * pageSize;
+            var totalCount = filteredMovies.Count();
+            var page = filteredMovies
+                .Skip(offset)
+                .Take(pageSize)
+                .ToList();
+
+            var availDelay = _configService.AvailabilityDelay;
+            var resources = page.Select(m => m.ToResource(availDelay, _qualityUpgradableSpecification)).ToList();
+
+            var result = new PagingResource<MovieResource>(request)
+            {
+                Records = resources,
+                TotalRecords = totalCount
+            };
+            return Ok(result);
+        }
+
+        private ActionResult<PagingResource<MovieResource>> GetPagedMoviesStandard(MoviePagingRequestResource request, PagingSpec<Movie> pageSpec)
+        {
+            ApplyMovieFiltersToPagingSpec(request.Filters, pageSpec);
+
+            var availDelay = _configService.AvailabilityDelay;
+
+            return pageSpec.ApplyToPage(_moviesService.Paged, resource =>
+            {
+                return resource.ToResource(availDelay, _qualityUpgradableSpecification);
+            });
+        }
+
+        private object GetSortValue(Movie movie, string sortKey)
+        {
+            switch (sortKey.ToLowerInvariant())
+            {
+                case "sorttitle": return movie.MovieMetadata.Value.SortTitle;
+                case "title": return movie.MovieMetadata.Value.Title;
+                case "studio": return movie.MovieMetadata.Value.StudioTitle;
+                case "releasedate": return movie.MovieMetadata.Value.ReleaseDateUtc;
+                case "added": return movie.Added;
+                case "sizeondisk": return movie.MovieFile?.Size ?? 0;
+                case "qualityprofileid": return movie.QualityProfileId;
+                case "runtime": return movie.MovieMetadata.Value.Runtime;
+                case "year": return movie.MovieMetadata.Value.Year;
+                case "monitored": return movie.Monitored;
+                case "status": return movie.MovieMetadata.Value.Status;
+                case "itemtype": return movie.MovieMetadata.Value.ItemType;
+                default: return movie.MovieMetadata.Value.SortTitle;
+            }
+        }
+
+        private void ApplyMovieFiltersToPagingSpec(List<MovieFilterResource> filters, PagingSpec<Movie> pageSpec)
+        {
+            if (filters == null || !filters.Any())
+            {
+                return;
+            }
+
+            foreach (var filter in filters)
+            {
+                if (filter == null)
+                {
+                    _logger.Warn("Null filter object encountered in Filters list.");
+                    continue;
+                }
+
+                var key = filter.Key.ToLowerInvariant();
+                var op = filter.Type?.ToLowerInvariant() ?? "equal";
+
+                if (!(filter.Value is JsonElement jsonElement))
+                {
+                    continue;
+                }
+
+                switch (key)
+                {
+                    case "monitored":
+                        ApplyBooleanFilter(pageSpec, jsonElement, op, m => m.Monitored);
+                        break;
+                    case "itemtype":
+                        ApplyItemTypeFilter(pageSpec, jsonElement, op);
+                        break;
+                    case "status":
+                        ApplyEnumFilter<MovieStatusType>(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Status);
+                        break;
+                    case "qualityprofileid":
+                        var qualityProfileIds = ParseIntArray(jsonElement);
+                        if (qualityProfileIds.Count > 0)
+                        {
+                            switch (op)
+                            {
+                                case "equal":
+                                    pageSpec.FilterExpressions.Add(m => qualityProfileIds.Contains(m.QualityProfileId));
+                                    break;
+                                case "notequal":
+                                    pageSpec.FilterExpressions.Add(m => !qualityProfileIds.Contains(m.QualityProfileId));
+                                    break;
+                            }
+                        }
+
+                        break;
+                    case "releasedate":
+                        ApplyStringFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.ReleaseDate);
+                        break;
+                    case "title":
+                        ApplyStringFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Title);
+                        break;
+                    case "studio":
+                        ApplyStringFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.StudioTitle);
+                        break;
+                    case "year":
+                        ApplyNumericFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Year);
+                        break;
+                    case "runtime":
+                        ApplyNumericFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Runtime);
+                        break;
+                }
+            }
+        }
+
+        private void ApplyItemTypeFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation)
+        {
+            if (element.ValueKind == JsonValueKind.String)
+            {
+                var itemTypeStr = element.GetString();
+                if (Enum.TryParse<ItemType>(itemTypeStr, ignoreCase: true, out var itemType))
+                {
+                    switch (operation)
+                    {
+                        case "equal":
+                            pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == itemType);
+                            break;
+                        case "notequal":
+                            pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType != itemType);
+                            break;
+                    }
+                }
+            }
+            else if (element.ValueKind == JsonValueKind.Array)
+            {
+                var itemTypes = new List<ItemType>();
+                foreach (var item in element.EnumerateArray())
+                {
+                    if (item.ValueKind == JsonValueKind.String && Enum.TryParse<ItemType>(item.GetString(), ignoreCase: true, out var itemType))
+                    {
+                        itemTypes.Add(itemType);
+                    }
+                }
+
+                if (itemTypes.Count > 0)
+                {
+                    switch (operation)
+                    {
+                        case "equal":
+                            pageSpec.FilterExpressions.Add(m => itemTypes.Contains(m.MovieMetadata.Value.ItemType));
+                            break;
+                        case "notequal":
+                            pageSpec.FilterExpressions.Add(m => !itemTypes.Contains(m.MovieMetadata.Value.ItemType));
+                            break;
+                    }
+                }
+            }
+        }
+
+        private List<int> ParseIntArray(JsonElement element)
+        {
+            var list = new List<int>();
+            if (element.ValueKind != JsonValueKind.Array)
+            {
+                return list;
+            }
+
+            foreach (var item in element.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Number && item.TryGetInt32(out var intValue))
+                {
+                    list.Add(intValue);
+                }
+                else if (item.ValueKind == JsonValueKind.String && int.TryParse(item.GetString(), out var strIntValue))
+                {
+                    list.Add(strIntValue);
+                }
+            }
+
+            return list;
+        }
+
+        private void ApplyBooleanFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, bool>> propertySelector)
+        {
+            if (element.ValueKind == JsonValueKind.True || element.ValueKind == JsonValueKind.False)
+            {
+                var value = element.GetBoolean();
+                var param = propertySelector.Parameters[0];
+                var property = propertySelector.Body;
+
+                switch (operation)
+                {
+                    case "equal":
+                        var equalExpr = Expression.Lambda<Func<Movie, bool>>(
+                            Expression.Equal(property, Expression.Constant(value)),
+                            param);
+                        pageSpec.FilterExpressions.Add(equalExpr);
+                        break;
+                    case "notequal":
+                        var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(
+                            Expression.NotEqual(property, Expression.Constant(value)),
+                            param);
+                        pageSpec.FilterExpressions.Add(notEqualExpr);
+                        break;
+                }
+            }
+        }
+
+        private void ApplyStringFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, string>> propertySelector)
+        {
+            var values = new List<string>();
+            if (element.ValueKind == JsonValueKind.String)
+            {
+                values.Add(element.GetString());
+            }
+            else if (element.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in element.EnumerateArray())
+                {
+                    if (item.ValueKind == JsonValueKind.String)
+                    {
+                        values.Add(item.GetString());
+                    }
+                }
+            }
+
+            if (values.Count == 0)
+            {
+                return;
+            }
+
+            var param = propertySelector.Parameters[0];
+            var property = propertySelector.Body;
+
+            switch (operation)
+            {
+                case "equal":
+                    var equalExpr = Expression.Lambda<Func<Movie, bool>>(
+                        Expression.Call(
+                            typeof(Enumerable),
+                            "Contains",
+                            new[] { typeof(string) },
+                            Expression.Constant(values),
+                            property),
+                        param);
+                    pageSpec.FilterExpressions.Add(equalExpr);
+                    break;
+                case "contains":
+                    foreach (var value in values)
+                    {
+                        var containsExpr = Expression.Lambda<Func<Movie, bool>>(
+                            Expression.Call(property, typeof(string).GetMethod("Contains", new[] { typeof(string) }), Expression.Constant(value)),
+                            param);
+                        pageSpec.FilterExpressions.Add(containsExpr);
+                    }
+
+                    break;
+                case "notequal":
+                    var notEqualCall = Expression.Call(
+                        typeof(Enumerable),
+                        "Contains",
+                        new[] { typeof(string) },
+                        Expression.Constant(values),
+                        property);
+                    var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(Expression.Not(notEqualCall), param);
+                    pageSpec.FilterExpressions.Add(notEqualExpr);
+                    break;
+            }
+        }
+
+        private void ApplyNumericFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, int>> propertySelector)
+        {
+            var values = ParseIntArray(element);
+            if (values.Count == 0)
+            {
+                return;
+            }
+
+            var param = propertySelector.Parameters[0];
+            var property = propertySelector.Body;
+
+            switch (operation)
+            {
+                case "equal":
+                    var equalExpr = Expression.Lambda<Func<Movie, bool>>(
+                        Expression.Call(
+                            typeof(Enumerable),
+                            "Contains",
+                            new[] { typeof(int) },
+                            Expression.Constant(values),
+                            property),
+                        param);
+                    pageSpec.FilterExpressions.Add(equalExpr);
+                    break;
+                case "notequal":
+                    var notEqualCall = Expression.Call(
+                        typeof(Enumerable),
+                        "Contains",
+                        new[] { typeof(int) },
+                        Expression.Constant(values),
+                        property);
+                    var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(Expression.Not(notEqualCall), param);
+                    pageSpec.FilterExpressions.Add(notEqualExpr);
+                    break;
+                case "greaterthan":
+                    var gtValue = values.First();
+                    var gtExpr = Expression.Lambda<Func<Movie, bool>>(
+                        Expression.GreaterThan(property, Expression.Constant(gtValue)),
+                        param);
+                    pageSpec.FilterExpressions.Add(gtExpr);
+                    break;
+                case "lessthan":
+                    var ltValue = values.First();
+                    var ltExpr = Expression.Lambda<Func<Movie, bool>>(
+                        Expression.LessThan(property, Expression.Constant(ltValue)),
+                        param);
+                    pageSpec.FilterExpressions.Add(ltExpr);
+                    break;
+                case "greaterthanorequal":
+                    var gteValue = values.First();
+                    var gteExpr = Expression.Lambda<Func<Movie, bool>>(
+                        Expression.GreaterThanOrEqual(property, Expression.Constant(gteValue)),
+                        param);
+                    pageSpec.FilterExpressions.Add(gteExpr);
+                    break;
+                case "lessthanorequal":
+                    var lteValue = values.First();
+                    var lteExpr = Expression.Lambda<Func<Movie, bool>>(
+                        Expression.LessThanOrEqual(property, Expression.Constant(lteValue)),
+                        param);
+                    pageSpec.FilterExpressions.Add(lteExpr);
+                    break;
+            }
+        }
+
+        private void ApplyEnumFilter<TEnum>(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, TEnum>> propertySelector)
+            where TEnum : Enum
+        {
+            var values = new List<TEnum>();
+
+            if (element.ValueKind == JsonValueKind.String)
+            {
+                try
+                {
+                    var enumValue = (TEnum)Enum.Parse(typeof(TEnum), element.GetString(), ignoreCase: true);
+                    values.Add(enumValue);
+                }
+                catch
+                {
+                    // Ignore invalid enum values
+                }
+            }
+            else if (element.ValueKind == JsonValueKind.Array)
+            {
+                foreach (var item in element.EnumerateArray())
+                {
+                    if (item.ValueKind == JsonValueKind.String)
+                    {
+                        try
+                        {
+                            var enumValue = (TEnum)Enum.Parse(typeof(TEnum), item.GetString(), ignoreCase: true);
+                            values.Add(enumValue);
+                        }
+                        catch
+                        {
+                            // Ignore invalid enum values
+                        }
+                    }
+                    else if (item.ValueKind == JsonValueKind.Number && item.TryGetInt32(out var intValue))
+                    {
+                        if (Enum.IsDefined(typeof(TEnum), intValue))
+                        {
+                            values.Add((TEnum)Enum.ToObject(typeof(TEnum), intValue));
+                        }
+                    }
+                }
+            }
+
+            if (values.Count == 0)
+            {
+                return;
+            }
+
+            var param = propertySelector.Parameters[0];
+            var property = propertySelector.Body;
+
+            switch (operation)
+            {
+                case "equal":
+                    var equalExpr = Expression.Lambda<Func<Movie, bool>>(
+                        Expression.Call(
+                            typeof(Enumerable),
+                            "Contains",
+                            new[] { typeof(TEnum) },
+                            Expression.Constant(values),
+                            property),
+                        param);
+                    pageSpec.FilterExpressions.Add(equalExpr);
+                    break;
+                case "notequal":
+                    var notEqualCall = Expression.Call(
+                        typeof(Enumerable),
+                        "Contains",
+                        new[] { typeof(TEnum) },
+                        Expression.Constant(values),
+                        property);
+                    var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(Expression.Not(notEqualCall), param);
+                    pageSpec.FilterExpressions.Add(notEqualExpr);
+                    break;
+            }
         }
 
         protected override MovieResource GetResourceById(int id)

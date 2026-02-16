@@ -63,7 +63,7 @@ function Row({ index, style, data }: ListChildComponentProps<RowItemData>) {
       className={styles.row}
     >
       <MovieIndexRow
-        movieId={movie.id}
+        movie={movie}
         sortKey={sortKey}
         columns={columns}
         isSelectMode={isSelectMode}

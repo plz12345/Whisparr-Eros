@@ -2,6 +2,7 @@ import React, { SyntheticEvent, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSelect } from 'App/SelectContext';
 import AppState from 'App/State/AppState';
+import Command from 'Commands/Command';
 import { MOVIE_SEARCH, REFRESH_MOVIE } from 'Commands/commandNames';
 import Icon from 'Components/Icon';
 import Label from 'Components/Label';
@@ -9,7 +10,6 @@ import IconButton from 'Components/Link/IconButton';
 import Link from 'Components/Link/Link';
 import SpinnerIconButton from 'Components/Link/SpinnerIconButton';
 import MovieTagList from 'Components/MovieTagList';
-import TmdbRating from 'Components/TmdbRating';
 import Popover from 'Components/Tooltip/Popover';
 import { icons } from 'Helpers/Props';
 import DeleteMovieModal from 'Movie/Delete/DeleteMovieModal';
@@ -17,20 +17,22 @@ import MovieDetailsLinks from 'Movie/Details/MovieDetailsLinks';
 import EditMovieModal from 'Movie/Edit/EditMovieModal';
 import MovieIndexProgressBar from 'Movie/Index/ProgressBar/MovieIndexProgressBar';
 import MovieIndexPosterSelect from 'Movie/Index/Select/MovieIndexPosterSelect';
-import { Statistics } from 'Movie/Movie';
+import Movie, { Statistics } from 'Movie/Movie';
 import MoviePoster from 'Movie/MoviePoster';
+import { updateItem } from 'Store/Actions/baseActions';
 import { executeCommand } from 'Store/Actions/commandActions';
+import createExecutingCommandsSelector from 'Store/Selectors/createExecutingCommandsSelector';
+import { createQualityProfileSelectorForHook } from 'Store/Selectors/createQualityProfileSelector';
 import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
 import formatDate from 'Utilities/Date/formatDate';
 import getRelativeDate from 'Utilities/Date/getRelativeDate';
 import translate from 'Utilities/String/translate';
-import createMovieIndexItemSelector from '../createMovieIndexItemSelector';
 import MovieIndexPosterInfo from './MovieIndexPosterInfo';
 import selectPosterOptions from './selectPosterOptions';
 import styles from './MovieIndexPoster.css';
 
 interface MovieIndexPosterProps {
-  movieId: number;
+  movie: Movie;
   sortKey: string;
   isSelectMode: boolean;
   posterWidth: number;
@@ -38,10 +40,21 @@ interface MovieIndexPosterProps {
 }
 
 function MovieIndexPoster(props: MovieIndexPosterProps) {
-  const { movieId, sortKey, isSelectMode, posterWidth, posterHeight } = props;
+  const { movie, sortKey, isSelectMode, posterWidth, posterHeight } = props;
+  const movieId = movie.id;
 
-  const { movie, qualityProfile, isRefreshingMovie, isSearchingMovie } =
-    useSelector(createMovieIndexItemSelector(props.movieId));
+  const qualityProfile = useSelector(
+    createQualityProfileSelectorForHook(movie.qualityProfileId)
+  );
+  const executingCommands = useSelector(createExecutingCommandsSelector());
+
+  const isRefreshingMovie = executingCommands.some((command: Command) => {
+    return command.name === REFRESH_MOVIE && command.body.movieId === movieId;
+  });
+
+  const isSearchingMovie = executingCommands.some((command: Command) => {
+    return command.name === MOVIE_SEARCH && command.body.movieId === movieId;
+  });
 
   const safeForWorkMode = useSelector(
     (state: AppState) => state.settings.safeForWorkMode
@@ -53,7 +66,6 @@ function MovieIndexPoster(props: MovieIndexPosterProps) {
     showMonitored,
     showQualityProfile,
     showReleaseDate,
-    showTmdbRating,
     showTags,
     showSearchAction,
   } = useSelector(selectPosterOptions);
@@ -118,8 +130,15 @@ function MovieIndexPoster(props: MovieIndexPosterProps) {
   }, [setHasPosterError]);
 
   const onEditMoviePress = useCallback(() => {
+    // Add movie to Redux so EditMovieModalContent can find it
+    dispatch(
+      updateItem({
+        section: 'movies',
+        ...movie,
+      })
+    );
     setIsEditMovieModalOpen(true);
-  }, [setIsEditMovieModalOpen]);
+  }, [dispatch, movie, setIsEditMovieModalOpen]);
 
   const onEditMovieModalClose = useCallback(() => {
     setIsEditMovieModalOpen(false);
@@ -280,12 +299,6 @@ function MovieIndexPoster(props: MovieIndexPosterProps) {
         </div>
       ) : null}
 
-      {showTmdbRating && !!ratings.tmdb ? (
-        <div className={styles.title}>
-          <TmdbRating ratings={ratings} iconSize={12} />
-        </div>
-      ) : null}
-
       {showTags && tags.length ? (
         <div className={styles.tags}>
           <div className={styles.tagsList}>
@@ -312,7 +325,6 @@ function MovieIndexPoster(props: MovieIndexPosterProps) {
         path={path}
         originalLanguage={originalLanguage}
         tags={tags}
-        showTmdbRating={showTmdbRating}
         showTags={showTags}
       />
 

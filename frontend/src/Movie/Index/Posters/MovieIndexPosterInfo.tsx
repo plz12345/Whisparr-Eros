@@ -1,7 +1,6 @@
 import React from 'react';
 import Icon from 'Components/Icon';
 import MovieTagList from 'Components/MovieTagList';
-import TmdbRating from 'Components/TmdbRating';
 import { icons } from 'Helpers/Props';
 import Language from 'Language/Language';
 import { Ratings } from 'Movie/Movie';
@@ -31,7 +30,6 @@ interface MovieIndexPosterInfoProps {
   shortDateFormat: string;
   longDateFormat: string;
   timeFormat: string;
-  showTmdbRating: boolean;
   showTags: boolean;
 }
 
@@ -44,7 +42,6 @@ function MovieIndexPosterInfo(props: MovieIndexPosterInfoProps) {
     year,
     releaseDate,
     path,
-    ratings,
     originalLanguage,
     sizeOnDisk = 0,
     tags = [],
@@ -54,7 +51,6 @@ function MovieIndexPosterInfo(props: MovieIndexPosterInfoProps) {
     shortDateFormat,
     longDateFormat,
     timeFormat,
-    showTmdbRating,
     showTags,
   } = props;
 
@@ -122,14 +118,6 @@ function MovieIndexPosterInfo(props: MovieIndexPosterInfoProps) {
           timeFormat,
           timeForToday: false,
         })}
-      </div>
-    );
-  }
-
-  if (!showTmdbRating && sortKey === 'tmdbRating' && !!ratings.tmdb) {
-    return (
-      <div className={styles.info}>
-        <TmdbRating ratings={ratings} iconSize={12} />
       </div>
     );
   }

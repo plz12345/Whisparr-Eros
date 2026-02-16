@@ -36,7 +36,6 @@ export const defaultState = {
     showMonitored: true,
     showQualityProfile: true,
     showReleaseDate: false,
-    showTmdbRating: false,
     showSearchAction: false
   },
 

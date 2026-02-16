@@ -48,12 +48,12 @@ function MovieIndexPosterOptionsModalContent(
 
   const {
     detailedProgressBar,
+    pageSize,
     size,
     showTitle,
     showMonitored,
     showQualityProfile,
     showReleaseDate,
-    showTmdbRating,
     showTags,
     showSearchAction,
   } = posterOptions;
@@ -81,6 +81,23 @@ function MovieIndexPosterOptionsModalContent(
               name="size"
               value={size}
               values={posterSizeOptions}
+              onChange={onPosterOptionChange}
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <FormLabel>{translate('TablePageSize')}</FormLabel>
+            <FormInputGroup
+              type={inputTypes.NUMBER}
+              name="pageSize"
+              value={pageSize}
+              min={10}
+              max={1000}
+              helpText={translate('TablePageSizeHelpText')}
+              helpTextWarning={translate('TablePageSizeMinMaxHelpText', {
+                min: 10,
+                max: 1000,
+              })}
               onChange={onPosterOptionChange}
             />
           </FormGroup>
@@ -141,18 +158,6 @@ function MovieIndexPosterOptionsModalContent(
               name="showReleaseDate"
               value={showReleaseDate}
               helpText={translate('ShowReleaseDatePosterHelpText')}
-              onChange={onPosterOptionChange}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <FormLabel>{translate('ShowTmdbRating')}</FormLabel>
-
-            <FormInputGroup
-              type={inputTypes.CHECK}
-              name="showTmdbRating"
-              value={showTmdbRating}
-              helpText={translate('ShowTmdbRatingHelpText')}
               onChange={onPosterOptionChange}
             />
           </FormGroup>

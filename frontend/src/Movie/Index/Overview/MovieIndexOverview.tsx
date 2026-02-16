@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextTruncate from 'react-text-truncate';
 import AppState from 'App/State/AppState';
+import Command from 'Commands/Command';
 import { MOVIE_SEARCH, REFRESH_MOVIE } from 'Commands/commandNames';
 import Icon from 'Components/Icon';
 import IconButton from 'Components/Link/IconButton';
@@ -15,13 +16,15 @@ import MovieDetailsLinks from 'Movie/Details/MovieDetailsLinks';
 import EditMovieModal from 'Movie/Edit/EditMovieModal';
 import MovieIndexProgressBar from 'Movie/Index/ProgressBar/MovieIndexProgressBar';
 import MovieIndexPosterSelect from 'Movie/Index/Select/MovieIndexPosterSelect';
-import { Statistics } from 'Movie/Movie';
+import Movie, { Statistics } from 'Movie/Movie';
 import MoviePoster from 'Movie/MoviePoster';
+import { updateItem } from 'Store/Actions/baseActions';
 import { executeCommand } from 'Store/Actions/commandActions';
+import createExecutingCommandsSelector from 'Store/Selectors/createExecutingCommandsSelector';
+import { createQualityProfileSelectorForHook } from 'Store/Selectors/createQualityProfileSelector';
 import dimensions from 'Styles/Variables/dimensions';
 import fonts from 'Styles/Variables/fonts';
 import translate from 'Utilities/String/translate';
-import createMovieIndexItemSelector from '../createMovieIndexItemSelector';
 import MovieIndexOverviewInfo from './MovieIndexOverviewInfo';
 import selectOverviewOptions from './selectOverviewOptions';
 import styles from './MovieIndexOverview.css';
@@ -38,7 +41,7 @@ const lineHeight = parseFloat(fonts.lineHeight);
 const titleRowHeight = 42;
 
 interface MovieIndexOverviewProps {
-  movieId: number;
+  movie: Movie;
   sortKey: string;
   posterWidth: number;
   posterHeight: number;
@@ -49,7 +52,7 @@ interface MovieIndexOverviewProps {
 
 function MovieIndexOverview(props: MovieIndexOverviewProps) {
   const {
-    movieId,
+    movie,
     sortKey,
     posterWidth,
     posterHeight,
@@ -57,9 +60,22 @@ function MovieIndexOverview(props: MovieIndexOverviewProps) {
     isSelectMode,
     isSmallScreen,
   } = props;
+  const movieId = movie.id;
 
-  const { movie, qualityProfile, isRefreshingMovie, isSearchingMovie } =
-    useSelector(createMovieIndexItemSelector(props.movieId));
+  const qualityProfile = useSelector(
+    createQualityProfileSelectorForHook(movie.qualityProfileId)
+  );
+  const executingCommands = useSelector(createExecutingCommandsSelector());
+
+  const isRefreshingMovie = executingCommands.some(
+    (command: Command) =>
+      command.name === REFRESH_MOVIE && command.body.movieId === movieId
+  );
+
+  const isSearchingMovie = executingCommands.some(
+    (command: Command) =>
+      command.name === MOVIE_SEARCH && command.body.movieId === movieId
+  );
 
   const safeForWorkMode = useSelector(
     (state: AppState) => state.settings.safeForWorkMode
@@ -111,8 +127,15 @@ function MovieIndexOverview(props: MovieIndexOverviewProps) {
   }, [movieId, dispatch]);
 
   const onEditMoviePress = useCallback(() => {
+    // Add movie to Redux so EditMovieModalContent can find it
+    dispatch(
+      updateItem({
+        section: 'movies',
+        ...movie,
+      })
+    );
     setIsEditMovieModalOpen(true);
-  }, [setIsEditMovieModalOpen]);
+  }, [dispatch, movie, setIsEditMovieModalOpen]);
 
   const onEditMovieModalClose = useCallback(() => {
     setIsEditMovieModalOpen(false);

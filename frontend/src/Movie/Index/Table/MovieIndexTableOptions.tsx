@@ -17,14 +17,14 @@ function MovieIndexTableOptions(props: MovieIndexTableOptionsProps) {
 
   const tableOptions = useSelector(selectTableOptions);
 
-  const { showSearchAction } = tableOptions;
+  const { pageSize, showSearchAction } = tableOptions;
 
   const onTableOptionChangeWrapper = useCallback(
-    ({ name, value }: InputChanged<boolean>) => {
+    ({ name, value }: InputChanged<number | null | boolean>) => {
       onTableOptionChange({
         tableOptions: {
           ...tableOptions,
-          [name]: value,
+          [name]: value === null ? 25 : value,
         },
       });
     },
@@ -32,17 +32,36 @@ function MovieIndexTableOptions(props: MovieIndexTableOptionsProps) {
   );
 
   return (
-    <FormGroup>
-      <FormLabel>{translate('ShowSearch')}</FormLabel>
+    <>
+      <FormGroup>
+        <FormLabel>{translate('TablePageSize')}</FormLabel>
+        <FormInputGroup
+          type={inputTypes.NUMBER}
+          name="pageSize"
+          value={pageSize}
+          min={10}
+          max={1000}
+          helpText={translate('TablePageSizeHelpText')}
+          helpTextWarning={translate('TablePageSizeMinMaxHelpText', {
+            min: 10,
+            max: 1000,
+          })}
+          onChange={onTableOptionChangeWrapper}
+        />
+      </FormGroup>
 
-      <FormInputGroup
-        type={inputTypes.CHECK}
-        name="showSearchAction"
-        value={showSearchAction}
-        helpText={translate('ShowSearchHelpText')}
-        onChange={onTableOptionChangeWrapper}
-      />
-    </FormGroup>
+      <FormGroup>
+        <FormLabel>{translate('ShowSearch')}</FormLabel>
+
+        <FormInputGroup
+          type={inputTypes.CHECK}
+          name="showSearchAction"
+          value={showSearchAction}
+          helpText={translate('ShowSearchHelpText')}
+          onChange={onTableOptionChangeWrapper}
+        />
+      </FormGroup>
+    </>
   );
 }
 

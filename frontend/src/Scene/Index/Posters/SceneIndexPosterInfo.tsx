@@ -1,6 +1,5 @@
 import React from 'react';
 import Icon from 'Components/Icon';
-import TmdbRating from 'Components/TmdbRating';
 import { icons } from 'Helpers/Props';
 import Language from 'Language/Language';
 import { Ratings } from 'Movie/Movie';
@@ -28,7 +27,6 @@ interface SceneIndexPosterInfoProps {
   shortDateFormat: string;
   longDateFormat: string;
   timeFormat: string;
-  showTmdbRating: boolean;
 }
 
 function SceneIndexPosterInfo(props: SceneIndexPosterInfoProps) {
@@ -49,7 +47,6 @@ function SceneIndexPosterInfo(props: SceneIndexPosterInfoProps) {
     shortDateFormat,
     longDateFormat,
     timeFormat,
-    showTmdbRating,
   } = props;
 
   if (sortKey === 'studio' && studio) {
@@ -110,14 +107,6 @@ function SceneIndexPosterInfo(props: SceneIndexPosterInfoProps) {
           timeFormat,
           timeForToday: false,
         })}
-      </div>
-    );
-  }
-
-  if (!showTmdbRating && sortKey === 'tmdbRating' && !!ratings.tmdb) {
-    return (
-      <div className={styles.info}>
-        <TmdbRating ratings={ratings} iconSize={12} />
       </div>
     );
   }

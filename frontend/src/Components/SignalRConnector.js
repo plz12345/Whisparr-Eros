@@ -7,7 +7,6 @@ import { queryClient } from 'App/queryClient';
 import { setAppValue, setVersion } from 'Store/Actions/appActions';
 import { removeItem, update, updateItem, updateItemsBatch } from 'Store/Actions/baseActions';
 import { fetchCommands, finishCommand, updateCommand } from 'Store/Actions/commandActions';
-import { fetchMovies } from 'Store/Actions/movieActions';
 import { fetchQueue, fetchQueueDetails } from 'Store/Actions/queueActions';
 import { fetchRootFolders } from 'Store/Actions/rootFolderActions';
 import { fetchQualityDefinitions } from 'Store/Actions/settingsActions';
@@ -53,7 +52,6 @@ const mapDispatchToProps = {
   dispatchFetchQueue: fetchQueue,
   dispatchFetchQueueDetails: fetchQueueDetails,
   dispatchFetchRootFolders: fetchRootFolders,
-  dispatchFetchMovies: fetchMovies,
   dispatchFetchTags: fetchTags,
   dispatchFetchTagDetails: fetchTagDetails
 };
@@ -222,6 +220,44 @@ function invalidateStudioPagedQueryCache() {
   });
 }
 
+// Merges updates in React Query cache instead of a re-fetch
+function updateMovieQueryCache(updatedMovie) {
+  if (!updatedMovie || !updatedMovie.id) {
+    return;
+  }
+
+  const movieKey = `/movie/${updatedMovie.id}`;
+
+  queryClient.setQueryData([movieKey], (oldData) => {
+    if (!oldData || typeof oldData !== 'object') {
+      return updatedMovie;
+    }
+    return { ...oldData, ...updatedMovie };
+  });
+}
+
+function removeMovieQueryCache(updatedMovie) {
+  if (!updatedMovie || !updatedMovie.id) {
+    return;
+  }
+
+  queryClient.removeQueries({
+    queryKey: [`/movie/${updatedMovie.id}`]
+  });
+}
+
+function invalidateMoviePagedQueryCache() {
+  queryClient.invalidateQueries({
+    predicate: (query) => {
+      return (
+        Array.isArray(query.queryKey) &&
+        typeof query.queryKey[0] === 'string' &&
+        query.queryKey[0].startsWith('/movie/paged')
+      );
+    }
+  });
+}
+
 class SignalRConnector extends Component {
 
   //
@@ -372,36 +408,38 @@ class SignalRConnector extends Component {
   };
 
   handleMovie = (body) => {
-    const section = 'movies';
+    const action = body.action;
 
-    // Support batch payloads (Resources) and single (resource)
     if (Array.isArray(body.resources) && body.resources.length > 0) {
-      // Batched update
-      if (body.action === 'updated') {
-        this.props.dispatchUpdateItemsBatch(body.resources.map((resource) => ({ section, ...resource })));
-        body.resources.forEach(updateMovieInPerformerWorksQueryCache);
-        body.resources.forEach(updateMovieInStudioWorksQueryCache);
-        body.resources.forEach(updateMovieInStudioWorksQueryCache);
-        repopulatePage('movieUpdated');
-      } else if (body.action === 'deleted') {
+      if (action === 'deleted') {
         body.resources.forEach((resource) => {
-          this.props.dispatchRemoveItem({ section, id: resource.id });
+          removeMovieQueryCache(resource);
+        });
+      } else {
+        body.resources.forEach((resource) => {
+          updateMovieQueryCache(resource);
+          updateMovieInPerformerWorksQueryCache(resource);
+          updateMovieInStudioWorksQueryCache(resource);
         });
       }
+      invalidateMoviePagedQueryCache();
       repopulatePage('movieUpdated');
       return;
     }
 
-    // Fallback: single resource
-    const action = body.action;
     if (action === 'updated') {
-      this.props.dispatchUpdateItem({ section, ...body.resource });
+      // Update individual movie query keys rather than re-fetch
+      updateMovieQueryCache(body.resource);
       updateMovieInPerformerWorksQueryCache(body.resource);
       updateMovieInStudioWorksQueryCache(body.resource);
-      updateMovieInStudioWorksQueryCache(body.resource);
+      // Force paged query re-fetch so updates are immediate
+      invalidateMoviePagedQueryCache();
       repopulatePage('movieUpdated');
     } else if (action === 'deleted') {
-      this.props.dispatchRemoveItem({ section, id: body.resource.id });
+      // Remove individual movie query keys
+      removeMovieQueryCache(body.resource);
+      // Force paged query re-fetch so updates are immediate
+      invalidateMoviePagedQueryCache();
     }
   };
 
@@ -568,7 +606,6 @@ class SignalRConnector extends Component {
 
     const {
       dispatchFetchCommands,
-      dispatchFetchMovies,
       dispatchSetAppValue
     } = this.props;
 
@@ -581,7 +618,6 @@ class SignalRConnector extends Component {
 
     // Repopulate the page (if a repopulator is set) to ensure things
     // are in sync after reconnecting.
-    dispatchFetchMovies();
     dispatchFetchCommands();
     repopulatePage();
   };
@@ -622,7 +658,6 @@ SignalRConnector.propTypes = {
   dispatchFetchQueue: PropTypes.func.isRequired,
   dispatchFetchQueueDetails: PropTypes.func.isRequired,
   dispatchFetchRootFolders: PropTypes.func.isRequired,
-  dispatchFetchMovies: PropTypes.func.isRequired,
   dispatchFetchTags: PropTypes.func.isRequired,
   dispatchFetchTagDetails: PropTypes.func.isRequired
 };

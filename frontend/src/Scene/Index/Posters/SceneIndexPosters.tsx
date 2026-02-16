@@ -144,7 +144,6 @@ export default function SceneIndexPosters(props: SceneIndexPostersProps) {
       showMonitored,
       showQualityProfile,
       showReleaseDate,
-      showTmdbRating,
     } = posterOptions;
 
     const nextAiringHeight = 19;
@@ -172,10 +171,6 @@ export default function SceneIndexPosters(props: SceneIndexPostersProps) {
       heights.push(19);
     }
 
-    if (showTmdbRating) {
-      heights.push(19);
-    }
-
     switch (sortKey) {
       case 'studio':
       case 'added':
@@ -192,11 +187,6 @@ export default function SceneIndexPosters(props: SceneIndexPostersProps) {
         break;
       case 'releaseDate':
         if (!showReleaseDate) {
-          heights.push(19);
-        }
-        break;
-      case 'tmdbRating':
-        if (!showTmdbRating) {
           heights.push(19);
         }
         break;

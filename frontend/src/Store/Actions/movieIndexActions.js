@@ -27,21 +27,24 @@ export const defaultState = {
   secondarySortKey: 'sortTitle',
   secondarySortDirection: sortDirections.ASCENDING,
   view: 'posters',
+  page: 1,
+  pageSize: 25,
 
   posterOptions: {
     detailedProgressBar: false,
+    pageSize: 25,
     size: 'large',
     showTitle: false,
     showMonitored: true,
     showQualityProfile: true,
     showReleaseDate: false,
-    showTmdbRating: false,
     showTags: false,
     showSearchAction: false
   },
 
   overviewOptions: {
     detailedProgressBar: false,
+    pageSize: 25,
     size: 'medium',
     showMonitored: true,
     showStudio: true,
@@ -54,6 +57,7 @@ export const defaultState = {
   },
 
   tableOptions: {
+    pageSize: 25,
     showSearchAction: false
   },
 
@@ -81,7 +85,7 @@ export const defaultState = {
       isModifiable: false
     },
     {
-      name: 'studio',
+      name: 'studioTitle',
       label: () => translate('Studio'),
       isSortable: true,
       isVisible: true
@@ -101,12 +105,6 @@ export const defaultState = {
     {
       name: 'year',
       label: () => translate('Year'),
-      isSortable: true,
-      isVisible: false
-    },
-    {
-      name: 'releaseDate',
-      label: () => translate('ReleaseDate'),
       isSortable: true,
       isVisible: false
     },
@@ -145,24 +143,6 @@ export const defaultState = {
       label: () => translate('Status'),
       isSortable: true,
       isVisible: true
-    },
-    {
-      name: 'tmdbRating',
-      label: () => translate('TmdbRating'),
-      isSortable: true,
-      isVisible: false
-    },
-    {
-      name: 'popularity',
-      label: () => translate('Popularity'),
-      isSortable: true,
-      isVisible: false
-    },
-    {
-      name: 'certification',
-      label: () => translate('Certification'),
-      isSortable: true,
-      isVisible: false
     },
     {
       name: 'releaseGroups',
@@ -241,51 +221,10 @@ export const defaultState = {
       type: filterBuilderTypes.STRING
     },
     {
-      name: 'releaseGroups',
-      label: () => translate('ReleaseGroups'),
-      type: filterBuilderTypes.ARRAY,
-      optionsSelector: function(items) {
-        const groupList = items.reduce((acc, movie) => {
-          const { statistics = {} } = movie;
-          const { releaseGroups = [] } = statistics;
-
-          releaseGroups.forEach((releaseGroup) => {
-            acc.push({
-              id: releaseGroup,
-              name: releaseGroup
-            });
-          });
-
-          return acc;
-        }, []);
-
-        return groupList.sort(sortByProp('name'));
-      }
-    },
-    {
       name: 'status',
       label: () => translate('ReleaseStatus'),
       type: filterBuilderTypes.EXACT,
       valueType: filterBuilderValueTypes.RELEASE_STATUS
-    },
-    {
-      name: 'studio',
-      label: () => translate('Studio'),
-      type: filterBuilderTypes.EXACT,
-      optionsSelector: function(items) {
-        const tagList = items.reduce((acc, movie) => {
-          if (movie.studioTitle) {
-            acc.push({
-              id: movie.studioTitle,
-              name: movie.studioTitle
-            });
-          }
-
-          return acc;
-        }, []);
-
-        return tagList.sort(sortByProp('name'));
-      }
     },
     {
       name: 'qualityProfileId',
@@ -311,12 +250,6 @@ export const defaultState = {
       valueType: filterBuilderValueTypes.DATE
     },
     {
-      name: 'releaseDate',
-      label: () => translate('ReleaseDate'),
-      type: filterBuilderTypes.DATE,
-      valueType: filterBuilderValueTypes.DATE
-    },
-    {
       name: 'runtime',
       label: () => translate('Runtime'),
       type: filterBuilderTypes.NUMBER
@@ -333,35 +266,6 @@ export const defaultState = {
       valueType: filterBuilderValueTypes.BYTES
     },
     {
-      name: 'genres',
-      label: () => translate('Genres'),
-      type: filterBuilderTypes.ARRAY,
-      optionsSelector: function(items) {
-        const genreList = items.reduce((acc, movie) => {
-          movie.genres.forEach((genre) => {
-            acc.push({
-              id: genre,
-              name: genre
-            });
-          });
-
-          return acc;
-        }, []);
-
-        return genreList.sort(sortByProp('name'));
-      }
-    },
-    {
-      name: 'tmdbRating',
-      label: () => translate('TmdbRating'),
-      type: filterBuilderTypes.NUMBER
-    },
-    {
-      name: 'tmdbVotes',
-      label: () => translate('TmdbVotes'),
-      type: filterBuilderTypes.NUMBER
-    },
-    {
       name: 'tags',
       label: () => translate('Tags'),
       type: filterBuilderTypes.ARRAY,
@@ -371,6 +275,7 @@ export const defaultState = {
 };
 
 export const persistState = [
+  'movieIndex.page',
   'movieIndex.sortKey',
   'movieIndex.sortDirection',
   'movieIndex.selectedFilterKey',
@@ -392,6 +297,8 @@ export const SET_MOVIE_TABLE_OPTION = 'movieIndex/setMovieTableOption';
 export const SET_MOVIE_POSTER_OPTION = 'movieIndex/setMoviePosterOption';
 export const SET_MOVIE_OVERVIEW_OPTION = 'movieIndex/setMovieOverviewOption';
 export const SET_MOVIE_INDEX_MODE = 'movieIndex/setMovieIndexMode';
+export const SET_MOVIE_PAGE = 'movieIndex/setMoviePage';
+export const SET_MOVIE_PAGE_SIZE = 'movieIndex/setMoviePageSize';
 
 //
 // Action Creators
@@ -403,6 +310,8 @@ export const setMovieTableOption = createAction(SET_MOVIE_TABLE_OPTION);
 export const setMoviePosterOption = createAction(SET_MOVIE_POSTER_OPTION);
 export const setMovieOverviewOption = createAction(SET_MOVIE_OVERVIEW_OPTION);
 export const setMovieIndexMode = createAction(SET_MOVIE_INDEX_MODE);
+export const setMoviePage = createAction(SET_MOVIE_PAGE);
+export const setMoviePageSize = createAction(SET_MOVIE_PAGE_SIZE);
 
 //
 // Reducers
@@ -444,6 +353,14 @@ export const reducers = createHandleActions({
 
   [SET_MOVIE_INDEX_MODE]: function(state, { payload }) {
     return Object.assign({}, state, { indexMode: payload.indexMode });
+  },
+
+  [SET_MOVIE_PAGE]: function(state, { payload }) {
+    return Object.assign({}, state, { page: payload });
+  },
+
+  [SET_MOVIE_PAGE_SIZE]: function(state, { payload }) {
+    return Object.assign({}, state, { pageSize: payload });
   }
 
 }, defaultState, section);

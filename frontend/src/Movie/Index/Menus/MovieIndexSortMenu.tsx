@@ -38,15 +38,6 @@ function MovieIndexSortMenu(props: MovieIndexSortMenuProps) {
         </SortMenuItem>
 
         <SortMenuItem
-          name="studio"
-          sortKey={sortKey}
-          sortDirection={sortDirection}
-          onPress={onSortSelect}
-        >
-          {translate('Studio')}
-        </SortMenuItem>
-
-        <SortMenuItem
           name="qualityProfileId"
           sortKey={sortKey}
           sortDirection={sortDirection}
@@ -80,15 +71,6 @@ function MovieIndexSortMenu(props: MovieIndexSortMenuProps) {
           onPress={onSortSelect}
         >
           {translate('ReleaseDate')}
-        </SortMenuItem>
-
-        <SortMenuItem
-          name="tmdbRating"
-          sortKey={sortKey}
-          sortDirection={sortDirection}
-          onPress={onSortSelect}
-        >
-          {translate('TmdbRating')}
         </SortMenuItem>
 
         <SortMenuItem

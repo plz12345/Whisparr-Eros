@@ -86,7 +86,7 @@ function Cell({
       }}
     >
       <MovieIndexPoster
-        movieId={movie.id}
+        movie={movie}
         sortKey={sortKey}
         isSelectMode={isSelectMode}
         posterWidth={posterWidth}
@@ -144,7 +144,6 @@ export default function MovieIndexPosters(props: MovieIndexPostersProps) {
       showMonitored,
       showQualityProfile,
       showReleaseDate,
-      showTmdbRating,
       showTags,
     } = posterOptions;
 
@@ -170,10 +169,6 @@ export default function MovieIndexPosters(props: MovieIndexPostersProps) {
       heights.push(19);
     }
 
-    if (showTmdbRating) {
-      heights.push(19);
-    }
-
     if (showTags) {
       heights.push(21);
     }
@@ -194,11 +189,6 @@ export default function MovieIndexPosters(props: MovieIndexPostersProps) {
         break;
       case 'releaseDate':
         if (!showReleaseDate) {
-          heights.push(19);
-        }
-        break;
-      case 'tmdbRating':
-        if (!showTmdbRating) {
           heights.push(19);
         }
         break;

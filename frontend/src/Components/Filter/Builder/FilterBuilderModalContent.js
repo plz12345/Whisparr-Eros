@@ -52,7 +52,11 @@ class FilterBuilderModalContent extends Component {
         dispatchSetFilter({ selectedFilterKey: id });
       } else {
         const last = maxBy(customFilters, 'id');
-        dispatchSetFilter({ selectedFilterKey: last.id });
+        if (last && last.id !== undefined) {
+          dispatchSetFilter({ selectedFilterKey: last.id });
+        } else {
+          dispatchSetFilter({ selectedFilterKey: 'all' }); // fallback if no custom filters exist
+        }
       }
 
       onModalClose();
