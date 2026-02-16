@@ -15,7 +15,6 @@ import { createCustomFiltersSelector } from 'Store/Selectors/createClientSideCol
 const sortKeyMapping: Record<string, string> = {
   sortTitle: 'movieMetadata.sortTitle',
   title: 'movieMetadata.title',
-  // studio: 'movieMetadata.studio', // No such column, use studioTitle instead
   studioTitle: 'movieMetadata.studioTitle',
   releaseDate: 'movieMetadata.releaseDate',
   year: 'movieMetadata.year',

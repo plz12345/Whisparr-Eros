@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text.Json;
 using System.Threading.Tasks;
 using DryIoc.ImTools;
 using FluentValidation;
@@ -191,6 +189,12 @@ namespace Whisparr.Api.V3.Movies
             return moviesResources;
         }
 
+        /// <summary>Gets a movie resource for the given ID, with an option to bypass the cache if needed for real-time updates after changes</summary>
+        /// <param name="tmdbId">The TMDB ID of the movie</param>
+        /// <param name="tpdbId">The TPDB ID of the movie</param>
+        /// <param name="stashId">The Stash ID of the movie</param>
+        /// <param name="excludeLocalCovers">Whether to exclude local covers</param>
+        /// <returns>A list of movie resources matching the given IDs</returns>
         [HttpGet]
         public List<MovieResource> AllMovie(int? tmdbId, string tpdbId, string stashId, bool excludeLocalCovers = false)
         {
@@ -336,10 +340,11 @@ namespace Whisparr.Api.V3.Movies
             }
         }
 
+        /// <summary>Helper for paging movies with tags filter, which requires loading all movies and filtering in memory since Dapper doesn't support array filters. Not optimized for performance, so should only be used when tags filter is present.</summary>
         private ActionResult<PagingResource<MovieResource>> GetPagedMoviesWithTags(MoviePagingRequestResource request, PagingSpec<Movie> pageSpec)
         {
             var allMovies = _moviesService.GetAllMovies();
-            ApplyMovieFiltersToPagingSpec(request.Filters, pageSpec);
+            MovieFilterHelpers.ApplyMovieFiltersToPagingSpec(request.Filters, pageSpec);
             var filteredMovies = allMovies.AsQueryable();
             foreach (var expr in pageSpec.FilterExpressions)
             {
@@ -371,9 +376,10 @@ namespace Whisparr.Api.V3.Movies
             return Ok(result);
         }
 
+        /// <summary>Helper for standard paging without tags filter, optimized for performance by applying filters at the database level</summary>
         private ActionResult<PagingResource<MovieResource>> GetPagedMoviesStandard(MoviePagingRequestResource request, PagingSpec<Movie> pageSpec)
         {
-            ApplyMovieFiltersToPagingSpec(request.Filters, pageSpec);
+            MovieFilterHelpers.ApplyMovieFiltersToPagingSpec(request.Filters, pageSpec);
 
             var availDelay = _configService.AvailabilityDelay;
 
@@ -403,372 +409,9 @@ namespace Whisparr.Api.V3.Movies
             }
         }
 
-        private void ApplyMovieFiltersToPagingSpec(List<MovieFilterResource> filters, PagingSpec<Movie> pageSpec)
-        {
-            if (filters == null || !filters.Any())
-            {
-                return;
-            }
-
-            foreach (var filter in filters)
-            {
-                if (filter == null)
-                {
-                    _logger.Warn("Null filter object encountered in Filters list.");
-                    continue;
-                }
-
-                var key = filter.Key.ToLowerInvariant();
-                var op = filter.Type?.ToLowerInvariant() ?? "equal";
-
-                if (!(filter.Value is JsonElement jsonElement))
-                {
-                    continue;
-                }
-
-                switch (key)
-                {
-                    case "monitored":
-                        ApplyBooleanFilter(pageSpec, jsonElement, op, m => m.Monitored);
-                        break;
-                    case "itemtype":
-                        ApplyItemTypeFilter(pageSpec, jsonElement, op);
-                        break;
-                    case "status":
-                        ApplyEnumFilter<MovieStatusType>(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Status);
-                        break;
-                    case "qualityprofileid":
-                        var qualityProfileIds = ParseIntArray(jsonElement);
-                        if (qualityProfileIds.Count > 0)
-                        {
-                            switch (op)
-                            {
-                                case "equal":
-                                    pageSpec.FilterExpressions.Add(m => qualityProfileIds.Contains(m.QualityProfileId));
-                                    break;
-                                case "notequal":
-                                    pageSpec.FilterExpressions.Add(m => !qualityProfileIds.Contains(m.QualityProfileId));
-                                    break;
-                            }
-                        }
-
-                        break;
-                    case "releasedate":
-                        ApplyStringFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.ReleaseDate);
-                        break;
-                    case "title":
-                        ApplyStringFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Title);
-                        break;
-                    case "studio":
-                        ApplyStringFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.StudioTitle);
-                        break;
-                    case "year":
-                        ApplyNumericFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Year);
-                        break;
-                    case "runtime":
-                        ApplyNumericFilter(pageSpec, jsonElement, op, m => m.MovieMetadata.Value.Runtime);
-                        break;
-                }
-            }
-        }
-
-        private void ApplyItemTypeFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation)
-        {
-            if (element.ValueKind == JsonValueKind.String)
-            {
-                var itemTypeStr = element.GetString();
-                if (Enum.TryParse<ItemType>(itemTypeStr, ignoreCase: true, out var itemType))
-                {
-                    switch (operation)
-                    {
-                        case "equal":
-                            pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == itemType);
-                            break;
-                        case "notequal":
-                            pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType != itemType);
-                            break;
-                    }
-                }
-            }
-            else if (element.ValueKind == JsonValueKind.Array)
-            {
-                var itemTypes = new List<ItemType>();
-                foreach (var item in element.EnumerateArray())
-                {
-                    if (item.ValueKind == JsonValueKind.String && Enum.TryParse<ItemType>(item.GetString(), ignoreCase: true, out var itemType))
-                    {
-                        itemTypes.Add(itemType);
-                    }
-                }
-
-                if (itemTypes.Count > 0)
-                {
-                    switch (operation)
-                    {
-                        case "equal":
-                            pageSpec.FilterExpressions.Add(m => itemTypes.Contains(m.MovieMetadata.Value.ItemType));
-                            break;
-                        case "notequal":
-                            pageSpec.FilterExpressions.Add(m => !itemTypes.Contains(m.MovieMetadata.Value.ItemType));
-                            break;
-                    }
-                }
-            }
-        }
-
-        private List<int> ParseIntArray(JsonElement element)
-        {
-            var list = new List<int>();
-            if (element.ValueKind != JsonValueKind.Array)
-            {
-                return list;
-            }
-
-            foreach (var item in element.EnumerateArray())
-            {
-                if (item.ValueKind == JsonValueKind.Number && item.TryGetInt32(out var intValue))
-                {
-                    list.Add(intValue);
-                }
-                else if (item.ValueKind == JsonValueKind.String && int.TryParse(item.GetString(), out var strIntValue))
-                {
-                    list.Add(strIntValue);
-                }
-            }
-
-            return list;
-        }
-
-        private void ApplyBooleanFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, bool>> propertySelector)
-        {
-            if (element.ValueKind == JsonValueKind.True || element.ValueKind == JsonValueKind.False)
-            {
-                var value = element.GetBoolean();
-                var param = propertySelector.Parameters[0];
-                var property = propertySelector.Body;
-
-                switch (operation)
-                {
-                    case "equal":
-                        var equalExpr = Expression.Lambda<Func<Movie, bool>>(
-                            Expression.Equal(property, Expression.Constant(value)),
-                            param);
-                        pageSpec.FilterExpressions.Add(equalExpr);
-                        break;
-                    case "notequal":
-                        var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(
-                            Expression.NotEqual(property, Expression.Constant(value)),
-                            param);
-                        pageSpec.FilterExpressions.Add(notEqualExpr);
-                        break;
-                }
-            }
-        }
-
-        private void ApplyStringFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, string>> propertySelector)
-        {
-            var values = new List<string>();
-            if (element.ValueKind == JsonValueKind.String)
-            {
-                values.Add(element.GetString());
-            }
-            else if (element.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var item in element.EnumerateArray())
-                {
-                    if (item.ValueKind == JsonValueKind.String)
-                    {
-                        values.Add(item.GetString());
-                    }
-                }
-            }
-
-            if (values.Count == 0)
-            {
-                return;
-            }
-
-            var param = propertySelector.Parameters[0];
-            var property = propertySelector.Body;
-
-            switch (operation)
-            {
-                case "equal":
-                    var equalExpr = Expression.Lambda<Func<Movie, bool>>(
-                        Expression.Call(
-                            typeof(Enumerable),
-                            "Contains",
-                            new[] { typeof(string) },
-                            Expression.Constant(values),
-                            property),
-                        param);
-                    pageSpec.FilterExpressions.Add(equalExpr);
-                    break;
-                case "contains":
-                    foreach (var value in values)
-                    {
-                        var containsExpr = Expression.Lambda<Func<Movie, bool>>(
-                            Expression.Call(property, typeof(string).GetMethod("Contains", new[] { typeof(string) }), Expression.Constant(value)),
-                            param);
-                        pageSpec.FilterExpressions.Add(containsExpr);
-                    }
-
-                    break;
-                case "notequal":
-                    var notEqualCall = Expression.Call(
-                        typeof(Enumerable),
-                        "Contains",
-                        new[] { typeof(string) },
-                        Expression.Constant(values),
-                        property);
-                    var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(Expression.Not(notEqualCall), param);
-                    pageSpec.FilterExpressions.Add(notEqualExpr);
-                    break;
-            }
-        }
-
-        private void ApplyNumericFilter(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, int>> propertySelector)
-        {
-            var values = ParseIntArray(element);
-            if (values.Count == 0)
-            {
-                return;
-            }
-
-            var param = propertySelector.Parameters[0];
-            var property = propertySelector.Body;
-
-            switch (operation)
-            {
-                case "equal":
-                    var equalExpr = Expression.Lambda<Func<Movie, bool>>(
-                        Expression.Call(
-                            typeof(Enumerable),
-                            "Contains",
-                            new[] { typeof(int) },
-                            Expression.Constant(values),
-                            property),
-                        param);
-                    pageSpec.FilterExpressions.Add(equalExpr);
-                    break;
-                case "notequal":
-                    var notEqualCall = Expression.Call(
-                        typeof(Enumerable),
-                        "Contains",
-                        new[] { typeof(int) },
-                        Expression.Constant(values),
-                        property);
-                    var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(Expression.Not(notEqualCall), param);
-                    pageSpec.FilterExpressions.Add(notEqualExpr);
-                    break;
-                case "greaterthan":
-                    var gtValue = values.First();
-                    var gtExpr = Expression.Lambda<Func<Movie, bool>>(
-                        Expression.GreaterThan(property, Expression.Constant(gtValue)),
-                        param);
-                    pageSpec.FilterExpressions.Add(gtExpr);
-                    break;
-                case "lessthan":
-                    var ltValue = values.First();
-                    var ltExpr = Expression.Lambda<Func<Movie, bool>>(
-                        Expression.LessThan(property, Expression.Constant(ltValue)),
-                        param);
-                    pageSpec.FilterExpressions.Add(ltExpr);
-                    break;
-                case "greaterthanorequal":
-                    var gteValue = values.First();
-                    var gteExpr = Expression.Lambda<Func<Movie, bool>>(
-                        Expression.GreaterThanOrEqual(property, Expression.Constant(gteValue)),
-                        param);
-                    pageSpec.FilterExpressions.Add(gteExpr);
-                    break;
-                case "lessthanorequal":
-                    var lteValue = values.First();
-                    var lteExpr = Expression.Lambda<Func<Movie, bool>>(
-                        Expression.LessThanOrEqual(property, Expression.Constant(lteValue)),
-                        param);
-                    pageSpec.FilterExpressions.Add(lteExpr);
-                    break;
-            }
-        }
-
-        private void ApplyEnumFilter<TEnum>(PagingSpec<Movie> pageSpec, JsonElement element, string operation, Expression<Func<Movie, TEnum>> propertySelector)
-            where TEnum : Enum
-        {
-            var values = new List<TEnum>();
-
-            if (element.ValueKind == JsonValueKind.String)
-            {
-                try
-                {
-                    var enumValue = (TEnum)Enum.Parse(typeof(TEnum), element.GetString(), ignoreCase: true);
-                    values.Add(enumValue);
-                }
-                catch
-                {
-                    // Ignore invalid enum values
-                }
-            }
-            else if (element.ValueKind == JsonValueKind.Array)
-            {
-                foreach (var item in element.EnumerateArray())
-                {
-                    if (item.ValueKind == JsonValueKind.String)
-                    {
-                        try
-                        {
-                            var enumValue = (TEnum)Enum.Parse(typeof(TEnum), item.GetString(), ignoreCase: true);
-                            values.Add(enumValue);
-                        }
-                        catch
-                        {
-                            // Ignore invalid enum values
-                        }
-                    }
-                    else if (item.ValueKind == JsonValueKind.Number && item.TryGetInt32(out var intValue))
-                    {
-                        if (Enum.IsDefined(typeof(TEnum), intValue))
-                        {
-                            values.Add((TEnum)Enum.ToObject(typeof(TEnum), intValue));
-                        }
-                    }
-                }
-            }
-
-            if (values.Count == 0)
-            {
-                return;
-            }
-
-            var param = propertySelector.Parameters[0];
-            var property = propertySelector.Body;
-
-            switch (operation)
-            {
-                case "equal":
-                    var equalExpr = Expression.Lambda<Func<Movie, bool>>(
-                        Expression.Call(
-                            typeof(Enumerable),
-                            "Contains",
-                            new[] { typeof(TEnum) },
-                            Expression.Constant(values),
-                            property),
-                        param);
-                    pageSpec.FilterExpressions.Add(equalExpr);
-                    break;
-                case "notequal":
-                    var notEqualCall = Expression.Call(
-                        typeof(Enumerable),
-                        "Contains",
-                        new[] { typeof(TEnum) },
-                        Expression.Constant(values),
-                        property);
-                    var notEqualExpr = Expression.Lambda<Func<Movie, bool>>(Expression.Not(notEqualCall), param);
-                    pageSpec.FilterExpressions.Add(notEqualExpr);
-                    break;
-            }
-        }
-
+        /// <summary>Legacy: Gets a movie resource for the given ID. Uses cache if enabled.</summary>
+        /// <param name="id">The ID of the movie to retrieve</param>
+        /// <returns>The movie resource for the given ID</returns>
         protected override MovieResource GetResourceById(int id)
         {
             if (_useCache)
@@ -781,6 +424,8 @@ namespace Whisparr.Api.V3.Movies
             return MapToResource(movie);
         }
 
+        /// <summary>Legacy: Gets a list of movie resources for the given list of IDs. Uses cache if enabled.</summary>
+        /// <returns>A list of movie ID's</returns>
         [HttpGet("list")]
         public List<int> ListMovies()
         {
@@ -828,6 +473,10 @@ namespace Whisparr.Api.V3.Movies
             return Ok();
         }
 
+        /// <summary>Legacy: Gets a list of movie resources for the given list of IDs. Uses cache if enabled.</summary>
+        /// <param name="ids">The list of movie IDs to retrieve resources for</param>
+        /// <returns>A list of movie resources for the given IDs</returns>
+        /// <remarks>This is a legacy endpoint formerly used by the UI and other internal components to populate Redux items for Movie/Scene.</remarks>
         [HttpPost("bulk")]
         public List<MovieResource> GetResourceByIds([FromBody] List<int> ids)
         {
@@ -859,6 +508,9 @@ namespace Whisparr.Api.V3.Movies
             return moviesResources;
         }
 
+        /// <summary>Gets a list of movie IDs associated with the given performer foreign ID</summary>
+        /// <param name="performerForeignId">The foreign ID of the performer to list movies for</param>
+        /// <returns>A list of movie IDs associated with the given performer foreign ID</returns>
         [HttpGet("listByPerformerForeignId")]
         public List<int> ListByPerformerForeignId(string performerForeignId)
         {
@@ -876,37 +528,18 @@ namespace Whisparr.Api.V3.Movies
             return moviesList;
         }
 
+        /// <summary>Gets a list of movie IDs associated with the given studio foreign ID</summary>
+        /// <param name="studioForeignId">The foreign ID of the studio to list movies for</param>
+        /// <returns>A list of movie IDs associated with the given studio foreign ID</returns>
         [HttpGet("listByStudioForeignId")]
         public List<int> ListByStudioForeignId(string studioForeignId)
         {
             return _moviesService.GetByStudioForeignId(studioForeignId).Map(x => x.Id).ToList();
         }
 
-        protected MovieResource MapToResource(Movie movie)
-        {
-            if (movie == null)
-            {
-                return null;
-            }
-
-            var availDelay = _configService.AvailabilityDelay;
-
-            var resource = movie.ToResource(availDelay, _qualityUpgradableSpecification);
-
-            // TODO: movie this to the movie updated event handler instead
-            MapCoversToLocal(resource);
-            FetchAndLinkMovieStatistics(resource);
-
-            resource.RootFolderPath = _rootFolderService.GetBestRootFolderPath(resource.Path);
-
-            if (_useCache)
-            {
-                _movieResourcesCache.Set(resource.Id.ToString(), resource);
-            }
-
-            return resource;
-        }
-
+        /// <summary>Adds a new movie to the system. The movie will be added as "unmonitored" by default, so it won't be automatically downloaded until you set it to monitored. You can specify either a path or a root folder + relative path. If both are provided, the path will take precedence. If neither is provided, the movie will be added without a path and you'll need to set it later before it can be monitored or imported.</summary>
+        /// <param name="moviesResource">The movie resource containing the information for the new movie</param>
+        /// <returns>The movie resource</returns>
         [RestPostById]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -917,6 +550,9 @@ namespace Whisparr.Api.V3.Movies
             return Created(movie.Id);
         }
 
+        /// <summary>Updates a movie and optionally moves its files on disk if the path has changed</summary>
+        /// <param name="moviesResource">The movie resource containing the updated information</param>
+        /// <param name="moveFiles">Whether to move the movie files on disk if the path has changed</param>
         [RestPutById]
         [Consumes("application/json")]
         [Produces("application/json")]
@@ -944,10 +580,39 @@ namespace Whisparr.Api.V3.Movies
             return Accepted(moviesResource.Id);
         }
 
+        /// <summary> Deletes a movie and optionally its files, with the option to add an import exclusion to prevent re-import </summary>
+        /// <param name="id">The ID of the movie to delete</param>
+        /// <param name="deleteFiles">Whether to delete the movie files from disk</param>
+        /// <param name="addImportExclusion">Whether to add an import exclusion for the movie's path to prevent it from being re-imported</param>
         [RestDeleteById]
         public void DeleteMovie(int id, bool deleteFiles = false, bool addImportExclusion = false)
         {
             _moviesService.DeleteMovie(id, deleteFiles, addImportExclusion);
+        }
+
+        protected MovieResource MapToResource(Movie movie)
+        {
+            if (movie == null)
+            {
+                return null;
+            }
+
+            var availDelay = _configService.AvailabilityDelay;
+
+            var resource = movie.ToResource(availDelay, _qualityUpgradableSpecification);
+
+            // TODO: movie this to the movie updated event handler instead
+            MapCoversToLocal(resource);
+            FetchAndLinkMovieStatistics(resource);
+
+            resource.RootFolderPath = _rootFolderService.GetBestRootFolderPath(resource.Path);
+
+            if (_useCache)
+            {
+                _movieResourcesCache.Set(resource.Id.ToString(), resource);
+            }
+
+            return resource;
         }
 
         private void MapCoversToLocal(MovieResource movie)

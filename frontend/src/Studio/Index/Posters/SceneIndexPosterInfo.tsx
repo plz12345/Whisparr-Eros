@@ -38,7 +38,6 @@ function SceneIndexPosterInfo(props: SceneIndexPosterInfoProps) {
     year,
     releaseDate,
     path,
-    ratings,
     originalLanguage,
     sizeOnDisk,
     sortKey,

@@ -153,7 +153,7 @@ export const defaultState = {
     {
       name: 'tags',
       label: () => translate('Tags'),
-      isSortable: true,
+      isSortable: false,
       isVisible: false
     },
     {
@@ -225,6 +225,12 @@ export const defaultState = {
       label: () => translate('ReleaseStatus'),
       type: filterBuilderTypes.EXACT,
       valueType: filterBuilderValueTypes.RELEASE_STATUS
+    },
+    {
+      name: 'studioTitle',
+      label: () => translate('Studio'),
+      type: filterBuilderTypes.EXACT,
+      valueType: filterBuilderValueTypes.EXACT
     },
     {
       name: 'qualityProfileId',

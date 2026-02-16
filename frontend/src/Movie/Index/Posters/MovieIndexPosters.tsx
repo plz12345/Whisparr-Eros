@@ -86,6 +86,7 @@ function Cell({
       }}
     >
       <MovieIndexPoster
+        key={movie.id}
         movie={movie}
         sortKey={sortKey}
         isSelectMode={isSelectMode}

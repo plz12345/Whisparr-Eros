@@ -77,7 +77,6 @@ function MovieIndexRow(props: MovieIndexRowProps) {
     runtime,
     path,
     genres = [],
-    ratings,
     tags = [],
     tmdbId,
     tpdbId,
@@ -189,7 +188,7 @@ function MovieIndexRow(props: MovieIndexRowProps) {
           );
         }
 
-        if (name === 'studio') {
+        if (name === 'studioTitle') {
           return (
             <VirtualTableRowCell key={name} className={styles[name]}>
               {studioTitle}

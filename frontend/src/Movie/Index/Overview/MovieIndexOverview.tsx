@@ -178,6 +178,7 @@ function MovieIndexOverview(props: MovieIndexOverviewProps) {
 
             <Link className={styles.link} style={elementStyle} to={link}>
               <MoviePoster
+                key={movie.id}
                 safeForWorkMode={safeForWorkMode}
                 className={styles.poster}
                 style={elementStyle}
