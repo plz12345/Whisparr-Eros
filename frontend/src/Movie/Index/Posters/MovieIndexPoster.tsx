@@ -174,7 +174,7 @@ function MovieIndexPoster(props: MovieIndexPosterProps) {
     [movieId, selectState.selectedState, selectDispatch, foreignId]
   );
 
-  const link = `/movie/${foreignId}`;
+  const link = `/movie/${movieId}`;
 
   const linkProps = isSelectMode ? { onPress: onSelectPress } : { to: link };
 
@@ -330,14 +330,14 @@ function MovieIndexPoster(props: MovieIndexPosterProps) {
 
       <EditMovieModal
         isOpen={isEditMovieModalOpen}
-        movieId={movieId}
+        movie={movie}
         onModalClose={onEditMovieModalClose}
         onDeleteMoviePress={onDeleteMoviePress}
       />
 
       <DeleteMovieModal
         isOpen={isDeleteMovieModalOpen}
-        movieId={movieId}
+        movie={movie}
         onModalClose={onDeleteMovieModalClose}
       />
     </div>

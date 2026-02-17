@@ -20,7 +20,6 @@ import usePrevious from 'Helpers/Hooks/usePrevious';
 import { icons, inputTypes, kinds, sizes } from 'Helpers/Props';
 import MoveMovieModal from 'Movie/MoveMovie/MoveMovieModal';
 import Movie from 'Movie/Movie';
-import useMovie from 'Movie/useMovie';
 import { saveMovie, setMovieValue } from 'Store/Actions/movieActions';
 import selectSettings from 'Store/Selectors/selectSettings';
 import { InputChanged } from 'typings/inputs';
@@ -186,23 +185,23 @@ function EditMovieModalContent({
 
       dispatch(
         saveMovie({
-          id,
+          movie,
           moveFiles: false,
         })
       );
     }
-  }, [movieId, isPathChanging, isConfirmMoveModalOpen, dispatch]);
+  }, [movie, isPathChanging, isConfirmMoveModalOpen, dispatch]);
 
   const handleMoveMoviePress = useCallback(() => {
     setIsConfirmMoveModalOpen(false);
 
     dispatch(
       saveMovie({
-        id,
+        movie,
         moveFiles: true,
       })
     );
-  }, [movieId, dispatch]);
+  }, [movie, dispatch]);
 
   useEffect(() => {
     if (!isSaving && wasSaving && !saveError) {
