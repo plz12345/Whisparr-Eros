@@ -30,6 +30,8 @@ export const defaultState = {
   addError: null,
   items: [],
   studiosWithStatus: [],
+  moviesWithStatus: [],
+
 
   movieDefaults: {
     rootFolderPath: '',
@@ -80,6 +82,8 @@ export const SET_ADD_MOVIE_DEFAULT = 'addMovie/setAddMovieDefault';
 export const SET_ADD_PERFORMER_DEFAULT = 'addMovie/setAddPerformerDefault';
 export const SET_ADD_STUDIO_DEFAULT = 'addMovie/setAddStudioDefault';
 export const SET_STUDIOS_WITH_STATUS = 'addMovie/setStudiosWithStatus';
+export const SET_MOVIES_WITH_STATUS = 'addMovie/setMoviesWithStatus';
+
 
 //
 // Action Creators
@@ -96,6 +100,7 @@ export const setAddMovieDefault = createAction(SET_ADD_MOVIE_DEFAULT);
 export const setAddPerformerDefault = createAction(SET_ADD_PERFORMER_DEFAULT);
 export const setAddStudioDefault = createAction(SET_ADD_STUDIO_DEFAULT);
 export const setStudiosWithStatus = createAction(SET_STUDIOS_WITH_STATUS);
+export const setMoviesWithStatus = createAction(SET_MOVIES_WITH_STATUS);
 
 export const setAddMovieValue = createAction(SET_ADD_MOVIE_VALUE, (payload) => {
   return {
@@ -472,6 +477,11 @@ export const reducers = createHandleActions({
   [SET_STUDIOS_WITH_STATUS]: function(state, { payload }) {
     const newState = getSectionState(state, section);
     newState.studiosWithStatus = payload;
+    return updateSectionState(state, section, newState);
+  },
+  [SET_MOVIES_WITH_STATUS]: function(state, { payload }) {
+    const newState = getSectionState(state, section);
+    newState.moviesWithStatus = payload;
     return updateSectionState(state, section, newState);
   },
 

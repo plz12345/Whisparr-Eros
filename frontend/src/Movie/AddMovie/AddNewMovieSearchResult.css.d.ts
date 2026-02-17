@@ -2,23 +2,20 @@
 // Please do not change this file!
 interface CssExports {
   'alreadyExistsIcon': string;
-  'certification': string;
   'content': string;
-  'credits': string;
+  'country': string;
   'exclusionIcon': string;
-  'genres': string;
+  'gender': string;
+  'genderIcon': string;
   'icons': string;
   'links': string;
-  'originalLanguage': string;
   'overlay': string;
   'overview': string;
   'poster': string;
   'posterContainer': string;
   'runtime': string;
-  'scene': string;
   'searchResult': string;
   'statusContainer': string;
-  'studio': string;
   'title': string;
   'titleContainer': string;
   'titleRow': string;

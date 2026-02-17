@@ -95,7 +95,6 @@ function MovieIndexOverview(props: MovieIndexOverviewProps) {
     tags,
     hasFile,
     isAvailable,
-    foreignId,
     tmdbId,
     tpdbId,
     studioTitle,

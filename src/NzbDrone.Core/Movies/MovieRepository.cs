@@ -21,6 +21,7 @@ namespace NzbDrone.Core.Movies
         Movie FindByImdbId(string imdbid);
         Movie FindByTmdbId(int tmdbid);
         Movie FindByForeignId(string foreignId);
+        List<Movie> FindByForeignIds(List<string> foreignIds);
         List<Movie> FindByTpdbId(List<string> tpdbids);
         List<Movie> FindByTmdbId(List<int> tmdbids);
         List<Movie> FindByStudioAndDate(string studioForeignId, string date);
@@ -307,6 +308,23 @@ namespace NzbDrone.Core.Movies
         public Movie FindByForeignId(string foreignId)
         {
             return Query(x => x.MovieMetadata.Value.ForeignId == foreignId).FirstOrDefault();
+        }
+
+        public List<Movie> FindByForeignIds(List<string> foreignIds)
+        {
+            var movieDictionary = new Dictionary<int, Movie>();
+
+            var builder = new SqlBuilder(_database.DatabaseType)
+                .Join<Movie, QualityProfile>((m, p) => m.QualityProfileId == p.Id)
+                .Join<Movie, MovieMetadata>((m, p) => m.MovieMetadataId == p.Id)
+                .LeftJoin<Movie, MovieFile>((m, f) => m.Id == f.MovieId)
+                .LeftJoin<MovieMetadata, AlternativeTitle>((mm, t) => mm.Id == t.MovieMetadataId)
+                .Where<MovieMetadata>(x => foreignIds.Contains(x.ForeignId));
+
+            _ = _database.QueryJoined<Movie, MovieMetadata, QualityProfile, MovieFile, AlternativeTitle>(
+                builder,
+                (movie, metadata, qualityProfile, file, altTitle) => Map(movieDictionary, movie, metadata, qualityProfile, file, altTitle));
+            return movieDictionary.Values.ToList();
         }
 
         public List<Movie> FindByTpdbId(List<string> tpdbids)

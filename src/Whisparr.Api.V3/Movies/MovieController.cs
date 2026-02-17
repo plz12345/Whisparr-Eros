@@ -497,6 +497,18 @@ namespace Whisparr.Api.V3.Movies
             return Ok();
         }
 
+        /// <summary>Gets a list of movie resources for the given list of IDs. Uses cache if enabled.</summary>
+        /// <param name="foreignIds">The list of movie IDs to retrieve resources for</param>
+        [HttpPost("list")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        public ActionResult<List<MovieResource>> GetMoviesByForeignIds([FromBody] List<string> foreignIds = null)
+        {
+            var movies = _moviesService.FindByForeignIds(foreignIds);
+            var moviesResources = movies.Select(MapToResource).ToList();
+            return moviesResources;
+        }
+
         /// <summary>Legacy: Gets a list of movie resources for the given list of IDs. Uses cache if enabled.</summary>
         /// <param name="ids">The list of movie IDs to retrieve resources for</param>
         /// <returns>A list of movie resources for the given IDs</returns>

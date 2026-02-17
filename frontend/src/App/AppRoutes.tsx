@@ -3,13 +3,11 @@ import { Redirect, Route } from 'react-router-dom';
 import Blocklist from 'Activity/Blocklist/Blocklist';
 import HistoryConnector from 'Activity/History/HistoryConnector';
 import Queue from 'Activity/Queue/Queue';
-import AddNewMovieConnector from 'AddMovie/AddNewMovie/AddNewMovieConnector';
-import AddNewSceneConnector from 'AddMovie/AddNewMovie/AddNewSceneConnector';
-import ImportMovies from 'AddMovie/ImportMovie/ImportMovies';
 import CalendarPage from 'Calendar/CalendarPage';
 import CollectionConnector from 'Collection/CollectionConnector';
 import NotFound from 'Components/NotFound';
 import Switch from 'Components/Router/Switch';
+import AddNewMovie from 'Movie/AddMovie/AddNewMovie';
 import MovieDetails from 'Movie/Details/MovieDetails';
 import MovieIndex from 'Movie/Index/MovieIndex';
 import AddNewPerformer from 'Performer/AddPerformer/AddNewPerformer';
@@ -78,15 +76,11 @@ function AppRoutes() {
 
       <Route path="/studios" component={StudioIndex} />
 
-      <Route path="/add/new/movie" component={AddNewMovieConnector} />
-
-      <Route path="/add/new/scene" component={AddNewSceneConnector} />
+      <Route path="/add/new/movie" component={AddNewMovie} />
 
       <Route path="/add/new/studio" component={AddNewStudio} />
 
       <Route path="/add/new/performer" component={AddNewPerformer} />
-
-      <Route path="/add/import" component={ImportMovies} />
 
       <Route path="/movie/:foreignId" component={MovieDetails} />
 
