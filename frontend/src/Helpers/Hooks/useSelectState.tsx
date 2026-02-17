@@ -32,6 +32,10 @@ export type SelectAction =
   | {
       type: 'updateItems';
       items: ModelBase[];
+    }
+  | {
+      type: 'addItems';
+      items: ModelBase[];
     };
 
 export type Dispatch = (action: SelectAction) => void;
@@ -44,12 +48,39 @@ const initialState = {
   items: [],
 };
 
+// Only add new items to the selection state, do not reset selection to just current page
+function addItemsToSelectedState(
+  items: ModelBase[],
+  existingState: SelectedState
+) {
+  const acc = { ...existingState };
+  for (const item of items) {
+    if (!(item.id in acc)) {
+      acc[item.id] = false;
+    }
+  }
+  return acc;
+}
+
+// Remove items from selection state that are not in the global movie list
+function pruneSelectedState(
+  validIds: (number | string)[],
+  existingState: SelectedState
+) {
+  const acc: SelectedState = {};
+  for (const id of validIds) {
+    if (existingState[id]) {
+      acc[id] = true;
+    }
+  }
+  return acc;
+}
+
+// Restore getSelectedState for initial state usage
 function getSelectedState(items: ModelBase[], existingState: SelectedState) {
   return items.reduce((acc: SelectedState, item) => {
     const id = item.id;
-
     acc[id] = existingState[id] ?? false;
-
     return acc;
   }, {});
 }
@@ -81,12 +112,23 @@ function selectReducer(state: SelectState, action: SelectAction): SelectState {
           action.shiftKey
         ),
       };
-
       return result;
     }
+    case 'addItems': {
+      const nextSelectedState = addItemsToSelectedState(
+        action.items,
+        selectedState
+      );
+      return {
+        ...state,
+        ...areAllSelected(nextSelectedState),
+        selectedState: nextSelectedState,
+      };
+    }
     case 'updateItems': {
-      const nextSelectedState = getSelectedState(action.items, selectedState);
-
+      // Prune selection state to only valid IDs (e.g., after deletion)
+      const validIds = action.items.map((i) => i.id);
+      const nextSelectedState = pruneSelectedState(validIds, selectedState);
       return {
         ...state,
         ...areAllSelected(nextSelectedState),

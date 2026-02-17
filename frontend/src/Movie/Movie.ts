@@ -55,11 +55,13 @@ interface Movie extends ModelBase {
   tmdbId: number;
   tpdbId: string;
   stashId: string;
+  code: string;
   itemType: string;
   added: string;
   addOptions: MovieAddOptions;
   alternateTitles: AlternativeTitle[];
   cleanTitle: string;
+  certification: string;
   collection: Collection;
   credits: MovieCredit[];
   genres: string[];

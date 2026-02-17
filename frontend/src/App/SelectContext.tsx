@@ -61,8 +61,9 @@ export function SelectProvider<T extends ModelBase>(
 
   const value: [SelectState, SelectDispatch] = [state, dispatchWrapper];
 
+  // Only add new items to the selection state, do not reset selection to just current page
   useEffect(() => {
-    dispatch({ type: 'updateItems', items });
+    dispatch({ type: 'addItems', items });
   }, [items, dispatch]);
 
   return (

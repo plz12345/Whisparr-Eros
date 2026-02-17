@@ -11,7 +11,7 @@ class SceneTitleLink extends PureComponent {
       year
     } = this.props;
 
-    const link = `/movie/${titleSlug}`;
+    const link = `/scene/${titleSlug}`;
 
     return (
       <Link

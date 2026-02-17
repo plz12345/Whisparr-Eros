@@ -1,17 +1,37 @@
 import { createSelector } from 'reselect';
+import AppState from 'App/State/AppState';
 import Command from 'Commands/Command';
 import { MOVIE_SEARCH, REFRESH_MOVIE } from 'Commands/commandNames';
 import Movie from 'Movie/Movie';
 import createExecutingCommandsSelector from 'Store/Selectors/createExecutingCommandsSelector';
-import createMovieQualityProfileSelector from 'Store/Selectors/createMovieQualityProfileSelector';
-import { createMovieSelectorForHook } from 'Store/Selectors/createMovieSelector';
+
+function createSceneSelectorForHook(sceneId: number) {
+  return (state: AppState) => {
+    // Find the scene by id in the current sceneIndex items (AppSectionState<Movie>)
+    const items = state.sceneIndex.items || [];
+    return items.find((scene: Movie) => scene.id === sceneId);
+  };
+}
+
+function createSceneQualityProfileSelector(sceneId: number) {
+  return (state: AppState) => {
+    const scene = createSceneSelectorForHook(sceneId)(state);
+    if (!scene) return undefined;
+    const profiles = state.settings.qualityProfiles.items || [];
+    return profiles.find((profile) => profile.id === scene.qualityProfileId);
+  };
+}
 
 function createSceneIndexItemSelector(sceneId: number) {
   return createSelector(
-    createMovieSelectorForHook(sceneId),
-    createMovieQualityProfileSelector(sceneId),
+    createSceneSelectorForHook(sceneId),
+    createSceneQualityProfileSelector(sceneId),
     createExecutingCommandsSelector(),
-    (scene: Movie, qualityProfile, executingCommands: Command[]) => {
+    (
+      scene: Movie | undefined,
+      qualityProfile,
+      executingCommands: Command[]
+    ) => {
       const isRefreshingScene = executingCommands.some((command) => {
         return (
           command.name === REFRESH_MOVIE && command.body.movieId === sceneId

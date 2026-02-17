@@ -19,6 +19,7 @@ import ModalHeader from 'Components/Modal/ModalHeader';
 import usePrevious from 'Helpers/Hooks/usePrevious';
 import { icons, inputTypes, kinds, sizes } from 'Helpers/Props';
 import MoveMovieModal from 'Movie/MoveMovie/MoveMovieModal';
+import Movie from 'Movie/Movie';
 import useMovie from 'Movie/useMovie';
 import { saveMovie, setMovieValue } from 'Store/Actions/movieActions';
 import selectSettings from 'Store/Selectors/selectSettings';
@@ -30,25 +31,26 @@ import { RootFolderUpdated } from './RootFolder/RootFolderModalContent';
 import styles from './EditMovieModalContent.css';
 
 export interface EditMovieModalContentProps {
-  movieId: number;
+  movie: Movie;
   onModalClose: () => void;
   onDeleteMoviePress: () => void;
 }
 
 function EditMovieModalContent({
-  movieId,
+  movie,
   onModalClose,
   onDeleteMoviePress,
 }: EditMovieModalContentProps) {
   const dispatch = useDispatch();
   const {
+    id,
     title,
     monitored,
     qualityProfileId,
     path,
     tags,
     rootFolderPath: initialRootFolderPath,
-  } = useMovie(movieId)!;
+  } = movie;
 
   const { isSaving, saveError, pendingChanges } = useSelector(
     (state: AppState) => state.movies
@@ -184,7 +186,7 @@ function EditMovieModalContent({
 
       dispatch(
         saveMovie({
-          id: movieId,
+          id,
           moveFiles: false,
         })
       );
@@ -196,7 +198,7 @@ function EditMovieModalContent({
 
     dispatch(
       saveMovie({
-        id: movieId,
+        id,
         moveFiles: true,
       })
     );
@@ -303,7 +305,7 @@ function EditMovieModalContent({
 
       <RootFolderModal
         isOpen={isRootFolderModalOpen}
-        movieId={movieId}
+        movieId={id}
         rootFolderPath={rootFolderPath}
         onSavePress={handleRootFolderChange}
         onModalClose={handleRootFolderModalClose}

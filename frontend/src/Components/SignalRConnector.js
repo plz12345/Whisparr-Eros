@@ -415,6 +415,17 @@ class SignalRConnector extends Component {
         body.resources.forEach((resource) => {
           removeMovieQueryCache(resource);
         });
+        // Invalidate movie index paged query (itemType=movie)
+        queryClient.invalidateQueries({
+          predicate: (query) => {
+            return (
+              Array.isArray(query.queryKey) &&
+              typeof query.queryKey[0] === 'string' &&
+              query.queryKey[0].startsWith('/movie/paged') &&
+              query.queryKey[0].includes('itemType=movie')
+            );
+          }
+        });
       } else {
         body.resources.forEach((resource) => {
           updateMovieQueryCache(resource);
@@ -438,6 +449,17 @@ class SignalRConnector extends Component {
     } else if (action === 'deleted') {
       // Remove individual movie query keys
       removeMovieQueryCache(body.resource);
+      // Invalidate movie index paged query (itemType=movie)
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          return (
+            Array.isArray(query.queryKey) &&
+            typeof query.queryKey[0] === 'string' &&
+            query.queryKey[0].startsWith('/movie/pages') &&
+            query.queryKey[0].includes('itemType=movie')
+          );
+        }
+      });
       // Force paged query re-fetch so updates are immediate
       invalidateMoviePagedQueryCache();
     }

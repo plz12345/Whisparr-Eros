@@ -1,7 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextTruncate from 'react-text-truncate';
-import AppState from 'App/State/AppState';
+import { SafeForWorkModeContext } from 'App/State/SafeForWorkContext';
 import { MOVIE_SEARCH, REFRESH_MOVIE } from 'Commands/commandNames';
 import Icon from 'Components/Icon';
 import IconButton from 'Components/Link/IconButton';
@@ -11,7 +11,7 @@ import Popover from 'Components/Tooltip/Popover';
 import { icons } from 'Helpers/Props';
 import EditMovieModal from 'Movie/Edit/EditMovieModal';
 import MovieIndexPosterSelect from 'Movie/Index/Select/MovieIndexPosterSelect';
-import { Statistics } from 'Movie/Movie';
+import Movie, { Statistics } from 'Movie/Movie';
 import DeleteSceneModal from 'Scene/Delete/DeleteSceneModal';
 import SceneDetailsLinks from 'Scene/Details/SceneDetailsLinks';
 import SceneIndexProgressBar from 'Scene/Index/ProgressBar/SceneIndexProgressBar';
@@ -19,8 +19,9 @@ import ScenePoster from 'Scene/ScenePoster';
 import { executeCommand } from 'Store/Actions/commandActions';
 import dimensions from 'Styles/Variables/dimensions';
 import fonts from 'Styles/Variables/fonts';
+import QualityProfile from 'typings/QualityProfile';
 import translate from 'Utilities/String/translate';
-import createSceneIndexItemSelector from '../createSceneIndexItemSelector';
+// Removed createSceneIndexItemSelector import
 import SceneIndexOverviewInfo from './SceneIndexOverviewInfo';
 import selectOverviewOptions from './selectOverviewOptions';
 import styles from './SceneIndexOverview.css';
@@ -37,33 +38,33 @@ const lineHeight = parseFloat(fonts.lineHeight);
 const titleRowHeight = 42;
 
 interface SceneIndexOverviewProps {
-  sceneId: number;
+  scene: Movie;
+  qualityProfile?: QualityProfile;
   sortKey: string;
   posterWidth: number;
   posterHeight: number;
   rowHeight: number;
   isSelectMode: boolean;
   isSmallScreen: boolean;
+  isRefreshingScene?: boolean;
+  isSearchingScene?: boolean;
 }
 
 function SceneIndexOverview(props: SceneIndexOverviewProps) {
   const {
-    sceneId,
+    scene,
+    qualityProfile,
     sortKey,
     posterWidth,
     posterHeight,
     rowHeight,
     isSelectMode,
     isSmallScreen,
+    isRefreshingScene = false,
+    isSearchingScene = false,
   } = props;
-
-  const safeForWorkMode = useSelector(
-    (state: AppState) => state.settings.safeForWorkMode
-  );
-
-  const { scene, qualityProfile, isRefreshingScene, isSearchingScene } =
-    useSelector(createSceneIndexItemSelector(props.sceneId));
-
+  const sceneId = scene.id;
+  const safeForWorkMode = useContext(SafeForWorkModeContext);
   const overviewOptions = useSelector(selectOverviewOptions);
 
   const {
@@ -146,6 +147,7 @@ function SceneIndexOverview(props: SceneIndexOverviewProps) {
             {isSelectMode ? <MovieIndexPosterSelect movieId={sceneId} /> : null}
             <Link className={styles.link} style={elementStyle} to={link}>
               <ScenePoster
+                key={scene.id}
                 className={styles.poster}
                 style={elementStyle}
                 images={images}

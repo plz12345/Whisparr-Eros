@@ -12,8 +12,7 @@ import ModalContent from 'Components/Modal/ModalContent';
 import ModalFooter from 'Components/Modal/ModalFooter';
 import ModalHeader from 'Components/Modal/ModalHeader';
 import { icons, inputTypes, kinds } from 'Helpers/Props';
-import { Statistics } from 'Movie/Movie';
-import useMovie from 'Movie/useMovie';
+import Movie, { Statistics } from 'Movie/Movie';
 import { deleteMovie, setDeleteOption } from 'Store/Actions/movieActions';
 import { CheckInputChanged } from 'typings/inputs';
 import formatBytes from 'Utilities/Number/formatBytes';
@@ -21,12 +20,12 @@ import translate from 'Utilities/String/translate';
 import styles from './DeleteMovieModalContent.css';
 
 export interface DeleteMovieModalContentProps {
-  movieId: number;
+  movie: Movie;
   onModalClose: () => void;
 }
 
 function DeleteMovieModalContent({
-  movieId,
+  movie,
   onModalClose,
 }: DeleteMovieModalContentProps) {
   const dispatch = useDispatch();
@@ -35,13 +34,12 @@ function DeleteMovieModalContent({
     path,
     collection,
     statistics = {} as Statistics,
-  } = useMovie(movieId)!;
+    id,
+  } = movie || {};
   const { addImportExclusion } = useSelector(
     (state: AppState) => state.movies.deleteOptions
   );
-
   const { movieFileCount = 0, sizeOnDisk = 0 } = statistics;
-
   const [deleteFiles, setDeleteFiles] = useState(false);
 
   const handleDeleteFilesChange = useCallback(
@@ -52,24 +50,17 @@ function DeleteMovieModalContent({
   );
 
   const handleDeleteMovieConfirmed = useCallback(() => {
+    if (!id) return;
     dispatch(
       deleteMovie({
-        id: movieId,
+        id,
         collectionTmdbId: collection?.tmdbId,
         deleteFiles,
         addImportExclusion,
       })
     );
-
     onModalClose();
-  }, [
-    movieId,
-    collection,
-    addImportExclusion,
-    deleteFiles,
-    dispatch,
-    onModalClose,
-  ]);
+  }, [id, collection, addImportExclusion, deleteFiles, dispatch, onModalClose]);
 
   const handleDeleteOptionChange = useCallback(
     ({ name, value }: CheckInputChanged) => {

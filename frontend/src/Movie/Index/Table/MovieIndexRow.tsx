@@ -183,7 +183,7 @@ function MovieIndexRow(props: MovieIndexRowProps) {
         if (name === 'sortTitle') {
           return (
             <VirtualTableRowCell key={name} className={styles[name]}>
-              <MovieTitleLink foreignId={foreignId} title={title} />
+              <MovieTitleLink foreignId={String(movieId)} title={title} />
             </VirtualTableRowCell>
           );
         }
@@ -371,14 +371,14 @@ function MovieIndexRow(props: MovieIndexRowProps) {
 
       <EditMovieModal
         isOpen={isEditMovieModalOpen}
-        movieId={movieId}
+        movie={movie}
         onModalClose={onEditMovieModalClose}
         onDeleteMoviePress={onDeleteMoviePress}
       />
 
       <DeleteMovieModal
         isOpen={isDeleteMovieModalOpen}
-        movieId={movieId}
+        movie={movie}
         onModalClose={onDeleteMovieModalClose}
       />
     </>

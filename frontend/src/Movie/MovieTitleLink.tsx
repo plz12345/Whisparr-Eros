@@ -15,6 +15,7 @@ function MovieTitleLink({
   titleSlug,
   ...otherProps
 }: MovieTitleLinkProps) {
+  // foreignId is now actually the numeric id
   const link = `/movie/${foreignId}`;
 
   return (

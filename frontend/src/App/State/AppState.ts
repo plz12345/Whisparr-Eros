@@ -23,6 +23,7 @@ import ProviderOptionsAppState from './ProviderOptionsAppState';
 import QueueAppState from './QueueAppState';
 import ReleasesAppState from './ReleasesAppState';
 import RootFolderAppState from './RootFolderAppState';
+import SceneIndexAppState from './SceneIndexAppState';
 import SettingsAppState from './SettingsAppState';
 import StudiosAppState from './StudiosAppState';
 import SystemAppState from './SystemAppState';
@@ -99,7 +100,7 @@ interface AppState {
   movieHistory: MovieHistoryAppState;
   movieIndex: MovieIndexAppState;
   movieSearch: MovieSearchAppState;
-  sceneIndex: MovieIndexAppState;
+  sceneIndex: SceneIndexAppState;
   performers: PerformersAppState;
   studios: StudiosAppState;
   movies: MoviesAppState;

@@ -41,6 +41,7 @@ interface SceneIndexOverviewsProps {
   isSelectMode: boolean;
   isSmallScreen: boolean;
 }
+
 function Row({
   index,
   style,
@@ -53,10 +54,18 @@ function Row({
   }
 
   const scene = items[index];
-
+  // If you have command state for isRefreshingScene/isSearchingScene, pass it here
   return (
     <div style={style}>
-      <SceneIndexOverview sceneId={scene.id} {...otherData} />
+      <SceneIndexOverview
+        scene={scene}
+        sortKey={otherData.sortKey}
+        posterWidth={otherData.posterWidth}
+        posterHeight={otherData.posterHeight}
+        rowHeight={otherData.rowHeight}
+        isSelectMode={otherData.isSelectMode}
+        isSmallScreen={otherData.isSmallScreen}
+      />
     </div>
   );
 }

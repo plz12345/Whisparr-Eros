@@ -190,11 +190,11 @@ namespace Whisparr.Api.V3.Movies
         }
 
         /// <summary>Gets a movie resource for the given ID, with an option to bypass the cache if needed for real-time updates after changes</summary>
-        /// <param name="tmdbId">The TMDB ID of the movie</param>
-        /// <param name="tpdbId">The TPDB ID of the movie</param>
-        /// <param name="stashId">The Stash ID of the movie</param>
-        /// <param name="excludeLocalCovers">Whether to exclude local covers</param>
-        /// <returns>A list of movie resources matching the given IDs</returns>
+        /// <param name="tmdbId"></param>
+        /// <param name="tpdbId"></param>
+        /// <param name="stashId"></param>
+        /// <param name="excludeLocalCovers"></param>
+        /// <returns></returns>
         [HttpGet]
         public List<MovieResource> AllMovie(int? tmdbId, string tpdbId, string stashId, bool excludeLocalCovers = false)
         {
@@ -268,11 +268,12 @@ namespace Whisparr.Api.V3.Movies
 
         /// <summary>Retrieves a paged list of movies with advanced filtering options</summary>
         /// <param name="request">Paging and filtering parameters</param>
+        /// <param name="itemType">Optional item type filter (e.g., "movie" or "scene")</param>
         /// <returns>Paged list of movies matching the specified criteria</returns>
         [HttpPost("paged")]
         [Consumes("application/json")]
         [Produces("application/json")]
-        public ActionResult<PagingResource<MovieResource>> GetMoviesPagedPost([FromBody] MoviePagingRequestResource request)
+        public ActionResult<PagingResource<MovieResource>> GetMoviesPagedPost([FromBody] MoviePagingRequestResource request, [FromQuery] string itemType = null)
         {
             if (request == null)
             {
@@ -286,8 +287,27 @@ namespace Whisparr.Api.V3.Movies
                 "movieMetadata.sortTitle",
                 SortDirection.Ascending);
 
-            // Enforce itemType filter for movies
-            pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == ItemType.Movie);
+            // Enforce itemType filter if specified, otherwise default to movies
+            if (!string.IsNullOrWhiteSpace(itemType))
+            {
+                switch (itemType.ToLowerInvariant())
+                {
+                    case "scene":
+                        pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == ItemType.Scene);
+                        break;
+                    case "movie":
+                        pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == ItemType.Movie);
+                        break;
+                    default:
+                        // Do nothing, allow all types
+                        break;
+                }
+            }
+            else
+            {
+                // Default to movies if not specified
+                pageSpec.FilterExpressions.Add(m => m.MovieMetadata.Value.ItemType == ItemType.Movie);
+            }
 
             var hasTagFilter = request.Filters != null && request.Filters.Any(f => f.Key?.ToLowerInvariant() == "tags" && f.Value != null);
 
@@ -340,7 +360,12 @@ namespace Whisparr.Api.V3.Movies
             }
         }
 
-        /// <summary>Helper for paging movies with tags filter, which requires loading all movies and filtering in memory since Dapper doesn't support array filters. Not optimized for performance, so should only be used when tags filter is present.</summary>
+        /// <summary>Helper for paging movies with tags filter, which requires loading all movies and filtering in memory since Dapper doesn't support array filters. Not optimized for performance, so should only be used when tags filter is present.</summary> <summary>
+        ///
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="pageSpec"></param>
+        /// <returns></returns>
         private ActionResult<PagingResource<MovieResource>> GetPagedMoviesWithTags(MoviePagingRequestResource request, PagingSpec<Movie> pageSpec)
         {
             var allMovies = _moviesService.GetAllMovies();
@@ -376,7 +401,6 @@ namespace Whisparr.Api.V3.Movies
             return Ok(result);
         }
 
-        /// <summary>Helper for standard paging without tags filter, optimized for performance by applying filters at the database level</summary>
         private ActionResult<PagingResource<MovieResource>> GetPagedMoviesStandard(MoviePagingRequestResource request, PagingSpec<Movie> pageSpec)
         {
             MovieFilterHelpers.ApplyMovieFiltersToPagingSpec(request.Filters, pageSpec);
@@ -511,7 +535,6 @@ namespace Whisparr.Api.V3.Movies
         /// <summary>Gets a list of movie IDs associated with the given performer foreign ID</summary>
         /// <param name="performerForeignId">The foreign ID of the performer to list movies for</param>
         /// <returns>A list of movie IDs associated with the given performer foreign ID</returns>
-        [HttpGet("listByPerformerForeignId")]
         public List<int> ListByPerformerForeignId(string performerForeignId)
         {
             var moviesList = new List<int>();

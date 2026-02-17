@@ -10,11 +10,12 @@ import CalendarPage from 'Calendar/CalendarPage';
 import CollectionConnector from 'Collection/CollectionConnector';
 import NotFound from 'Components/NotFound';
 import Switch from 'Components/Router/Switch';
-import MovieDetailsPageConnector from 'Movie/Details/MovieDetailsPageConnector';
+import MovieDetails from 'Movie/Details/MovieDetails';
 import MovieIndex from 'Movie/Index/MovieIndex';
 import AddNewPerformer from 'Performer/AddPerformer/AddNewPerformer';
 import PerformerDetails from 'Performer/Details/PerformerDetails';
 import PerformerIndex from 'Performer/Index/PerformerIndex';
+import SceneDetails from 'Scene/Details/SceneDetails';
 import SceneIndex from 'Scene/Index/SceneIndex';
 import CustomFormatSettingsPage from 'Settings/CustomFormats/CustomFormatSettingsPage';
 import DownloadClientSettingsConnector from 'Settings/DownloadClients/DownloadClientSettingsConnector';
@@ -87,8 +88,9 @@ function AppRoutes() {
 
       <Route path="/add/import" component={ImportMovies} />
 
-      <Route path="/movie/:titleSlug" component={MovieDetailsPageConnector} />
+      <Route path="/movie/:foreignId" component={MovieDetails} />
 
+      <Route path="/scene/:foreignId" component={SceneDetails} />
       <Route
         path="/performer/:performerForeignId"
         component={PerformerDetails}

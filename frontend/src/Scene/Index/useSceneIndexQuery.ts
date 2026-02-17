@@ -3,14 +3,12 @@ import AppState, { Filter, PropertyFilter } from 'App/State/AppState';
 import { CustomFilter } from 'Filters/Filter';
 import useApiQuery from 'Helpers/Hooks/useApiQuery';
 import { SortDirection } from 'Helpers/Props/sortDirections';
-import Movie from 'Movie/Movie';
-import { filters as movieFilters } from 'Store/Actions/movieActions';
+import { filters as sceneFilters } from 'Store/Actions/sceneIndexActions';
 import { createCustomFiltersSelector } from 'Store/Selectors/createClientSideCollectionSelector';
 
 /**
- * Maps frontend sort keys to backend table-prefixed format.
- * Properties on MovieMetadata table need the "movieMetadata." prefix.
- * Properties on Movies table need the "movies." prefix.
+ * Maps frontend sort keys to backend table-prefixed format for scenes.
+ * Adjust as needed for Scene/movieMetadata tables.
  */
 const sortKeyMapping: Record<string, string> = {
   sortTitle: 'movieMetadata.sortTitle',
@@ -32,64 +30,43 @@ function mapSortKey(sortKey: string): string {
   return sortKeyMapping[sortKey] || sortKeyMapping.sortTitle;
 }
 
-/**
- * Filter configuration for movie queries
- */
-export interface MovieFilter {
+export type SceneFilter = {
   key: string;
   operator: string;
   value: string | number | boolean;
-}
+};
 
-/**
- * Parameters for querying paginated movie data
- */
-export interface MovieIndexQueryParams {
+export type SceneIndexQueryParams = {
   page: number;
   pageSize: number;
   sortKey: string;
   sortDirection: SortDirection;
   filters: PropertyFilter[];
-}
+};
 
-/**
- * Response from the paginated movie index API endpoint
- */
-export interface MovieIndexPagedResponse {
+export type SceneIndexPagedResponse = {
   page: number;
   pageSize: number;
   sortKey: string;
   sortDirection: SortDirection;
   totalRecords: number;
-  records: Movie[];
+  records: unknown[];
   filters: PropertyFilter[];
   customFilters: PropertyFilter[];
-}
-
-/**
- * Custom hook for fetching paginated movie data from the API.
- *
- * Handles filter resolution by checking if the selected filter is a custom filter
- * (numeric ID) or a predefined filter (string key), then merges the appropriate
- * filter configuration into the query parameters.
- *
- * @param params - Query parameters (page, pageSize, sort, etc.)
- * @param options - React Query options (e.g., placeholderData)
- * @returns Query result with movie data and loading state
- */
-export function useMovieIndexQuery(
-  params: MovieIndexQueryParams,
+};
+export function useSceneIndexQuery(
+  params: SceneIndexQueryParams,
   options: {
-    placeholderData: (prev: MovieIndexPagedResponse) => MovieIndexPagedResponse;
+    placeholderData: (prev: SceneIndexPagedResponse) => SceneIndexPagedResponse;
   }
 ) {
   // Retrieve selected filter key from Redux store
   const selectedFilterKey = useSelector(
-    (state: AppState) => state.movieIndex.selectedFilterKey
+    (state: AppState) => state.sceneIndex.selectedFilterKey
   );
 
   // Get custom filters from Redux store
-  const customFilters = useSelector(createCustomFiltersSelector('movieIndex'));
+  const customFilters = useSelector(createCustomFiltersSelector('sceneIndex'));
 
   let filterDef: Filter | undefined = undefined;
   let filters: PropertyFilter[] = [];
@@ -107,7 +84,7 @@ export function useMovieIndexQuery(
     filters = filterDef && filterDef.filters ? filterDef.filters : [];
   } else {
     // String key indicates a predefined filter
-    filterDef = movieFilters.find((f: Filter) => f.key === selectedFilterKey);
+    filterDef = sceneFilters.find((f: Filter) => f.key === selectedFilterKey);
     filters = filterDef && filterDef.filters ? filterDef.filters : [];
   }
 
@@ -118,9 +95,9 @@ export function useMovieIndexQuery(
     filters,
   };
 
-  // Execute API query for paginated movie data
-  return useApiQuery<MovieIndexPagedResponse>({
-    path: '/movie/paged?itemType=movie',
+  // Execute API query for paginated scene data
+  return useApiQuery<SceneIndexPagedResponse>({
+    path: '/movie/paged?itemType=scene',
     method: 'POST',
     body: queryParams,
     ...options,

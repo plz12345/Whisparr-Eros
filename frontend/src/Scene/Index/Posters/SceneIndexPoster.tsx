@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AppState from 'App/State/AppState';
+import { SafeForWorkModeContext } from 'App/State/SafeForWorkContext';
 import { MOVIE_SEARCH, REFRESH_MOVIE } from 'Commands/commandNames';
 import Icon from 'Components/Icon';
 import Label from 'Components/Label';
@@ -11,38 +11,46 @@ import Popover from 'Components/Tooltip/Popover';
 import { icons } from 'Helpers/Props';
 import EditMovieModal from 'Movie/Edit/EditMovieModal';
 import MovieIndexPosterSelect from 'Movie/Index/Select/MovieIndexPosterSelect';
-import { Statistics } from 'Movie/Movie';
+import Movie, { Statistics } from 'Movie/Movie';
 import DeleteSceneModal from 'Scene/Delete/DeleteSceneModal';
 import SceneDetailsLinks from 'Scene/Details/SceneDetailsLinks';
 import SceneIndexProgressBar from 'Scene/Index/ProgressBar/SceneIndexProgressBar';
 import ScenePoster from 'Scene/ScenePoster';
 import { executeCommand } from 'Store/Actions/commandActions';
 import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
+import QualityProfile from 'typings/QualityProfile';
 import getRelativeDate from 'Utilities/Date/getRelativeDate';
 import translate from 'Utilities/String/translate';
-import createSceneIndexItemSelector from '../createSceneIndexItemSelector';
+// Removed createSceneIndexItemSelector import
 import SceneIndexPosterInfo from './SceneIndexPosterInfo';
 import selectPosterOptions from './selectPosterOptions';
 import styles from './SceneIndexPoster.css';
 
 interface SceneIndexPosterProps {
-  sceneId: number;
-  sortKey: string;
+  scene: Movie;
+  isRefreshingScene?: boolean;
+  isSearchingScene?: boolean;
   isSelectMode: boolean;
-  posterWidth: number;
   posterHeight: number;
+  posterWidth: number;
+  qualityProfile?: QualityProfile;
+  sortKey: string;
 }
 
 function SceneIndexPoster(props: SceneIndexPosterProps) {
-  const { sceneId, sortKey, isSelectMode, posterWidth, posterHeight } = props;
+  const {
+    scene,
+    isRefreshingScene = false,
+    isSearchingScene = false,
+    isSelectMode,
+    posterHeight,
+    posterWidth,
+    qualityProfile,
+    sortKey,
+  } = props;
+  const sceneId = scene.id;
 
-  const { scene, qualityProfile, isRefreshingScene, isSearchingScene } =
-    useSelector(createSceneIndexItemSelector(props.sceneId));
-
-  const safeForWorkMode = useSelector(
-    (state: AppState) => state.settings.safeForWorkMode
-  );
-
+  const safeForWorkMode = useContext(SafeForWorkModeContext);
   const {
     detailedProgressBar,
     showTitle,

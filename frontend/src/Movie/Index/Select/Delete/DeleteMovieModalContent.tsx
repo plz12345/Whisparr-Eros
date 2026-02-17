@@ -1,5 +1,4 @@
-import { orderBy } from 'lodash';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import AppState from 'App/State/AppState';
@@ -12,47 +11,30 @@ import ModalContent from 'Components/Modal/ModalContent';
 import ModalFooter from 'Components/Modal/ModalFooter';
 import ModalHeader from 'Components/Modal/ModalHeader';
 import { inputTypes, kinds } from 'Helpers/Props';
-import Movie from 'Movie/Movie';
-import { bulkDeleteMovie, setDeleteOption } from 'Store/Actions/movieActions';
-import createAllMoviesSelector from 'Store/Selectors/createAllMoviesSelector';
-import { InputChanged } from 'typings/inputs';
-import formatBytes from 'Utilities/Number/formatBytes';
+import { setDeleteOption } from 'Store/Actions/movieActions';
 import translate from 'Utilities/String/translate';
 import styles from './DeleteMovieModalContent.css';
 
-interface DeleteMovieModalContentProps {
+type DeleteMovieModalContentProps = {
   movieIds: number[];
-  onModalClose(): void;
-}
-
-const selectDeleteOptions = createSelector(
-  (state: AppState) => state.movies.deleteOptions,
-  (deleteOptions) => deleteOptions
-);
+  onDeletePress: (deleteFiles: boolean, addImportExclusion: boolean) => void;
+  onModalClose: () => void;
+};
 
 function DeleteMovieModalContent(props: DeleteMovieModalContentProps) {
-  const { movieIds, onModalClose } = props;
+  const selectDeleteOptions = createSelector(
+    (state: AppState) => state.movies.deleteOptions,
+    (deleteOptions) => deleteOptions
+  );
 
+  const { movieIds, onDeletePress, onModalClose } = props;
   const { addImportExclusion } = useSelector(selectDeleteOptions);
-  const allMovies: Movie[] = useSelector(createAllMoviesSelector());
   const dispatch = useDispatch();
-
   const [deleteFiles, setDeleteFiles] = useState(false);
 
-  const movies = useMemo((): Movie[] => {
-    const movies = movieIds.map((id) => {
-      return allMovies.find((s) => s.id === id);
-    }) as Movie[];
-
-    return orderBy(movies, ['sortTitle']);
-  }, [movieIds, allMovies]);
-
-  const onDeleteFilesChange = useCallback(
-    ({ value }: InputChanged<boolean>) => {
-      setDeleteFiles(value);
-    },
-    [setDeleteFiles]
-  );
+  const onDeleteFilesChange = useCallback((e: { value: boolean }) => {
+    setDeleteFiles(e.value);
+  }, []);
 
   const onDeleteOptionChange = useCallback(
     ({ name, value }: { name: string; value: boolean }) => {
@@ -67,46 +49,13 @@ function DeleteMovieModalContent(props: DeleteMovieModalContentProps) {
 
   const onDeleteMoviesConfirmed = useCallback(() => {
     setDeleteFiles(false);
-
-    dispatch(
-      bulkDeleteMovie({
-        movieIds,
-        deleteFiles,
-        addImportExclusion,
-      })
-    );
-
-    onModalClose();
-  }, [
-    movieIds,
-    deleteFiles,
-    addImportExclusion,
-    setDeleteFiles,
-    dispatch,
-    onModalClose,
-  ]);
-
-  const { totalMovieFileCount, totalSizeOnDisk } = useMemo(() => {
-    return movies.reduce(
-      (acc, { statistics = {} }) => {
-        const { movieFileCount = 0, sizeOnDisk = 0 } = statistics;
-
-        acc.totalMovieFileCount += movieFileCount;
-        acc.totalSizeOnDisk += sizeOnDisk;
-
-        return acc;
-      },
-      {
-        totalMovieFileCount: 0,
-        totalSizeOnDisk: 0,
-      }
-    );
-  }, [movies]);
+    onDeletePress(deleteFiles, addImportExclusion);
+  }, [deleteFiles, addImportExclusion, onDeletePress]);
 
   return (
     <ModalContent onModalClose={onModalClose}>
       <ModalHeader>
-        {movies.length > 1
+        {movieIds.length > 1
           ? translate('DeleteSelectedMovies')
           : translate('DeleteSelectedMovie')}
       </ModalHeader>
@@ -115,7 +64,6 @@ function DeleteMovieModalContent(props: DeleteMovieModalContentProps) {
         <div>
           <FormGroup>
             <FormLabel>{translate('AddListExclusion')}</FormLabel>
-
             <FormInputGroup
               type={inputTypes.CHECK}
               name="addImportExclusion"
@@ -124,20 +72,18 @@ function DeleteMovieModalContent(props: DeleteMovieModalContentProps) {
               onChange={onDeleteOptionChange}
             />
           </FormGroup>
-
           <FormGroup>
             <FormLabel>
-              {movies.length > 1
+              {movieIds.length > 1
                 ? translate('DeleteMovieFolders')
                 : translate('DeleteMovieFolder')}
             </FormLabel>
-
             <FormInputGroup
               type={inputTypes.CHECK}
               name="deleteFiles"
               value={deleteFiles}
               helpText={
-                movies.length > 1
+                movieIds.length > 1
                   ? translate('DeleteMovieFoldersHelpText')
                   : translate('DeleteMovieFolderHelpText')
               }
@@ -146,61 +92,19 @@ function DeleteMovieModalContent(props: DeleteMovieModalContentProps) {
             />
           </FormGroup>
         </div>
-
         <div className={styles.message}>
           {deleteFiles
             ? translate('DeleteMovieFolderCountWithFilesConfirmation', {
-                count: movies.length,
+                count: movieIds.length,
               })
             : translate('DeleteMovieFolderCountConfirmation', {
-                count: movies.length,
+                count: movieIds.length,
               })}
         </div>
-
-        <ul>
-          {movies.map(({ title, path, statistics = {} }) => {
-            const { movieFileCount = 0, sizeOnDisk = 0 } = statistics;
-
-            return (
-              <li key={title}>
-                <span>{title}</span>
-
-                {deleteFiles && (
-                  <span>
-                    <span className={styles.pathContainer}>
-                      -<span className={styles.path}>{path}</span>
-                    </span>
-
-                    {!!movieFileCount && (
-                      <span className={styles.statistics}>
-                        (
-                        {translate('DeleteMovieFolderMovieCount', {
-                          movieFileCount,
-                          size: formatBytes(sizeOnDisk),
-                        })}
-                        )
-                      </span>
-                    )}
-                  </span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-
-        {deleteFiles && !!totalMovieFileCount ? (
-          <div className={styles.deleteFilesMessage}>
-            {translate('DeleteMovieFolderMovieCount', {
-              movieFileCount: totalMovieFileCount,
-              size: formatBytes(totalSizeOnDisk),
-            })}
-          </div>
-        ) : null}
+        {/* Could show more details if needed */}
       </ModalBody>
-
       <ModalFooter>
         <Button onPress={onModalClose}>{translate('Cancel')}</Button>
-
         <Button kind={kinds.DANGER} onPress={onDeleteMoviesConfirmed}>
           {translate('Delete')}
         </Button>

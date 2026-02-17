@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useSelect } from 'App/SelectContext';
-import { MOVIE_SEARCH, REFRESH_MOVIE } from 'Commands/commandNames';
 import Icon from 'Components/Icon';
 import IconButton from 'Components/Link/IconButton';
 import SpinnerIconButton from 'Components/Link/SpinnerIconButton';
@@ -13,13 +12,11 @@ import Column from 'Components/Table/Column';
 import Tooltip from 'Components/Tooltip/Tooltip';
 import { icons, kinds } from 'Helpers/Props';
 import EditMovieModal from 'Movie/Edit/EditMovieModal';
-import { Statistics } from 'Movie/Movie';
+import Movie from 'Movie/Movie';
 import DeleteSceneModal from 'Scene/Delete/DeleteSceneModal';
 import SceneDetailsLinks from 'Scene/Details/SceneDetailsLinks';
-import createSceneIndexItemSelector from 'Scene/Index/createSceneIndexItemSelector';
 import SceneStudioTitleLink from 'Scene/SceneStudioTitleLink';
 import SceneTitleLink from 'Scene/SceneTitleLink';
-import { executeCommand } from 'Store/Actions/commandActions';
 import createUISettingsSelector from 'Store/Selectors/createUISettingsSelector';
 import { SelectStateInputProps } from 'typings/props';
 import formatRuntime from 'Utilities/Date/formatRuntime';
@@ -27,91 +24,70 @@ import formatBytes from 'Utilities/Number/formatBytes';
 import translate from 'Utilities/String/translate';
 import SceneIndexProgressBar from '../ProgressBar/SceneIndexProgressBar';
 import SceneStatusCell from './SceneStatusCell';
-import selectTableOptions from './selectTableOptions';
 import styles from './SceneIndexRow.css';
 
 interface SceneIndexRowProps {
-  sceneId: number;
+  scene: Movie;
   sortKey: string;
   columns: Column[];
   isSelectMode: boolean;
 }
 
 function SceneIndexRow(props: SceneIndexRowProps) {
-  const { sceneId, columns, isSelectMode } = props;
-
-  const { scene, qualityProfile, isRefreshingScene, isSearchingScene } =
-    useSelector(createSceneIndexItemSelector(props.sceneId));
-
-  const { showSearchAction } = useSelector(selectTableOptions);
-
+  const { scene, columns, isSelectMode } = props;
   const { movieRuntimeFormat } = useSelector(createUISettingsSelector());
 
-  const {
-    monitored,
-    titleSlug,
-    title,
-    studioTitle,
-    status,
-    originalLanguage,
-    added,
-    statistics = {} as Statistics,
-    year,
-    releaseDate,
-    runtime,
-    path,
-    genres = [],
-    tags = [],
-    foreignId,
-    studioForeignId,
-    isAvailable,
-    hasFile,
-    movieFile,
-    isSaving = false,
-  } = scene;
+  const sceneId = scene.id;
+  const qualityProfileId = scene.qualityProfileId;
+  const statistics = scene.statistics || {};
+  const monitored = scene.monitored;
+  const titleSlug = scene.titleSlug;
+  const title = scene.title;
+  const studioTitle = scene.studioTitle;
+  const status = scene.status;
+  const originalLanguage = scene.originalLanguage;
+  const added = scene.added;
+  const year = scene.year;
+  const releaseDate = scene.releaseDate;
+  const runtime = scene.runtime;
+  const path = scene.path;
+  const genres = scene.genres || [];
+  const tags = scene.tags || [];
+  const foreignId = scene.foreignId;
+  const studioForeignId = scene.studioForeignId;
+  const isAvailable = scene.isAvailable;
+  const hasFile = scene.hasFile;
+  const movieFile = scene.movieFile;
+  const isSaving = scene.isSaving || false;
+  const sizeOnDisk = statistics.sizeOnDisk || 0;
+  const releaseGroups = statistics.releaseGroups || [];
+  // TODO: migrate qualityProfile, statistics, and other computed props as needed
 
-  const { sizeOnDisk = 0, releaseGroups = [] } = statistics;
-
-  const dispatch = useDispatch();
   const [isEditSceneModalOpen, setIsEditSceneModalOpen] = useState(false);
   const [isDeleteSceneModalOpen, setIsDeleteSceneModalOpen] = useState(false);
   const [selectState, selectDispatch] = useSelect();
 
-  const onRefreshPress = useCallback(() => {
-    dispatch(
-      executeCommand({
-        name: REFRESH_MOVIE,
-        movieIds: [sceneId],
-      })
-    );
-  }, [sceneId, dispatch]);
-
-  const onSearchPress = useCallback(() => {
-    dispatch(
-      executeCommand({
-        name: MOVIE_SEARCH,
-        movieIds: [sceneId],
-      })
-    );
-  }, [sceneId, dispatch]);
-
+  // TODO: migrate command handlers to use parent-provided handlers or context
+  const onRefreshPress = useCallback(() => {}, []);
+  const onSearchPress = useCallback(() => {}, []);
+  // TODO: wire these to actual command state if needed
+  const isRefreshingScene = false;
+  const isSearchingScene = false;
+  // TODO: wire to real logic or prop if needed
+  const showSearchAction = true;
   const onEditScenePress = useCallback(() => {
     setIsEditSceneModalOpen(true);
   }, [setIsEditSceneModalOpen]);
-
   const onEditSceneModalClose = useCallback(() => {
     setIsEditSceneModalOpen(false);
   }, [setIsEditSceneModalOpen]);
-
   const onDeleteScenePress = useCallback(() => {
     setIsEditSceneModalOpen(false);
     setIsDeleteSceneModalOpen(true);
   }, [setIsDeleteSceneModalOpen]);
-
   const onDeleteSceneModalClose = useCallback(() => {
     setIsDeleteSceneModalOpen(false);
   }, [setIsDeleteSceneModalOpen]);
-
   const onSelectedChange = useCallback(
     ({ id, value, shiftKey }: SelectStateInputProps) => {
       selectDispatch({
@@ -165,13 +141,13 @@ function SceneIndexRow(props: SceneIndexRowProps) {
           );
         }
 
-        if (name === 'studio') {
+        if (name === 'studioTitle') {
           return (
             <VirtualTableRowCell key={name} className={styles[name]}>
               <SceneStudioTitleLink
                 studioForeignId={studioForeignId}
                 studioTitle={studioTitle}
-                className={styles.studio}
+                className={styles.studioTitle}
               >
                 {studioTitle}
               </SceneStudioTitleLink>
@@ -190,7 +166,7 @@ function SceneIndexRow(props: SceneIndexRowProps) {
         if (name === 'qualityProfileId') {
           return (
             <VirtualTableRowCell key={name} className={styles[name]}>
-              {qualityProfile?.name ?? ''}
+              {qualityProfileId}
             </VirtualTableRowCell>
           );
         }

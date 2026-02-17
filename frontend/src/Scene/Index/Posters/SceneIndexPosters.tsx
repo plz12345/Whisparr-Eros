@@ -49,6 +49,7 @@ interface SceneIndexPostersProps {
   scrollerRef: RefObject<HTMLElement>;
   isSelectMode: boolean;
   isSmallScreen: boolean;
+  safeForWorkMode: boolean;
 }
 
 const sceneIndexSelector = createSelector(
@@ -77,7 +78,7 @@ function Cell({
   }
 
   const scene = items[index];
-
+  // If you have command state for isRefreshingScene/isSearchingScene, pass it here
   return (
     <div
       style={{
@@ -86,7 +87,8 @@ function Cell({
       }}
     >
       <SceneIndexPoster
-        sceneId={scene.id}
+        key={scene.id}
+        scene={scene}
         sortKey={sortKey}
         isSelectMode={isSelectMode}
         posterWidth={posterWidth}

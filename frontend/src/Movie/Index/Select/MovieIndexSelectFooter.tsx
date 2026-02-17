@@ -8,7 +8,7 @@ import SpinnerButton from 'Components/Link/SpinnerButton';
 import PageContentFooter from 'Components/Page/PageContentFooter';
 import usePrevious from 'Helpers/Hooks/usePrevious';
 import { kinds } from 'Helpers/Props';
-import { saveMovieEditor } from 'Store/Actions/movieActions';
+import { bulkDeleteMovie, saveMovieEditor } from 'Store/Actions/movieActions';
 import { fetchRootFolders } from 'Store/Actions/rootFolderActions';
 import createCommandExecutingSelector from 'Store/Selectors/createCommandExecutingSelector';
 import translate from 'Utilities/String/translate';
@@ -63,6 +63,8 @@ function MovieIndexSelectFooter() {
   const movieIds = useMemo(() => {
     return getSelectedIds(selectedState);
   }, [selectedState]);
+
+  // No longer needed: selectedMovies
 
   const selectedCount = movieIds.length ? movieIds.length : 0;
 
@@ -128,6 +130,21 @@ function MovieIndexSelectFooter() {
   const onDeleteModalClose = useCallback(() => {
     setIsDeleteModalOpen(false);
   }, []);
+
+  // Handler for when delete is confirmed in modal
+  const handleDeleteConfirmed = useCallback(
+    (deleteFiles: boolean, addImportExclusion: boolean) => {
+      dispatch(
+        bulkDeleteMovie({
+          movieIds,
+          deleteFiles,
+          addImportExclusion,
+        })
+      );
+      setIsDeleteModalOpen(false);
+    },
+    [dispatch, movieIds]
+  );
 
   useEffect(() => {
     if (!isSaving) {
@@ -217,6 +234,7 @@ function MovieIndexSelectFooter() {
       <DeleteMovieModal
         isOpen={isDeleteModalOpen}
         movieIds={movieIds}
+        onDeletePress={handleDeleteConfirmed}
         onModalClose={onDeleteModalClose}
       />
     </PageContentFooter>

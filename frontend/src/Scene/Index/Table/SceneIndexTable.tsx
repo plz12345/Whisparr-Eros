@@ -67,7 +67,7 @@ function Row({
       className={styles.row}
     >
       <SceneIndexRow
-        sceneId={scene.id}
+        scene={scene}
         sortKey={sortKey}
         columns={columns}
         isSelectMode={isSelectMode}

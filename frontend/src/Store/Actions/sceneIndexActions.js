@@ -13,6 +13,7 @@ import { filterPredicates, filters, sortPredicates } from './movieActions';
 // Variables
 
 export const section = 'sceneIndex';
+export { filters };
 
 //
 // State
@@ -28,6 +29,7 @@ export const defaultState = {
   secondarySortKey: 'sortTitle',
   secondarySortDirection: sortDirections.ASCENDING,
   view: 'posters',
+  page: 1,
 
   posterOptions: {
     detailedProgressBar: false,
@@ -79,7 +81,7 @@ export const defaultState = {
       isModifiable: false
     },
     {
-      name: 'studio',
+      name: 'studioTitle',
       label: () => translate('Studio'),
       isSortable: true,
       isVisible: true
@@ -284,6 +286,7 @@ export const defaultState = {
 };
 
 export const persistState = [
+  'sceneIndex.page',
   'sceneIndex.sortKey',
   'sceneIndex.sortDirection',
   'sceneIndex.selectedFilterKey',
@@ -295,6 +298,7 @@ export const persistState = [
   'sceneIndex.tableOptions'
 ];
 
+
 //
 // Actions Types
 
@@ -305,6 +309,8 @@ export const SET_MOVIE_TABLE_OPTION = 'sceneIndex/setSceneTableOption';
 export const SET_MOVIE_POSTER_OPTION = 'sceneIndex/setScenePosterOption';
 export const SET_MOVIE_OVERVIEW_OPTION = 'sceneIndex/setSceneOverviewOption';
 export const SET_MOVIE_INDEX_MODE = 'sceneIndex/setSceneIndexMode';
+export const SET_SCENE_PAGE = 'sceneIndex/setScenePage';
+export const SET_SCENE_PAGE_SIZE = 'sceneIndex/setScenePageSize';
 
 //
 // Action Creators
@@ -316,6 +322,8 @@ export const setSceneTableOption = createAction(SET_MOVIE_TABLE_OPTION);
 export const setScenePosterOption = createAction(SET_MOVIE_POSTER_OPTION);
 export const setSceneOverviewOption = createAction(SET_MOVIE_OVERVIEW_OPTION);
 export const setSceneIndexMode = createAction(SET_MOVIE_INDEX_MODE);
+export const setScenePage = createAction(SET_SCENE_PAGE);
+export const setScenePageSize = createAction(SET_SCENE_PAGE_SIZE);
 
 //
 // Reducers
@@ -357,6 +365,14 @@ export const reducers = createHandleActions({
 
   [SET_MOVIE_INDEX_MODE]: function(state, { payload }) {
     return Object.assign({}, state, { indexMode: payload.indexMode });
+  },
+
+  [SET_SCENE_PAGE]: function(state, { payload }) {
+    return Object.assign({}, state, { page: payload });
+  },
+
+  [SET_SCENE_PAGE_SIZE]: function(state, { payload }) {
+    return Object.assign({}, state, { pageSize: payload });
   }
 
 }, defaultState, section);
