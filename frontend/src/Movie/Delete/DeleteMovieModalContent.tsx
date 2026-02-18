@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import AppState from 'App/State/AppState';
@@ -14,7 +14,8 @@ import ModalFooter from 'Components/Modal/ModalFooter';
 import ModalHeader from 'Components/Modal/ModalHeader';
 import { icons, inputTypes, kinds } from 'Helpers/Props';
 import Movie, { Statistics } from 'Movie/Movie';
-import { deleteMovie, setDeleteOption } from 'Store/Actions/movieActions';
+import { useDeleteMovie } from 'Movie/useMovie';
+import { setDeleteOption } from 'Store/Actions/movieActions';
 import { CheckInputChanged } from 'typings/inputs';
 import formatBytes from 'Utilities/Number/formatBytes';
 import translate from 'Utilities/String/translate';
@@ -29,20 +30,29 @@ function DeleteMovieModalContent({
   movie,
   onModalClose,
 }: DeleteMovieModalContentProps) {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const {
-    title,
-    path,
-    collection,
-    statistics = {} as Statistics,
-    id,
-  } = movie || {};
+
+  const { title, path, statistics = {} as Statistics, id } = movie || {};
   const { addImportExclusion } = useSelector(
     (state: AppState) => state.movies.deleteOptions
   );
   const { movieFileCount = 0, sizeOnDisk = 0 } = statistics;
   const [deleteFiles, setDeleteFiles] = useState(false);
-  const history = useHistory();
+
+  const deleteMovieMutation = useDeleteMovie({
+    onSuccess: () => {
+      history.push('/movies');
+    },
+  });
+
+  // Handlers
+  const handleDeleteOptionChange = useCallback(
+    ({ name, value }: CheckInputChanged) => {
+      dispatch(setDeleteOption({ [name]: value }));
+    },
+    [dispatch]
+  );
 
   const handleDeleteFilesChange = useCallback(
     ({ value }: CheckInputChanged) => {
@@ -53,23 +63,9 @@ function DeleteMovieModalContent({
 
   const handleDeleteMovieConfirmed = useCallback(() => {
     if (!id) return;
-    dispatch(
-      deleteMovie({
-        id,
-        collectionTmdbId: collection?.tmdbId,
-        deleteFiles,
-      })
-    );
-    history.push('/movies');
-    onModalClose();
-  }, [id, collection, deleteFiles, dispatch, history, onModalClose]);
 
-  const handleDeleteOptionChange = useCallback(
-    ({ name, value }: CheckInputChanged) => {
-      dispatch(setDeleteOption({ [name]: value }));
-    },
-    [dispatch]
-  );
+    deleteMovieMutation.mutate({ id, deleteFiles, addImportExclusion });
+  }, [id, deleteFiles, addImportExclusion, deleteMovieMutation]);
 
   return (
     <ModalContent onModalClose={onModalClose}>
@@ -140,8 +136,14 @@ function DeleteMovieModalContent({
       <ModalFooter>
         <Button onPress={onModalClose}>{translate('Close')}</Button>
 
-        <Button kind={kinds.DANGER} onPress={handleDeleteMovieConfirmed}>
-          {translate('Delete')}
+        <Button
+          kind={kinds.DANGER}
+          disabled={deleteMovieMutation.isPending}
+          onPress={handleDeleteMovieConfirmed}
+        >
+          {deleteMovieMutation.isPending
+            ? translate('Deleting')
+            : translate('Delete')}
         </Button>
       </ModalFooter>
     </ModalContent>
