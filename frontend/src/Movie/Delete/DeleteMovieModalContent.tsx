@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import AppState from 'App/State/AppState';
 import FormGroup from 'Components/Form/FormGroup';
 import FormInputGroup from 'Components/Form/FormInputGroup';
@@ -41,6 +42,7 @@ function DeleteMovieModalContent({
   );
   const { movieFileCount = 0, sizeOnDisk = 0 } = statistics;
   const [deleteFiles, setDeleteFiles] = useState(false);
+  const history = useHistory();
 
   const handleDeleteFilesChange = useCallback(
     ({ value }: CheckInputChanged) => {
@@ -56,11 +58,11 @@ function DeleteMovieModalContent({
         id,
         collectionTmdbId: collection?.tmdbId,
         deleteFiles,
-        addImportExclusion,
       })
     );
+    history.push('/movies');
     onModalClose();
-  }, [id, collection, addImportExclusion, deleteFiles, dispatch, onModalClose]);
+  }, [id, collection, deleteFiles, dispatch, history, onModalClose]);
 
   const handleDeleteOptionChange = useCallback(
     ({ name, value }: CheckInputChanged) => {

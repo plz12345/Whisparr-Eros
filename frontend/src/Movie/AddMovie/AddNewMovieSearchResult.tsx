@@ -20,7 +20,8 @@ interface AddNewMovieSearchResultProps {
 function AddNewMovieSearchResult({
   movie,
   isExistingMovie,
-}: AddNewMovieSearchResultProps) {
+  onMovieAdded,
+}: AddNewMovieSearchResultProps & { onMovieAdded: () => void }) {
   const { foreignId, tmdbId, tpdbId, images } = movie;
   const { isSmallScreen, safeForWorkMode } = useAddNewMovieSearchResult();
   const [isNewAddMovieModalOpen, setIsNewAddMovieModalOpen] = useState(false);
@@ -109,6 +110,7 @@ function AddNewMovieSearchResult({
         title={movie.title}
         images={images || []}
         onModalClose={onAddMovieModalClose}
+        onMovieAdded={onMovieAdded}
       />
     </div>
   );

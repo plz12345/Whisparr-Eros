@@ -4,12 +4,12 @@ import { Error as AppError } from 'App/State/AppSectionState';
 import AppState from 'App/State/AppState';
 import { ValidationMessage } from 'Components/Form/FormInputGroup';
 import useApiQuery from 'Helpers/Hooks/useApiQuery';
+import useQueryClient from 'Helpers/Hooks/useQueryClient';
 import Movie from 'Movie/Movie';
 import {
   addMovie,
   clearAddMovie,
   lookupMovie,
-  setAddMovieDefault,
   setMoviesWithStatus,
 } from 'Store/Actions/addMovieActions';
 import {
@@ -87,8 +87,20 @@ const defaultMovieDefaults: MovieDefaults = {
 };
 
 function useAddNewMovie() {
+  const queryClient = useQueryClient();
+  const invalidateMovieListCache = () => {
+    queryClient.invalidateQueries({
+      predicate: (query) => {
+        const qKey = Array.isArray(query.queryKey)
+          ? Array.from(query.queryKey)
+          : [];
+        return qKey[0] === '/movie/list';
+      },
+    });
+  };
+
   const dispatch = useDispatch();
-  const addMovie = useSelector((state: RootState) => state.addMovie);
+  const addMovieState = useSelector((state: RootState) => state.addMovie);
   const uiSettings = useSelector(createUISettingsSelector());
   const [term, setTerm] = useState('');
 
@@ -111,7 +123,7 @@ function useAddNewMovie() {
 
   // When lookup results change, check which Movies already exist
   // React Query: fetch existing movies by foreignIds
-  const foreignIds = (addMovie?.items || [])
+  const foreignIds = (addMovieState?.items || [])
     .map((item: LookupMovieItem) => item.movie.foreignId)
     .filter((id: string | undefined) => id);
 
@@ -130,19 +142,23 @@ function useAddNewMovie() {
   });
 
   React.useEffect(() => {
-    if (addMovie?.items && addMovie.items.length > 0 && foreignIds.length > 0) {
+    if (
+      addMovieState?.items &&
+      addMovieState.items.length > 0 &&
+      foreignIds.length > 0
+    ) {
       if (isExistingMoviesLoading) return;
       if (existingMoviesError) {
         // fallback: mark all as not existing
-        const mapped = addMovie.items.map((item: LookupMovieItem) => ({
+        const mapped = addMovieState.items.map((item: LookupMovieItem) => ({
           movie: item.movie,
           isExistingMovie: false,
         }));
-        const current = addMovie.moviesWithStatus || [];
+        const current = addMovieState.moviesWithStatus || [];
         const isDifferent =
           mapped.length !== current.length ||
           mapped.some(
-            (m, i) =>
+            (m: MovieWithExistingStatus, i: number) =>
               !current[i] ||
               m.isExistingMovie !== current[i].isExistingMovie ||
               m.movie?.foreignId !== current[i].movie?.foreignId
@@ -156,18 +172,18 @@ function useAddNewMovie() {
         const existingMovieMap = new Map(
           existingMovies.map((p) => [p.foreignId, p])
         );
-        const mapped = addMovie.items.map((item: LookupMovieItem) => {
+        const mapped = addMovieState.items.map((item: LookupMovieItem) => {
           const fullMovie = existingMovieMap.get(item.movie.foreignId);
           return {
             movie: fullMovie || item.movie,
             isExistingMovie: !!fullMovie,
           };
         });
-        const current = addMovie.moviesWithStatus || [];
+        const current = addMovieState.moviesWithStatus || [];
         const isDifferent =
           mapped.length !== current.length ||
           mapped.some(
-            (m, i) =>
+            (m: MovieWithExistingStatus, i: number) =>
               !current[i] ||
               m.isExistingMovie !== current[i].isExistingMovie ||
               m.movie?.foreignId !== current[i].movie?.foreignId
@@ -176,13 +192,13 @@ function useAddNewMovie() {
           dispatch(setMoviesWithStatus(mapped));
         }
       }
-    } else if ((addMovie.moviesWithStatus || []).length > 0) {
+    } else if ((addMovieState.moviesWithStatus || []).length > 0) {
       dispatch(setMoviesWithStatus([]));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    addMovie?.items,
-    addMovie.moviesWithStatus,
+    addMovieState?.items,
+    addMovieState.moviesWithStatus,
     foreignIds,
     existingMovies,
     isExistingMoviesLoading,
@@ -213,18 +229,19 @@ function useAddNewMovie() {
   }, [dispatch]);
 
   return {
-    isPopulated: addMovie?.isPopulated || false,
-    error: addMovie?.error,
-    isAdding: addMovie?.isAdding || false,
-    isFetching: addMovie?.isFetching || false,
-    isAdded: addMovie?.isAdded || false,
-    addError: addMovie?.addError,
-    items: addMovie?.items || [],
-    moviesWithStatus: addMovie?.moviesWithStatus || [],
+    isPopulated: addMovieState?.isPopulated || false,
+    error: addMovieState?.error,
+    isAdding: addMovieState?.isAdding || false,
+    isFetching: addMovieState?.isFetching || false,
+    isAdded: addMovieState?.isAdded || false,
+    addError: addMovieState?.addError,
+    items: addMovieState?.items || [],
+    moviesWithStatus: addMovieState?.moviesWithStatus || [],
     term,
     colorImpairedMode: uiSettings.enableColorImpairedMode,
     onMovieLookupChange,
     onClearMovieLookupPress,
+    invalidateMovieListCache,
   };
 }
 

@@ -22,6 +22,7 @@ interface AddNewMovieModalContentProps {
   title: string;
   images: Image[];
   onModalClose: () => void;
+  onMovieAdded: () => void;
 }
 
 function AddNewMovieModalContent({
@@ -29,9 +30,11 @@ function AddNewMovieModalContent({
   title,
   images,
   onModalClose,
+  onMovieAdded,
 }: AddNewMovieModalContentProps) {
   const {
     isAdding,
+    addError,
     isSmallScreen,
     isWindows,
     safeForWorkMode,
@@ -49,6 +52,16 @@ function AddNewMovieModalContent({
     tags,
   } = settings;
 
+  const [wasAdding, setWasAdding] = React.useState(false);
+
+  React.useEffect(() => {
+    if (wasAdding && !isAdding && !addError) {
+      onMovieAdded();
+      onModalClose();
+    }
+    setWasAdding(isAdding);
+  }, [isAdding, addError, onModalClose, wasAdding, onMovieAdded]);
+
   const onQualityProfileIdChange = React.useCallback(
     ({ value }: EnhancedSelectInputChanged<string | number>) => {
       onInputChange({ name: 'qualityProfileId', value: Number(value) });
@@ -57,8 +70,9 @@ function AddNewMovieModalContent({
   );
 
   const onAddMoviePressHandler = React.useCallback(() => {
+    if (isAdding) return;
     onAddMoviePress();
-  }, [onAddMoviePress]);
+  }, [onAddMoviePress, isAdding]);
 
   return (
     <ModalContent onModalClose={onModalClose}>

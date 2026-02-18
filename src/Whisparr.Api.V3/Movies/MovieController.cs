@@ -407,6 +407,8 @@ namespace Whisparr.Api.V3.Movies
 
             var availDelay = _configService.AvailabilityDelay;
 
+            var movies = _moviesService.Paged(pageSpec);
+
             return pageSpec.ApplyToPage(_moviesService.Paged, resource =>
             {
                 return resource.ToResource(availDelay, _qualityUpgradableSpecification);

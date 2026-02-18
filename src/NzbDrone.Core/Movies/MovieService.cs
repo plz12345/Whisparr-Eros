@@ -130,7 +130,14 @@ namespace NzbDrone.Core.Movies
         /// <returns></returns>
         public PagingSpec<Movie> Paged(PagingSpec<Movie> pagingSpec)
         {
-            return _movieRepository.GetPaged(pagingSpec);
+            var result = _movieRepository.GetPaged(pagingSpec);
+
+            // Remove duplicates by Movie.Id, preserving order
+            result.Records = result.Records
+                .GroupBy(m => m.Id)
+                .Select(g => g.First())
+                .ToList();
+            return result;
         }
 
         /// <summary> Add a new movie to the repository. </summary>

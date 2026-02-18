@@ -9,7 +9,6 @@ import LoadingIndicator from 'Components/Loading/LoadingIndicator';
 import PageContent from 'Components/Page/PageContent';
 import PageContentBody from 'Components/Page/PageContentBody';
 import { icons, kinds } from 'Helpers/Props';
-import Movie from 'Movie/Movie';
 import getErrorMessage from 'Utilities/Object/getErrorMessage';
 import translate from 'Utilities/String/translate';
 import AddNewMovieSearchResult from './AddNewMovieSearchResult';
@@ -24,6 +23,7 @@ function AddNewMovie() {
     moviesWithStatus,
     onMovieLookupChange,
     onClearMovieLookupPress,
+    invalidateMovieListCache,
   } = useAddNewMovie();
 
   const handleInputChange = React.useCallback(
@@ -85,6 +85,7 @@ function AddNewMovie() {
                     key={status.movie.foreignId}
                     movie={status.movie}
                     isExistingMovie={status.isExistingMovie}
+                    onMovieAdded={invalidateMovieListCache}
                   />
                 );
               }

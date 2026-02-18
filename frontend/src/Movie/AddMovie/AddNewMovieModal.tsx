@@ -9,6 +9,7 @@ interface AddNewMovieModalProps {
   foreignId: string;
   title: string;
   images: Image[];
+  onMovieAdded: () => void;
 }
 
 function AddNewMovieModal({
@@ -17,6 +18,7 @@ function AddNewMovieModal({
   foreignId,
   title,
   images,
+  onMovieAdded,
 }: AddNewMovieModalProps) {
   return (
     <Modal isOpen={isOpen} onModalClose={onModalClose}>
@@ -25,6 +27,7 @@ function AddNewMovieModal({
         title={title}
         images={images}
         onModalClose={onModalClose}
+        onMovieAdded={onMovieAdded}
       />
     </Modal>
   );
