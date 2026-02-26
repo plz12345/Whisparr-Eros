@@ -172,7 +172,9 @@ jobs:
         with:
           name: whisparr-unit-test-logs-${{ matrix.os }}
           path: |
-            **/_test_*/logs/**
+            /tmp/_test_*/logs/**
+            /private/tmp/_test_*/logs/**
+            C:\Users\runneradmin\AppData\Local\Temp\_test_*\logs\**
 
   unit_test_postgres:
     needs: backend
@@ -203,7 +205,9 @@ jobs:
         with:
           name: whisparr-postgres-test-logs-${{ matrix.os }}
           path: |
-            **/_test_*/logs/**
+            /tmp/_test_*/logs/**
+            /private/tmp/_test_*/logs/**
+            C:\Users\runneradmin\AppData\Local\Temp\_test_*\logs\**
 
   integration_test:
     needs: [prepare, backend]
@@ -249,8 +253,9 @@ jobs:
         with:
           name: whisparr-integration-test-logs-${{ matrix.os }}
           path: |
-            **/_test_*/logs/**
-
+            /tmp/_test_*/logs/**
+            /private/tmp/_test_*/logs/**
+            C:\Users\runneradmin\AppData\Local\Temp\_test_*\logs\**
   deploy:
     needs:
       [
