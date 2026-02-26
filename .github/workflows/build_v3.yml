@@ -166,6 +166,14 @@ jobs:
           pattern: Whisparr.*.Test.dll
           filter: ${{ matrix.filter }}
 
+      - name: Upload unit test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: whisparr-unit-test-logs-${{ matrix.os }}
+          path: |
+            **/_test_*/logs/**
+
   unit_test_postgres:
     needs: backend
     runs-on: ubuntu-latest
@@ -188,6 +196,14 @@ jobs:
           filter: TestCategory!=ManualTest&TestCategory!=WINDOWS&TestCategory!=IntegrationTest&TestCategory!=AutomationTest
           use_postgres: true
           postgres-version: ${{ matrix.postgres-version }}
+
+      - name: Upload postgres test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: whisparr-postgres-test-logs-${{ matrix.os }}
+          path: |
+            **/_test_*/logs/**
 
   integration_test:
     needs: [prepare, backend]
@@ -227,6 +243,13 @@ jobs:
           integration_tests: true
           binary_artifact: ${{ matrix.binary_artifact }}
           binary_path: ${{ matrix.binary_path }}
+      - name: Upload integration test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: whisparr-integration-test-logs-${{ matrix.os }}
+          path: |
+            **/_test_*/logs/**
 
   deploy:
     needs:
