@@ -3,30 +3,30 @@ description: Runs unit/integration tests
 
 inputs:
   use_postgres:
-    description: 'Whether postgres should be used for the database'
+    description: "Whether postgres should be used for the database"
   postgres-version:
-    description: 'Which postgres version should be used for the database'
+    description: "Which postgres version should be used for the database"
   os:
-    description: 'OS that the tests are running on'
+    description: "OS that the tests are running on"
     required: true
   artifact:
-    description: 'Test binary artifact'
+    description: "Test binary artifact"
     required: true
   pattern:
-    description: 'Pattern for DLLs'
+    description: "Pattern for DLLs"
     required: true
   filter:
-    description: 'Filter for tests'
+    description: "Filter for tests"
     required: true
   integration_tests:
-    description: 'True if running integration tests'
+    description: "True if running integration tests"
   binary_artifact:
-    description: 'Binary artifact for integration tests'
+    description: "Binary artifact for integration tests"
   binary_path:
-    description: 'Path within binary artifact for integration tests'
+    description: "Path within binary artifact for integration tests"
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
@@ -64,7 +64,6 @@ runs:
         name: ${{ inputs.binary_artifact }}
         path: _output
 
-
     - name: Set up binary artifact
       if: ${{ inputs.binary_path != '' }}
       shell: bash
@@ -78,7 +77,6 @@ runs:
           exit 1
         fi
         ls -l _tests/bin/Whisparr
-
 
     - name: Make executable
       if: startsWith(inputs.os, 'windows') != true
@@ -109,3 +107,10 @@ runs:
       with:
         name: results-${{ env.RESULTS_NAME }}
         path: TestResults/*.trx
+
+    - name: Upload Integration Test Logs
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: integration-test-logs-${{ matrix.os }}
+        path: ./_tests/_intg_*/logs/
