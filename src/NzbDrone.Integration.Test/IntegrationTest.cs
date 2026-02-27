@@ -13,7 +13,7 @@ using RestSharp;
 
 namespace NzbDrone.Integration.Test
 {
-    [Parallelizable(ParallelScope.Fixtures)]
+    [Parallelizable(ParallelScope.None)]
     public abstract class IntegrationTest : IntegrationTestBase
     {
         protected static int StaticPort = 6969;
