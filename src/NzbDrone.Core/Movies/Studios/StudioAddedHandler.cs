@@ -23,7 +23,10 @@ namespace NzbDrone.Core.Movies.Studios
 
         public void Handle(StudiosAddedEvent message)
         {
-            _commandQueueManager.PushMany(message.Studios.Select(s => new RefreshStudiosCommand(new List<int> { s.Id })).ToList());
+            var ids = message.Studios.Select(s => s.Id).ToList();
+            var command = new RefreshStudiosCommand(ids);
+
+            _commandQueueManager.Push(command);
         }
     }
 }

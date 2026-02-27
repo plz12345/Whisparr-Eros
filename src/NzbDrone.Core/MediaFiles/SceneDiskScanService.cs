@@ -180,17 +180,24 @@ namespace NzbDrone.Core.MediaFiles
             foreach (var scene_list in decisions.MoviesToAdd.Chunk(chunkSize))
             {
                 // Add the studios to prevent a race condition with the movie import
-                var studios = scene_list.ToList().DistinctBy(m => m.MovieMetadata.Value.StudioForeignId);
-                _addStudioService.AddStudios(studios.Select(m => new Studio
-                {
-                    ForeignId = m.MovieMetadata.Value.StudioForeignId,
-                    QualityProfileId = m.QualityProfileId,
-                    Title = m.MovieMetadata.Value.StudioTitle,
-                    RootFolderPath = m.RootFolderPath,
-                    Monitored = false,
-                }).ToList(), true);
+                var studios = scene_list
+                    .DistinctBy(m => m.MovieMetadata.Value.StudioForeignId)
+                    .Select(m => new Studio
+                    {
+                        ForeignId = m.MovieMetadata.Value.StudioForeignId,
+                        QualityProfileId = m.QualityProfileId,
+                        Title = m.MovieMetadata.Value.StudioTitle,
+                        RootFolderPath = m.RootFolderPath,
+                        Monitored = false,
+                    })
+                    .ToList();
 
-                _commandQueueManager.PushMany(scene_list.Select(s => new AddMoviesCommand(new List<Movie> { s })).ToList());
+                _addStudioService.AddStudios(studios, true);
+
+                // Push a single AddMoviesCommand for the entire chunk
+                // command queue manager will handle enumerating the list and processing each movie
+                var command = new AddMoviesCommand(scene_list.ToList());
+                _commandQueueManager.Push(command);
             }
 
             foreach (var folder in folders)

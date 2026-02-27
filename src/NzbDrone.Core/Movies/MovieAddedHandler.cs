@@ -23,7 +23,11 @@ namespace NzbDrone.Core.Movies
 
         public void Handle(MoviesImportedEvent message)
         {
-            _commandQueueManager.PushMany(message.Movies.Select(s => new RefreshMovieCommand(new List<int> { s.Id }, true)).ToList());
+            // Revised to pass the list to command queue manager instead of each item, the manager already enumerates
+            var ids = message.Movies.Select(m => m.Id).ToList();
+            var command = new RefreshMovieCommand(ids, true);
+
+            _commandQueueManager.Push(command);
         }
     }
 }
