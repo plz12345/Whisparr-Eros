@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using DryIoc;
 using DryIoc.Microsoft.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
@@ -43,6 +44,14 @@ namespace NzbDrone.Host
 
         public static void Start(string[] args, Action<IHostBuilder> trayCallback = null)
         {
+            // Raise the ThreadPool minimum to avoid deadlocks caused by sync-over-async in
+            // HttpClient (Task.Run().GetResult()) combined with SemaphoreSlim.Wait() in
+            // MediaCoverService. On 2-core CI runners the default minimum of 2 threads is
+            // exhausted when multiple event handlers (PerformerUpdated, StudioUpdated,
+            // MovieUpdated) fire concurrently, each needing two ThreadPool threads for HTTP I/O.
+            ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIoThreads);
+            ThreadPool.SetMinThreads(Math.Max(minWorkerThreads, 32), minIoThreads);
+
             try
             {
                 Logger.Info("Starting Whisparr - {0} - Version {1}",
