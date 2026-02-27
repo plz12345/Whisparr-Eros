@@ -23,7 +23,7 @@ namespace NzbDrone.Core.Movies.Performers
 
         public void Handle(PerformersAddedEvent message)
         {
-            _commandQueueManager.PushMany(message.Performers.Select(s => new RefreshPerformersCommand(new List<int> { s.Id })).ToList());
+            _commandQueueManager.Push(new RefreshPerformersCommand(message.Performers.Select(s => s.Id).ToList()));
         }
     }
 }
