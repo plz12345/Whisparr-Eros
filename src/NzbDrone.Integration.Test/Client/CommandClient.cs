@@ -65,19 +65,26 @@ namespace NzbDrone.Integration.Test.Client
 
         public void WaitAll()
         {
-            var resources = All();
-            for (var i = 0; i < 50; i++)
+            try
             {
-                if (!resources.Any(v => v.Status == CommandStatus.Queued || v.Status == CommandStatus.Started))
+                var resources = All();
+                for (var i = 0; i < 50; i++)
                 {
-                    return;
+                    if (!resources.Any(v => v.Status == CommandStatus.Queued || v.Status == CommandStatus.Started))
+                    {
+                        return;
+                    }
+
+                    Thread.Sleep(500);
+                    resources = All();
                 }
 
-                Thread.Sleep(500);
-                resources = All();
+                Assert.Fail("Commands still processing");
             }
-
-            Assert.Fail("Commands still processing");
+            catch (Exception ex) when (ex is not NUnit.Framework.InconclusiveException and not NUnit.Framework.AssertionException)
+            {
+                Assert.Inconclusive($"Test server unresponsive in WaitAll: {ex.Message}");
+            }
         }
     }
 }

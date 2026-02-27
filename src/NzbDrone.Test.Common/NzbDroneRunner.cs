@@ -113,7 +113,45 @@ namespace NzbDrone.Test.Common
                 // May happen if the process closes while being closed
             }
 
+            PreserveAppData();
             TestBase.DeleteTempFolder(AppData);
+        }
+
+        private void PreserveAppData()
+        {
+            try
+            {
+                if (!Directory.Exists(AppData))
+                {
+                    return;
+                }
+
+                var dest = Path.Combine(
+                    TestContext.CurrentContext.TestDirectory,
+                    "_intg_logs",
+                    Path.GetFileName(AppData));
+
+                CopyDirectory(AppData, dest);
+            }
+            catch (Exception)
+            {
+                // Best-effort — never fail test cleanup over data preservation
+            }
+        }
+
+        private static void CopyDirectory(string source, string dest)
+        {
+            Directory.CreateDirectory(dest);
+
+            foreach (var file in Directory.GetFiles(source))
+            {
+                File.Copy(file, Path.Combine(dest, Path.GetFileName(file)), overwrite: true);
+            }
+
+            foreach (var dir in Directory.GetDirectories(source))
+            {
+                CopyDirectory(dir, Path.Combine(dest, Path.GetFileName(dir)));
+            }
         }
 
         public void KillAll()
